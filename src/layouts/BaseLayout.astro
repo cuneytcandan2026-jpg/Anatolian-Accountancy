@@ -1,0 +1,119 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileActionBar from '../components/MobileActionBar.astro';
+import { site } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  includeLocalBusinessSchema?: boolean;
+  noIndex?: boolean;
+  lang?: 'en' | 'tr';
+}
+
+const {
+  title,
+  description,
+  path = '/',
+  includeLocalBusinessSchema = false,
+  noIndex = false,
+  lang = 'en',
+} = Astro.props;
+
+const canonicalURL = new URL(path, site.url).toString();
+const ogImageURL = new URL('/og-image.jpg', site.url).toString();
+
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AccountingService',
+  name: site.name,
+  url: site.url,
+  telephone: site.phoneDisplay,
+  email: site.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: `${site.address.line1}, ${site.address.line2}`,
+    addressLocality: site.address.city,
+    postalCode: site.address.postcode,
+    addressCountry: site.address.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: site.geo.lat,
+    longitude: site.geo.lng,
+  },
+  openingHoursSpecification: site.hoursSchema.map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.days,
+    opens: h.opens,
+    closes: h.closes,
+  })),
+  areaServed: ['London', 'Enfield', 'United Kingdom'],
+  availableLanguage: ['English', 'Turkish'],
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : 'en_GB'} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    {includeLocalBusinessSchema && (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(localBusinessSchema)} />
+    )}
+
+    <meta name="generator" content={Astro.generator} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <MobileActionBar />
+
+    <script>
+      const revealEls = document.querySelectorAll<HTMLElement>('.reveal');
+      if (revealEls.length) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+        );
+        revealEls.forEach((el) => observer.observe(el));
+      }
+    </script>
+  </body>
+</html>

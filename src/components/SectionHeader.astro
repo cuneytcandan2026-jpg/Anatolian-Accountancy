@@ -1,0 +1,54 @@
+---
+interface Props {
+  eyebrow: string;
+  heading: string;
+  intro?: string;
+  tone?: 'light' | 'ink';
+  align?: 'left' | 'center';
+  class?: string;
+}
+
+const { eyebrow, heading, intro, tone = 'light', align = 'left', class: className = '' } = Astro.props;
+---
+
+<div class={`section-header section-header--${align} reveal ${className}`}>
+  <p class={`eyebrow ${tone === 'ink' ? 'eyebrow--on-ink' : ''}`}>{eyebrow}</p>
+  <h2 class={`section-header__heading ${tone === 'ink' ? 'section-header__heading--on-ink' : ''}`}>{heading}</h2>
+  {intro && <p class={`section-header__intro ${tone === 'ink' ? 'section-header__intro--on-ink' : ''}`}>{intro}</p>}
+</div>
+
+<style>
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: 46rem;
+  }
+
+  .section-header--center {
+    max-width: 40rem;
+    margin-inline: auto;
+    text-align: center;
+    align-items: center;
+  }
+
+  .section-header__heading {
+    font-size: var(--fs-h2);
+    color: var(--text-primary);
+  }
+
+  .section-header__heading--on-ink {
+    color: var(--text-on-ink);
+  }
+
+  .section-header__intro {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+    max-width: 38rem;
+  }
+
+  .section-header__intro--on-ink {
+    color: var(--text-on-ink-muted);
+  }
+</style>

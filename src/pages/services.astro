@@ -1,0 +1,390 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CTASection from '../components/CTASection.astro';
+import Icon from '../components/Icon.astro';
+import imgAccounting from '../assets/services/business-accounting.jpg';
+import imgTax from '../assets/services/tax.jpg';
+import imgVatPayroll from '../assets/services/vat-payroll.jpg';
+import imgSupport from '../assets/services/business-support.jpg';
+import imgConstruction from '../assets/services/specialist-construction.jpg';
+import imgEcommerce from '../assets/services/specialist-ecommerce.jpg';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const byCategory = (cat: string) => services.filter((s) => s.data.category === cat);
+
+const accounting = byCategory('business-accounting')[0];
+const tax = byCategory('tax')[0];
+const vatPayroll = byCategory('vat-payroll')[0];
+const support = byCategory('business-support')[0];
+const [cis, ecommerce] = byCategory('specialist');
+
+const blocks = [
+  {
+    id: 'business-accounting',
+    eyebrow: 'Business Accounting',
+    title: accounting.data.title,
+    body: accounting.body,
+    points: ['Annual accounts', 'Management accounts', 'Financial statements', 'Bookkeeping'],
+    image: imgAccounting,
+    imageAlt: 'A hand reviewing a printed financial report with charts and figures',
+  },
+  {
+    id: 'tax',
+    eyebrow: 'Tax',
+    title: tax.data.title,
+    body: tax.body,
+    points: ['Corporation tax returns', 'Self Assessment', 'Partnership returns', 'Capital Gains Tax', 'Rental income tax'],
+    image: imgTax,
+    imageAlt: 'A calculator and notebook used to work through a tax return',
+  },
+  {
+    id: 'vat-payroll',
+    eyebrow: 'VAT & Payroll',
+    title: vatPayroll.data.title,
+    body: vatPayroll.body,
+    points: ['VAT registration and returns', 'Payroll processing', 'Workplace pension compliance'],
+    image: imgVatPayroll,
+    imageAlt: 'British pound sterling banknotes',
+  },
+  {
+    id: 'business-support',
+    eyebrow: 'Business Support',
+    title: support.data.title,
+    body: support.body,
+    points: ['Company formation and structuring advice', 'Cloud accounting set-up'],
+    image: imgSupport,
+    imageAlt: 'A laptop on a calm, modern desk beside a window',
+  },
+];
+---
+
+<BaseLayout
+  title="Accounting & Tax Services | Anatolian Accountancy"
+  description="Annual accounts, corporation tax, Self Assessment, VAT, payroll, company formation, CIS and e-commerce accounting for businesses and individuals across London and the UK."
+  path="/services/"
+>
+  <!-- ============ HERO ============ -->
+  <section class="services-hero">
+    <div class="services-hero__glow" aria-hidden="true"></div>
+    <div class="container services-hero__inner reveal">
+      <p class="eyebrow eyebrow--on-ink">Services</p>
+      <h1 class="services-hero__heading">Accounting and tax, covered end to end.</h1>
+      <p class="services-hero__lead">
+        From day-to-day bookkeeping to specialist tax positions: here's the full breakdown of how we support
+        companies, contractors, landlords and individuals across London and the UK, in English or Turkish.
+      </p>
+      <div class="services-hero__actions">
+        <Button href="/contact/" size="lg">Book a Free Consultation</Button>
+        <Button href={`tel:+447541173722`} size="lg" variant="outline-on-ink" icon="phone">Call Bektaş directly</Button>
+      </div>
+      <nav class="services-hero__jump" aria-label="Jump to a service category">
+        <a href="#business-accounting">Business Accounting</a>
+        <a href="#tax">Tax</a>
+        <a href="#vat-payroll">VAT &amp; Payroll</a>
+        <a href="#business-support">Business Support</a>
+        <a href="#specialist">Specialist Services</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ============ CORE SERVICE BLOCKS ============ -->
+  {blocks.map((block, i) => (
+    <section id={block.id} class={`section service-block ${i % 2 === 1 ? 'service-block--alt' : ''} ${i % 2 === 1 ? 'service-block--reverse' : ''}`}>
+      <div class="container">
+        <div class="service-block__grid">
+          <div class="service-block__copy reveal">
+            <p class="eyebrow">{block.eyebrow}</p>
+            <h2 class="service-block__title">{block.title}</h2>
+            <p class="service-block__body">{block.body}</p>
+            <ul class="service-block__list">
+              {block.points.map((point) => (
+                <li>
+                  <Icon name="check" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+            <Button href="/contact/" variant="outline" icon="arrow-right" class="service-block__cta">
+              Ask about {block.title}
+            </Button>
+          </div>
+          <div class="service-block__image-wrap reveal">
+            <Image src={block.image} alt={block.imageAlt} width={800} height={600} class="service-block__image" />
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- ============ SPECIALIST SERVICES ============ -->
+  <section id="specialist" class="section specialist-section">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Specialist Services"
+        heading="Built for construction and e-commerce"
+        intro="Two sectors with rules of their own, covered properly, not bolted on as an afterthought."
+      />
+      <div class="specialist-section__grid">
+        <div class="specialist-card reveal">
+          <div class="specialist-card__image-wrap">
+            <Image
+              src={imgConstruction}
+              alt="Scaffolding staircases on a construction site against a blue sky"
+              width={640}
+              height={480}
+              class="specialist-card__image"
+            />
+          </div>
+          <p class="eyebrow">Construction</p>
+          <h3 class="specialist-card__title">{cis.data.title}</h3>
+          <p class="specialist-card__body">{cis.body}</p>
+          <ul class="service-block__list">
+            <li><Icon name="check" /><span>CIS registration</span></li>
+            <li><Icon name="check" /><span>Monthly returns</span></li>
+            <li><Icon name="check" /><span>Deduction statements</span></li>
+          </ul>
+          <Button href="/contact/" variant="outline" icon="arrow-right" class="service-block__cta">Ask about CIS</Button>
+        </div>
+
+        <div class="specialist-card reveal" style="--reveal-delay:100ms">
+          <div class="specialist-card__image-wrap">
+            <Image
+              src={imgEcommerce}
+              alt="Cardboard parcels packed and ready for shipping"
+              width={640}
+              height={480}
+              class="specialist-card__image"
+            />
+          </div>
+          <p class="eyebrow">E-commerce</p>
+          <h3 class="specialist-card__title">{ecommerce.data.title}</h3>
+          <p class="specialist-card__body">{ecommerce.body}</p>
+          <ul class="service-block__list">
+            <li><Icon name="check" /><span>Amazon, eBay &amp; Shopify accounting</span></li>
+            <li><Icon name="check" /><span>Multi-channel VAT</span></li>
+            <li><Icon name="check" /><span>International tax</span></li>
+            <li><Icon name="check" /><span>R&amp;D tax relief, where it applies</span></li>
+          </ul>
+          <Button href="/contact/" variant="outline" icon="arrow-right" class="service-block__cta">Ask about e-commerce accounting</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    eyebrow="Ready when you are"
+    heading="Let's find the right fit for your business."
+    intro="Tell us a bit about what you need and we'll recommend exactly which of these apply to you. No obligation, no jargon."
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Hero ---- */
+  .services-hero {
+    position: relative;
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .services-hero__glow {
+    position: absolute;
+    inset: -30% auto auto -10%;
+    width: 46rem;
+    height: 46rem;
+    z-index: 1;
+    background: radial-gradient(circle, var(--c-azure-glow), transparent 65%);
+    pointer-events: none;
+  }
+
+  .services-hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 42rem;
+  }
+
+  .services-hero__heading {
+    margin-top: var(--space-5);
+    font-size: var(--fs-h1);
+    letter-spacing: var(--ls-tighter);
+    color: var(--text-on-ink);
+  }
+
+  .services-hero__lead {
+    margin-top: var(--space-5);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-relaxed);
+    color: var(--text-on-ink-muted);
+  }
+
+  .services-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .services-hero__jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-10);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-on-ink);
+  }
+
+  .services-hero__jump a {
+    padding: 0.55rem 1rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-on-ink);
+    color: var(--text-on-ink-muted);
+    text-decoration: none;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    transition: border-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .services-hero__jump a:hover {
+    color: var(--text-on-ink);
+    border-color: rgba(250, 246, 238, 0.4);
+    background: rgba(250, 246, 238, 0.06);
+  }
+
+  /* ---- Service blocks ---- */
+  .service-block--alt {
+    background: var(--bg-muted);
+  }
+
+  .service-block__grid {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .service-block__copy {
+    order: 1;
+  }
+
+  .service-block__image-wrap {
+    order: 2;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    aspect-ratio: 4 / 3;
+  }
+
+  .service-block__image-wrap :global(.service-block__image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .service-block__title {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h2);
+  }
+
+  .service-block__body {
+    margin-top: var(--space-5);
+    font-size: var(--fs-lead);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+  }
+
+  .service-block__list {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .service-block__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--fs-small);
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .service-block__list :global(svg) {
+    width: 18px;
+    height: 18px;
+    color: var(--text-accent);
+    flex-shrink: 0;
+    margin-top: 0.15em;
+  }
+
+  :global(.service-block__cta) {
+    margin-top: var(--space-8);
+  }
+
+  @media (min-width: 900px) {
+    .service-block__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-12);
+      align-items: center;
+    }
+
+    .service-block--reverse .service-block__copy {
+      order: 2;
+    }
+
+    .service-block--reverse .service-block__image-wrap {
+      order: 1;
+    }
+  }
+
+  /* ---- Specialist services ---- */
+  .specialist-section__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-8);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .specialist-card {
+    background: var(--bg-surface-raised);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-md);
+  }
+
+  .specialist-card__image-wrap {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    margin-bottom: var(--space-6);
+  }
+
+  .specialist-card__image-wrap :global(.specialist-card__image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .specialist-card__title {
+    margin-top: var(--space-3);
+    font-size: 1.6rem;
+  }
+
+  .specialist-card__body {
+    margin-top: var(--space-4);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+  }
+
+  @media (min-width: 900px) {
+    .specialist-section__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

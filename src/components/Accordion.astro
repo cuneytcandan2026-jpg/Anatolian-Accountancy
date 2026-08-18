@@ -1,0 +1,128 @@
+---
+import { getCollection, render } from 'astro:content';
+import Icon from './Icon.astro';
+
+interface Props {
+  items?: { question: string; answer: string }[];
+}
+
+const { items } = Astro.props;
+
+type Row = { id: string; question: string; Content?: any; answer?: string };
+
+let rows: Row[];
+
+if (items) {
+  rows = items.map((item, i) => ({ id: `faq-tr-${i}`, question: item.question, answer: item.answer }));
+} else {
+  const faqEntries = (await getCollection('faq')).sort((a, b) => a.data.order - b.data.order);
+  const rendered = await Promise.all(faqEntries.map((entry) => render(entry)));
+  rows = faqEntries.map((entry, i) => ({ id: entry.id, question: entry.data.question, Content: rendered[i].Content }));
+}
+---
+
+<div class="accordion">
+  {rows.map((row, i) => {
+    const { Content } = row;
+    return (
+      <div class="accordion__item reveal" style={`--reveal-delay:${(i % 4) * 60}ms`}>
+        <h3>
+          <button
+            type="button"
+            class="accordion__trigger"
+            aria-expanded={i === 0 ? 'true' : 'false'}
+            aria-controls={`faq-panel-${row.id}`}
+            id={`faq-trigger-${row.id}`}
+          >
+            <span>{row.question}</span>
+            <Icon name="chevron-down" class="accordion__chevron" />
+          </button>
+        </h3>
+        <div
+          class="accordion__panel"
+          id={`faq-panel-${row.id}`}
+          role="region"
+          aria-labelledby={`faq-trigger-${row.id}`}
+          hidden={i !== 0}
+        >
+          <div class="accordion__panel-inner">
+            {Content ? <Content /> : <p>{row.answer}</p>}
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
+
+<script>
+  const items = document.querySelectorAll<HTMLElement>('.accordion__item');
+
+  items.forEach((item) => {
+    const trigger = item.querySelector<HTMLButtonElement>('.accordion__trigger');
+    const panel = item.querySelector<HTMLElement>('.accordion__panel');
+    trigger?.addEventListener('click', () => {
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', String(!isOpen));
+      if (panel) panel.hidden = isOpen;
+    });
+  });
+</script>
+
+<style>
+  .accordion {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .accordion__item {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .accordion__item h3 {
+    margin: 0;
+    font-family: var(--font-body);
+  }
+
+  .accordion__trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-block: 1.5rem;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .accordion__trigger :global(.accordion__chevron) {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--text-accent);
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  .accordion__trigger[aria-expanded='true'] :global(.accordion__chevron) {
+    transform: rotate(180deg);
+  }
+
+  .accordion__panel {
+    overflow: hidden;
+    padding-bottom: 1.5rem;
+  }
+
+  .accordion__panel-inner {
+    max-width: 42rem;
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+  }
+
+  .accordion__panel-inner :global(p) {
+    margin: 0;
+  }
+</style>

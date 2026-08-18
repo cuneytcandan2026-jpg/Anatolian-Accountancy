@@ -1,0 +1,108 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  title: string;
+  summary: string;
+  icon: string;
+  href: string;
+  index: number;
+  linkLabel?: string;
+}
+
+const { title, summary, icon, href, index, linkLabel = 'Learn more' } = Astro.props;
+---
+
+<a href={href} class="service-card reveal" style={`--reveal-delay:${(index % 3) * 80}ms`}>
+  <span class="service-card__icon"><Icon name={icon} /></span>
+  <span class="service-card__title">{title}</span>
+  <span class="service-card__summary">{summary}</span>
+  <span class="service-card__link">
+    {linkLabel} <Icon name="arrow-right" />
+  </span>
+</a>
+
+<style>
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-8) var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 100% at 0% 0%, var(--c-azure-glow), transparent 60%);
+    opacity: 0;
+    transition: opacity var(--duration-base) var(--ease-out);
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .service-card:hover::before {
+    opacity: 1;
+  }
+
+  .service-card__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-md);
+    background: rgba(250, 246, 238, 0.08);
+    border: 1px solid var(--border-on-ink);
+    color: var(--text-accent-on-ink);
+  }
+
+  .service-card__icon :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+
+  .service-card__title {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 560;
+    letter-spacing: var(--ls-tight);
+  }
+
+  .service-card__summary {
+    font-size: var(--fs-small);
+    line-height: var(--lh-relaxed);
+    color: var(--text-on-ink-muted);
+    flex-grow: 1;
+  }
+
+  .service-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--fs-eyebrow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+    color: var(--text-accent-on-ink);
+  }
+
+  .service-card__link :global(svg) {
+    width: 15px;
+    height: 15px;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .service-card:hover .service-card__link :global(svg) {
+    transform: translateX(3px);
+  }
+</style>

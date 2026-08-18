@@ -1,0 +1,873 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import StatCounter from '../components/StatCounter.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import AudienceCard from '../components/AudienceCard.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ProcessStep from '../components/ProcessStep.astro';
+import TestimonialCarousel from '../components/TestimonialCarousel.astro';
+import Accordion from '../components/Accordion.astro';
+import CTASection from '../components/CTASection.astro';
+import Icon from '../components/Icon.astro';
+import HeroBoxes from '../components/HeroBoxes.astro';
+import aatLogo from '../assets/trust/aat-logo.webp';
+import ismmmoLogo from '../assets/trust/ismmmo-logo.png';
+import capiumLogo from '../assets/trust/capium-logo.png';
+import XeroLogo from '../assets/trust/xero-logo.svg';
+import founderPhoto from '../assets/founder-photo.jpg';
+import heroDesk from '../assets/hero-collage-desk.jpg';
+import heroGherkin from '../assets/hero-collage-gherkin.jpg';
+import heroWork from '../assets/hero-collage-work.jpg';
+import heroStreet from '../assets/hero-collage-street.jpg';
+import heroCharts from '../assets/hero-collage-charts.jpg';
+import { site } from '../lib/site';
+
+const audiences = (await getCollection('audiences')).sort((a, b) => a.data.order - b.data.order);
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const testimonials = (await getCollection('testimonials'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((t) => ({ quote: t.body ?? '', name: t.data.name, context: t.data.context, source: t.data.source }));
+
+const faqEntries = (await getCollection('faq')).sort((a, b) => a.data.order - b.data.order);
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqEntries.map((entry) => ({
+    '@type': 'Question',
+    name: entry.data.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: entry.body?.trim() ?? '',
+    },
+  })),
+};
+
+const whyPoints = [
+  {
+    icon: 'check',
+    title: 'Straightforward advice',
+    desc: 'Accounting explained in plain English: what it means for you, not just what the form says.',
+  },
+  {
+    icon: 'user',
+    title: 'Personal service',
+    desc: "You deal with Bektaş directly. No account handovers, no call centre, no starting your story over.",
+  },
+  {
+    icon: 'arrow-up-right',
+    title: 'Proactive support',
+    desc: "We don't just file returns. We tell you what's coming next and what it means for your plans.",
+  },
+  {
+    icon: 'globe',
+    title: 'English & Turkish',
+    desc: 'Every conversation, consultation and document is available in the language you\'re most comfortable with.',
+  },
+  {
+    icon: 'ledger',
+    title: 'Modern accounting',
+    desc: 'Cloud-based bookkeeping and reporting, so your numbers are current, not three months behind.',
+  },
+];
+---
+
+<BaseLayout
+  title="Anatolian Accountancy | Accountants in London & Enfield, English & Turkish"
+  description="Accounting, tax and business support for limited companies, sole traders, contractors and landlords across London and the UK, in English or Turkish. Book a free consultation."
+  path="/"
+  includeLocalBusinessSchema
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <HeroBoxes />
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow eyebrow--on-ink">London &amp; UK-Wide Accountancy</p>
+        <h1 class="hero__heading">Accountancy that makes business simpler.</h1>
+        <p class="hero__lead">
+          Straightforward accounting, tax and business support for companies, contractors, landlords and
+          individuals across London and the UK, in English or Turkish.
+        </p>
+        <div class="hero__actions">
+          <Button href="/contact/" size="lg">Book a Free Consultation</Button>
+          <Button href="/services/" size="lg" variant="outline-on-ink" icon="arrow-right">Explore Our Services</Button>
+        </div>
+      </div>
+
+      <div class="hero__visual">
+        <div class="hero__collage" aria-hidden="true">
+          <div class="hero__piece hero__piece--blob reveal"></div>
+          <div class="hero__piece hero__piece--street reveal" style="--reveal-delay:80ms">
+            <Image src={heroStreet} alt="" width={500} height={800} class="hero__piece-img" />
+          </div>
+          <div class="hero__piece hero__piece--work reveal" style="--reveal-delay:180ms">
+            <Image src={heroWork} alt="" width={560} height={760} class="hero__piece-img" />
+          </div>
+          <div class="hero__piece hero__piece--gherkin reveal" style="--reveal-delay:260ms">
+            <Image src={heroGherkin} alt="" width={600} height={700} class="hero__piece-img" />
+          </div>
+          <div class="hero__piece hero__piece--charts reveal" style="--reveal-delay:340ms">
+            <Image src={heroCharts} alt="" width={600} height={600} class="hero__piece-img" />
+          </div>
+          <div class="hero__piece hero__piece--desk reveal" style="--reveal-delay:420ms">
+            <Image src={heroDesk} alt="" width={500} height={500} class="hero__piece-img" />
+          </div>
+          <div class="hero__piece hero__piece--blob2 reveal" style="--reveal-delay:500ms"></div>
+        </div>
+
+        <dl class="hero__trust">
+          <div class="hero__trust-item">
+            <StatCounter value={20} suffix="+" label="Years' accounting experience" />
+          </div>
+          <div class="hero__trust-item hero__trust-item--text">
+            <dt>AAT Member</dt>
+            <dd>Full membership</dd>
+          </div>
+          <div class="hero__trust-item hero__trust-item--text">
+            <dt>English &amp; Turkish</dt>
+            <dd>Bilingual service</dd>
+          </div>
+          <div class="hero__trust-item hero__trust-item--text">
+            <dt>London &amp; UK-Wide</dt>
+            <dd>Enfield-based office</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRUST STRIP ============ -->
+  <section class="trust-strip section" style="padding-block: var(--space-10) calc(var(--space-10) / 2);">
+    <div class="container trust-strip__inner reveal">
+      <p class="trust-strip__label">Professional memberships &amp; software</p>
+      <div class="trust-strip__badges">
+        <div class="trust-strip__logo">
+          <Image src={aatLogo} alt="AAT Licensed Accountant" height={44} />
+        </div>
+        <div class="trust-strip__logo">
+          <Image src={ismmmoLogo} alt="İSMMMO member" height={56} />
+        </div>
+        <div class="trust-strip__logo trust-strip__logo--xero">
+          <XeroLogo width={26} height={26} />
+          <span class="trust-strip__xero-text">
+            <span class="trust-strip__xero-label">Xero</span>
+            <span class="trust-strip__xero-sublabel">Certified cloud software</span>
+          </span>
+        </div>
+        <div class="trust-strip__logo">
+          <Image src={capiumLogo} alt="Capium practice software" height={30} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW CAN WE HELP ============ -->
+  <section class="section how-we-help">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Who we work with"
+        heading="How can we help?"
+        intro="Tell us what best describes you, and we'll point you to the support that actually applies, not a generic list of everything we do."
+      />
+      <div class="how-we-help__grid">
+        {audiences.map((item, i) => (
+          <AudienceCard
+            title={item.data.title}
+            description={item.data.description}
+            icon={item.data.icon}
+            href={item.data.href}
+            index={i}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CORE SERVICES ============ -->
+  <section class="section services-section services-section--alt">
+    <div class="container">
+      <div class="services-section__head">
+        <SectionHeader
+          eyebrow="What we do"
+          heading="Accounting and tax, covered end to end"
+          intro="From day-to-day bookkeeping to specialist tax positions: here are the areas clients lean on us for most."
+        />
+        <Button href="/services/" variant="ghost" class="services-section__all">View all services</Button>
+      </div>
+      <div class="services-section__grid">
+        {services.map((item, i) => (
+          <ServiceCard title={item.data.title} summary={item.data.summary} icon={item.data.icon} href={item.data.href} index={i} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY ANATOLIAN ============ -->
+  <section class="section why-us">
+    <div class="container">
+      <SectionHeader eyebrow="Why Anatolian" heading="Why clients stay" />
+      <div class="why-us__grid">
+        {whyPoints.map((point, i) => (
+          <div class="why-us__item reveal" style={`--reveal-delay:${(i % 3) * 90}ms`}>
+            <span class="why-us__icon"><Icon name={point.icon} /></span>
+            <h3>{point.title}</h3>
+            <p>{point.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOUNDER ============ -->
+  <section class="section founder">
+    <div class="container founder__grid">
+      <div class="founder__image-wrap reveal">
+        <Image src={founderPhoto} alt="Bektaş Ünal, founder and accountant at Anatolian Accountancy" width={367} height={661} class="founder__image" />
+      </div>
+      <div class="founder__copy reveal">
+        <p class="eyebrow">Meet your accountant</p>
+        <h2 class="founder__heading">Your accountant, not just an accounting company.</h2>
+        <p class="founder__lead">
+          Bektaş Ünal has spent more than twenty years in accounting, across construction, food &amp;
+          beverage, textiles, forestry and outsourced accounting, in Turkey, the UK, Ireland, Saudi Arabia
+          and Cameroon. He holds an MSc in Accounting &amp; Auditing from Istanbul University, is a full
+          member of the AAT and an ACCA finalist.
+        </p>
+        <p class="founder__lead">
+          Since 2019 he's built Anatolian Accountancy around one idea: clients should deal with a real
+          accountant who understands their business, not a rotating queue of case handlers.
+        </p>
+        <div class="founder__chips">
+          <span>MSc Accounting &amp; Auditing</span>
+          <span>AAT Full Member</span>
+          <span>ACCA Finalist</span>
+          <span>Turkey · UK · Ireland · Saudi Arabia · Cameroon</span>
+        </div>
+        <Button href="/about/" variant="outline" icon="arrow-right">Read Bektaş's story</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section class="section process">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Getting started"
+        heading="Becoming a client is simple"
+        tone="ink"
+      />
+      <div class="process__grid">
+        <ProcessStep
+          number="01"
+          title="Tell us about yourself"
+          description="Book a free consultation and tell us what kind of support you need. No forms to fill in first."
+          index={0}
+        />
+        <ProcessStep
+          number="02"
+          title="We review your requirements"
+          description="We look at your situation and recommend the accounting and tax services that actually apply to you."
+          index={1}
+        />
+        <ProcessStep
+          number="03"
+          title="We take care of the numbers"
+          description="You get on with running your business. We manage the ongoing accounting and keep you ahead of deadlines."
+          index={2}
+        />
+      </div>
+      <div class="process__cta reveal">
+        <Button href="/contact/" size="lg" variant="outline-on-ink">Book a Free Consultation</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="section testimonials">
+    <div class="container">
+      <SectionHeader eyebrow="What clients say" heading="Trusted by business owners and individuals across London" tone="ink" align="center" />
+      <TestimonialCarousel
+        testimonials={testimonials}
+        rating={site.googleRating}
+        reviewCount={site.googleReviewCount}
+        reviewsUrl={site.googleReviewsUrl}
+        lang="en"
+      />
+    </div>
+  </section>
+
+  <!-- ============ BILINGUAL CALLOUT ============ -->
+  <section class="section bilingual">
+    <div class="container">
+      <div class="bilingual__panel reveal">
+        <div class="bilingual__text">
+          <p class="eyebrow">Bilingual service</p>
+          <h2>Prefer to discuss your finances in Turkish?</h2>
+          <p class="bilingual__desc">
+            Bektaş speaks native Turkish and advanced English, so you can go through your accounts, tax
+            position or business plans in whichever language you're more comfortable with.
+          </p>
+          <p class="bilingual__tr">Muhasebe ve vergi konularında Türkçe destek almak için tıklayın.</p>
+        </div>
+        <Button href="/tr/" size="lg" icon="arrow-right">Türkçe bilgi alın</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section faq">
+    <div class="container faq__grid">
+      <SectionHeader eyebrow="Common questions" heading="Answers before you ask" class="faq__header" />
+      <Accordion />
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <CTASection
+    eyebrow="Ready when you are"
+    heading="Let's make your accounting simpler."
+    intro="Book an initial consultation and tell us what support you need. There's no cost and no obligation to sign up."
+  />
+</BaseLayout>
+
+<style is:global>
+  /* ---- HOMEPAGE-ONLY preview: brighter blue tones ----
+     Client wants to see brighter blues before it's rolled out site-wide.
+     `html:root` out-specifies the `:root` block in tokens.css, so these
+     overrides win without touching the shared tokens file — every other
+     page (services, about, contact, /tr/*) keeps the current palette.
+     If approved, move these values into src/styles/tokens.css and delete
+     this block; if rejected, just delete this block. */
+  html:root {
+    --c-ink-900: #0f4c96;
+    --c-ink-800: #146bbf;
+    --c-ink-700: #1a86dd;
+    --c-ink-600: #2f9ce8;
+    --c-ink-500: #63b4ee;
+
+    --c-azure-300: #a9d8f7;
+    --c-azure-400: #5cb8ef;
+    --c-azure-500: #1785e0;
+    --c-azure-600: #0f68b8;
+    --c-azure-glow: rgba(23, 133, 224, 0.22);
+
+    --border-subtle: rgba(15, 76, 150, 0.1);
+    --border-strong: rgba(15, 76, 150, 0.18);
+    --focus-ring: 0 0 0 3px rgba(23, 133, 224, 0.45);
+
+    --shadow-sm: 0 1px 2px rgba(15, 76, 150, 0.07);
+    --shadow-md: 0 12px 28px -12px rgba(15, 76, 150, 0.22);
+    --shadow-lg: 0 28px 56px -20px rgba(15, 76, 150, 0.28);
+  }
+</style>
+
+<style>
+  /* ---- Hero ---- */
+  .hero {
+    position: relative;
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .hero__glow {
+    position: absolute;
+    inset: -30% -10% auto auto;
+    width: 46rem;
+    height: 46rem;
+    z-index: 1;
+    background: radial-gradient(circle, var(--c-azure-glow), transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero__grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  /* Stacks the photo collage and trust stats together so the stats sit
+     snugly under the photos regardless of how tall the copy column is —
+     order:-1 on .hero__trust puts stats before photos on mobile (closer
+     to the CTA buttons); desktop flips it back to photos-then-stats to
+     fill the empty space below the collage. */
+  .hero__visual {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero__heading {
+    margin-top: var(--space-5);
+    font-size: var(--fs-hero);
+    letter-spacing: var(--ls-tighter);
+    color: var(--text-on-ink);
+    max-width: 16ch;
+  }
+
+  .hero__lead {
+    margin-top: var(--space-6);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-relaxed);
+    color: var(--text-on-ink-muted);
+    max-width: 38rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .hero__trust {
+    order: -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--border-on-ink);
+  }
+
+  .hero__trust-item--text dt {
+    font-weight: 700;
+    font-size: var(--fs-small);
+    color: var(--text-on-ink);
+  }
+
+  .hero__trust-item--text dd {
+    margin: 0.2rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--text-on-ink-muted);
+  }
+
+  /* ---- Hero photo collage ---- */
+  .hero__collage {
+    grid-area: collage;
+    position: relative;
+    width: 100%;
+    max-width: 34rem;
+    aspect-ratio: 1 / 0.88;
+    margin-inline: auto;
+  }
+
+  .hero__piece {
+    position: absolute;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .hero__piece :global(.hero__piece-img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero__piece--blob {
+    top: -4%;
+    right: -4%;
+    width: 24%;
+    height: 17%;
+    z-index: 1;
+    background: var(--c-ink-600);
+    border-radius: 62% 38% 55% 45% / 48% 55% 45% 52%;
+    box-shadow: none;
+  }
+
+  .hero__piece--street {
+    left: 0;
+    top: 4%;
+    width: 30%;
+    height: 60%;
+    z-index: 2;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero__piece--work {
+    left: 26%;
+    top: 0;
+    width: 44%;
+    height: 68%;
+    z-index: 3;
+    border-radius: var(--radius-xl);
+  }
+
+  .hero__piece--gherkin {
+    right: 0;
+    top: 14%;
+    width: 30%;
+    height: 33%;
+    z-index: 2;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero__piece--charts {
+    right: 0;
+    top: 49%;
+    width: 32%;
+    height: 27%;
+    z-index: 2;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero__piece--desk {
+    left: 30%;
+    top: 57%;
+    width: 23%;
+    height: 20%;
+    z-index: 4;
+    border-radius: var(--radius-full);
+    border: 4px solid var(--bg-ink);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero__piece--blob2 {
+    left: 0%;
+    top: 52%;
+    width: 20%;
+    height: 17%;
+    z-index: 1;
+    background: var(--c-azure-500);
+    border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%;
+    box-shadow: none;
+  }
+
+  @media (min-width: 980px) {
+    .hero__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: var(--space-12);
+    }
+
+    .hero__collage {
+      margin-top: var(--space-8);
+      margin-left: auto;
+      margin-right: 0;
+    }
+
+    .hero__trust {
+      order: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+      margin-top: var(--space-8);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--border-on-ink);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* ---- Trust strip ---- */
+  .trust-strip__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .trust-strip__label {
+    font-size: var(--fs-eyebrow);
+    font-weight: 700;
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .trust-strip__badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) 0;
+  }
+
+  .trust-strip__logo {
+    display: flex;
+    align-items: center;
+    padding-inline: var(--space-4);
+    border-left: 1px solid var(--border-subtle);
+  }
+
+  .trust-strip__logo:first-child {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .trust-strip__logo :global(img) {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .trust-strip__logo--xero {
+    gap: var(--space-3);
+  }
+
+  .trust-strip__xero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .trust-strip__xero-label {
+    font-weight: 700;
+    font-size: var(--fs-small);
+    color: var(--text-primary);
+  }
+
+  .trust-strip__xero-sublabel {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+  }
+
+  /* ---- How we help ---- */
+  .how-we-help__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+  }
+
+  /* ---- Services ---- */
+  .services-section--alt {
+    background: var(--bg-muted);
+  }
+
+  .services-section__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--space-6);
+  }
+
+  :global(.services-section__all) {
+    flex-shrink: 0;
+  }
+
+  .services-section__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+  }
+
+  /* ---- Why us ---- */
+  .why-us__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-8) var(--space-6);
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+
+  .why-us__item {
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .why-us__icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-md);
+    background: var(--bg-muted);
+    color: var(--accent-strong);
+  }
+
+  .why-us__icon :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .why-us__item h3 {
+    margin-top: var(--space-4);
+    font-size: 1.2rem;
+  }
+
+  .why-us__item p {
+    margin-top: var(--space-2);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+    font-size: var(--fs-small);
+  }
+
+  /* ---- Founder ---- */
+  .founder {
+    background: var(--bg-surface);
+  }
+
+  .founder__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-10);
+    align-items: center;
+  }
+
+  .founder__image-wrap {
+    position: relative;
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  .founder__image-wrap::before {
+    content: '';
+    position: absolute;
+    top: -1rem;
+    left: -1rem;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    border: 1.5px solid var(--accent);
+    border-radius: var(--radius-lg);
+    z-index: 0;
+  }
+
+  :global(.founder__image) {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    object-fit: cover;
+  }
+
+  .founder__heading {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h1);
+  }
+
+  .founder__lead {
+    margin-top: var(--space-5);
+    font-size: 1.0625rem;
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .founder__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: var(--space-6) 0 var(--space-8);
+  }
+
+  .founder__chips span {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-muted);
+    color: var(--text-secondary);
+  }
+
+  @media (min-width: 900px) {
+    .founder__grid {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: var(--space-16);
+    }
+
+    .founder__image-wrap {
+      margin-inline: 0;
+    }
+  }
+
+  /* ---- Process ---- */
+  .process {
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+  }
+
+  .process__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-10);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .process__cta {
+    margin-top: var(--space-12);
+  }
+
+  @media (min-width: 800px) {
+    .process__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* ---- Testimonials ---- */
+  .testimonials {
+    background: var(--c-ink-800);
+    color: var(--text-on-ink);
+  }
+
+  /* ---- Bilingual ---- */
+  .bilingual__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    border-left: 4px solid var(--accent);
+  }
+
+  .bilingual__text {
+    min-width: 0;
+  }
+
+  .bilingual__panel h2 {
+    margin-top: var(--space-3);
+    font-size: var(--fs-h2);
+  }
+
+  .bilingual__desc {
+    margin-top: var(--space-4);
+    font-size: var(--fs-lead);
+    color: var(--text-secondary);
+    max-width: 34rem;
+  }
+
+  .bilingual__tr {
+    margin-top: var(--space-4);
+    font-style: italic;
+    color: var(--text-tertiary);
+  }
+
+  @media (min-width: 800px) {
+    .bilingual__panel {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  /* ---- FAQ ---- */
+  .faq__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-10);
+  }
+
+  @media (min-width: 900px) {
+    .faq__grid {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    }
+
+    .faq :global(.faq__header) {
+      position: sticky;
+      top: 7rem;
+      align-self: start;
+    }
+  }
+</style>

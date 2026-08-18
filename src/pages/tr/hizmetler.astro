@@ -1,0 +1,393 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/Button.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import CTASection from '../../components/CTASection.astro';
+import Icon from '../../components/Icon.astro';
+import imgAccounting from '../../assets/services/business-accounting.jpg';
+import imgTax from '../../assets/services/tax.jpg';
+import imgVatPayroll from '../../assets/services/vat-payroll.jpg';
+import imgSupport from '../../assets/services/business-support.jpg';
+import imgConstruction from '../../assets/services/specialist-construction.jpg';
+import imgEcommerce from '../../assets/services/specialist-ecommerce.jpg';
+
+const blocks = [
+  {
+    id: 'business-accounting',
+    eyebrow: 'Muhasebe',
+    title: 'Yıllık Hesaplar ve Ön Muhasebe',
+    body: 'Yıllık hesaplar, ara dönem (yönetim) hesapları, finansal tablolar ve ön muhasebe kayıtları, doğru şekilde hazırlanır ve zamanında beyan edilir; gerçekten karar verebileceğiniz rakamlarla çalışırsınız.',
+    points: ['Yıllık hesaplar', 'Ara dönem (yönetim) hesapları', 'Finansal tablolar', 'Ön muhasebe'],
+    image: imgAccounting,
+    imageAlt: 'Basılı bir finansal raporu inceleyen bir el',
+    cta: 'Yıllık hesaplar ve ön muhasebe hakkında bilgi alın',
+  },
+  {
+    id: 'tax',
+    eyebrow: 'Vergi',
+    title: 'Kurumlar Vergisi ve Kişisel Vergi Beyannamesi',
+    body: 'Kurumlar vergisi beyannameleri, Kişisel Vergi Beyannamesi (Self Assessment), ortaklık beyannameleri, Sermaye Kazancı Vergisi ve kira geliri vergisi, doğru şekilde hesaplanır ve size ne kadar borcunuz olduğunu ve nedenini açıkça anlatırız.',
+    points: ['Kurumlar vergisi beyannameleri', 'Kişisel Vergi Beyannamesi (Self Assessment)', 'Ortaklık beyannameleri', 'Sermaye Kazancı Vergisi', 'Kira geliri vergisi'],
+    image: imgTax,
+    imageAlt: 'Bir vergi beyannamesi üzerinde kullanılan hesap makinesi ve not defteri',
+    cta: 'Vergi hizmetleri hakkında bilgi alın',
+  },
+  {
+    id: 'vat-payroll',
+    eyebrow: 'KDV ve Bordro',
+    title: 'KDV ve Bordro',
+    body: 'KDV kaydı ve beyannameleri, bordro işlemleri ve işyeri emeklilik katkı payı uyumluluğu, her dönem, peşinizden koşmanıza gerek kalmadan zamanında yürütülür.',
+    points: ['KDV kaydı ve beyannameleri', 'Bordro işlemleri', 'İşyeri emeklilik katkı payı uyumluluğu'],
+    image: imgVatPayroll,
+    imageAlt: 'İngiliz sterlini banknotları',
+    cta: 'KDV ve bordro hakkında bilgi alın',
+  },
+  {
+    id: 'business-support',
+    eyebrow: 'İşletme Desteği',
+    title: 'Şirket Kuruluşu ve Bulut Muhasebe',
+    body: 'Şirket kuruluşu ve yapılandırma danışmanlığının ardından bulut tabanlı muhasebe kurulumu, işletmeniz doğru bir başlangıç yapar ve yönetimi kolay kalır.',
+    points: ['Şirket kuruluşu ve yapılandırma danışmanlığı', 'Bulut muhasebe kurulumu'],
+    image: imgSupport,
+    imageAlt: 'Sakin, modern bir masada pencere kenarında duran bir dizüstü bilgisayar',
+    cta: 'Şirket kuruluşu hakkında bilgi alın',
+  },
+];
+---
+
+<BaseLayout
+  title="Muhasebe ve Vergi Hizmetleri | Anatolian Accountancy"
+  description="Yıllık hesaplar, kurumlar vergisi, Self Assessment, KDV, bordro, şirket kuruluşu, CIS ve e-ticaret muhasebesi: Londra ve İngiltere genelinde işletmeler ve bireyler için."
+  path="/tr/hizmetler/"
+  lang="tr"
+>
+  <!-- ============ HERO ============ -->
+  <section class="services-hero">
+    <div class="services-hero__glow" aria-hidden="true"></div>
+    <div class="container services-hero__inner reveal">
+      <p class="eyebrow eyebrow--on-ink">Hizmetler</p>
+      <h1 class="services-hero__heading">Muhasebe ve vergi, uçtan uca.</h1>
+      <p class="services-hero__lead">
+        Günlük ön muhasebeden özel vergi durumlarına kadar: Londra ve İngiltere genelinde şirketlere,
+        taşeronlara, mülk sahiplerine ve bireylere İngilizce veya Türkçe nasıl destek olduğumuzun tam
+        dökümü burada.
+      </p>
+      <div class="services-hero__actions">
+        <Button href="/tr/iletisim/" size="lg">Ücretsiz Görüşme Talep Edin</Button>
+        <Button href={`tel:+447541173722`} size="lg" variant="outline-on-ink" icon="phone">Bektaş'ı doğrudan arayın</Button>
+      </div>
+      <nav class="services-hero__jump" aria-label="Bir hizmet kategorisine atla">
+        <a href="#business-accounting">Muhasebe</a>
+        <a href="#tax">Vergi</a>
+        <a href="#vat-payroll">KDV ve Bordro</a>
+        <a href="#business-support">İşletme Desteği</a>
+        <a href="#specialist">Özel Hizmetler</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ============ CORE SERVICE BLOCKS ============ -->
+  {blocks.map((block, i) => (
+    <section id={block.id} class={`section service-block ${i % 2 === 1 ? 'service-block--alt' : ''} ${i % 2 === 1 ? 'service-block--reverse' : ''}`}>
+      <div class="container">
+        <div class="service-block__grid">
+          <div class="service-block__copy reveal">
+            <p class="eyebrow">{block.eyebrow}</p>
+            <h2 class="service-block__title">{block.title}</h2>
+            <p class="service-block__body">{block.body}</p>
+            <ul class="service-block__list">
+              {block.points.map((point) => (
+                <li>
+                  <Icon name="check" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+            <Button href="/tr/iletisim/" variant="outline" icon="arrow-right" class="service-block__cta">
+              {block.cta}
+            </Button>
+          </div>
+          <div class="service-block__image-wrap reveal">
+            <Image src={block.image} alt={block.imageAlt} width={800} height={600} class="service-block__image" />
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- ============ SPECIALIST SERVICES ============ -->
+  <section id="specialist" class="section specialist-section">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Özel Hizmetler"
+        heading="İnşaat ve e-ticaret için özel olarak tasarlandı"
+        intro="Kendine has kuralları olan iki sektör, sonradan eklenen bir çözüm değil, baştan doğru şekilde ele alınır."
+      />
+      <div class="specialist-section__grid">
+        <div class="specialist-card reveal">
+          <div class="specialist-card__image-wrap">
+            <Image
+              src={imgConstruction}
+              alt="Mavi gökyüzü altında bir inşaat sahasındaki iskele merdivenleri"
+              width={640}
+              height={480}
+              class="specialist-card__image"
+            />
+          </div>
+          <p class="eyebrow">İnşaat</p>
+          <h3 class="specialist-card__title">İnşaat Sektörü Vergi Sistemi (CIS)</h3>
+          <p class="specialist-card__body">
+            İnşaat sektöründe çalışan müteahhitler ve taşeronlar için CIS kaydı, aylık beyannameler ve
+            kesinti bildirimleri, uyumlu ve sorunsuz şekilde yönetilir.
+          </p>
+          <ul class="service-block__list">
+            <li><Icon name="check" /><span>CIS kaydı</span></li>
+            <li><Icon name="check" /><span>Aylık beyannameler</span></li>
+            <li><Icon name="check" /><span>Kesinti bildirimleri</span></li>
+          </ul>
+          <Button href="/tr/iletisim/" variant="outline" icon="arrow-right" class="service-block__cta">CIS hakkında bilgi alın</Button>
+        </div>
+
+        <div class="specialist-card reveal" style="--reveal-delay:100ms">
+          <div class="specialist-card__image-wrap">
+            <Image
+              src={imgEcommerce}
+              alt="Gönderime hazır, bantlanmış karton koliler"
+              width={640}
+              height={480}
+              class="specialist-card__image"
+            />
+          </div>
+          <p class="eyebrow">E-Ticaret</p>
+          <h3 class="specialist-card__title">E-Ticaret Muhasebesi</h3>
+          <p class="specialist-card__body">
+            Amazon, eBay, Shopify ve diğer pazar yeri satıcıları için muhasebe: çok kanallı KDV,
+            uluslararası vergi ve uygun olduğunda Ar-Ge vergi indirimi dahil.
+          </p>
+          <ul class="service-block__list">
+            <li><Icon name="check" /><span>Amazon, eBay ve Shopify muhasebesi</span></li>
+            <li><Icon name="check" /><span>Çok kanallı KDV</span></li>
+            <li><Icon name="check" /><span>Uluslararası vergi</span></li>
+            <li><Icon name="check" /><span>Uygun olduğunda Ar-Ge vergi indirimi</span></li>
+          </ul>
+          <Button href="/tr/iletisim/" variant="outline" icon="arrow-right" class="service-block__cta">E-ticaret muhasebesi hakkında bilgi alın</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    eyebrow="Ne zaman hazır olursanız"
+    heading="Size uygun çözümü birlikte bulalım."
+    intro="İhtiyaçlarınızı bize anlatın, hangilerinin sizin için geçerli olduğunu önerelim. Zorunluluk yok, karmaşık terimler yok."
+    lang="tr"
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Hero ---- */
+  .services-hero {
+    position: relative;
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .services-hero__glow {
+    position: absolute;
+    inset: -30% auto auto -10%;
+    width: 46rem;
+    height: 46rem;
+    z-index: 1;
+    background: radial-gradient(circle, var(--c-azure-glow), transparent 65%);
+    pointer-events: none;
+  }
+
+  .services-hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 42rem;
+  }
+
+  .services-hero__heading {
+    margin-top: var(--space-5);
+    font-size: var(--fs-h1);
+    letter-spacing: var(--ls-tighter);
+    color: var(--text-on-ink);
+  }
+
+  .services-hero__lead {
+    margin-top: var(--space-5);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-relaxed);
+    color: var(--text-on-ink-muted);
+  }
+
+  .services-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .services-hero__jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-10);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-on-ink);
+  }
+
+  .services-hero__jump a {
+    padding: 0.55rem 1rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-on-ink);
+    color: var(--text-on-ink-muted);
+    text-decoration: none;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    transition: border-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .services-hero__jump a:hover {
+    color: var(--text-on-ink);
+    border-color: rgba(250, 246, 238, 0.4);
+    background: rgba(250, 246, 238, 0.06);
+  }
+
+  /* ---- Service blocks ---- */
+  .service-block--alt {
+    background: var(--bg-muted);
+  }
+
+  .service-block__grid {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .service-block__copy {
+    order: 1;
+  }
+
+  .service-block__image-wrap {
+    order: 2;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    aspect-ratio: 4 / 3;
+  }
+
+  .service-block__image-wrap :global(.service-block__image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .service-block__title {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h2);
+  }
+
+  .service-block__body {
+    margin-top: var(--space-5);
+    font-size: var(--fs-lead);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+  }
+
+  .service-block__list {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .service-block__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--fs-small);
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .service-block__list :global(svg) {
+    width: 18px;
+    height: 18px;
+    color: var(--text-accent);
+    flex-shrink: 0;
+    margin-top: 0.15em;
+  }
+
+  :global(.service-block__cta) {
+    margin-top: var(--space-8);
+  }
+
+  @media (min-width: 900px) {
+    .service-block__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-12);
+      align-items: center;
+    }
+
+    .service-block--reverse .service-block__copy {
+      order: 2;
+    }
+
+    .service-block--reverse .service-block__image-wrap {
+      order: 1;
+    }
+  }
+
+  /* ---- Specialist services ---- */
+  .specialist-section__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-8);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .specialist-card {
+    background: var(--bg-surface-raised);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-md);
+  }
+
+  .specialist-card__image-wrap {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    margin-bottom: var(--space-6);
+  }
+
+  .specialist-card__image-wrap :global(.specialist-card__image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .specialist-card__title {
+    margin-top: var(--space-3);
+    font-size: 1.6rem;
+  }
+
+  .specialist-card__body {
+    margin-top: var(--space-4);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+  }
+
+  @media (min-width: 900px) {
+    .specialist-section__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

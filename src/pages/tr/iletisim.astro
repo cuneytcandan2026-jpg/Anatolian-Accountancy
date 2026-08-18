@@ -1,0 +1,250 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { site } from '../../lib/site';
+
+const mapQuery = encodeURIComponent(
+  `${site.address.line1}, ${site.address.line2}, ${site.address.city} ${site.address.postcode}`
+);
+---
+
+<BaseLayout
+  title="Bize Ulaşın | Anatolian Accountancy | Ücretsiz Görüşme Ayarlayın"
+  description="Anatolian Accountancy Enfield ile iletişime geçin, ücretsiz bir görüşme ayarlayın. Arayın, e-posta gönderin ya da bir talep bırakın. Londra ve İngiltere genelindeki müşterilere İngilizce veya Türkçe destek veriyoruz."
+  path="/tr/iletisim/"
+  lang="tr"
+>
+  <section class="contact-hero">
+    <div class="container contact-hero__grid">
+      <div class="contact-hero__intro reveal">
+        <p class="eyebrow">Bize ulaşın</p>
+        <h1 class="contact-hero__heading">Muhasebeniz hakkında konuşalım.</h1>
+        <p class="contact-hero__lead">
+          İşletmeniz ya da kişisel vergi durumunuz hakkında bize biraz bilgi verin, size dönüş yapıp
+          ücretsiz bir ilk görüşme ayarlayalım. Zorunluluk yok, karmaşık terimler yok.
+        </p>
+
+        <ul class="contact-details">
+          <li>
+            <span class="contact-details__icon"><Icon name="phone" /></span>
+            <div>
+              <p class="contact-details__label">Telefon</p>
+              <a href={site.phoneHref}>{site.phoneDisplay}</a>
+            </div>
+          </li>
+          <li>
+            <span class="contact-details__icon"><Icon name="mail" /></span>
+            <div>
+              <p class="contact-details__label">E-posta</p>
+              <a href={site.emailHref}>{site.email}</a>
+            </div>
+          </li>
+          <li>
+            <span class="contact-details__icon"><Icon name="map-pin" /></span>
+            <div>
+              <p class="contact-details__label">Ofis</p>
+              <p>{site.address.line1}, {site.address.line2}<br />{site.address.city} {site.address.postcode}</p>
+            </div>
+          </li>
+          <li>
+            <span class="contact-details__icon"><Icon name="clock" /></span>
+            <div>
+              <p class="contact-details__label">Çalışma saatleri</p>
+              <p>{site.hoursTr}</p>
+            </div>
+          </li>
+          <li>
+            <span class="contact-details__icon"><Icon name="globe" /></span>
+            <div>
+              <p class="contact-details__label">Diller</p>
+              <p>English / Türkçe</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact-hero__form reveal">
+        <div class="contact-card">
+          <h2 class="contact-card__heading">Görüşme talebimi gönder</h2>
+          <p class="contact-card__intro">Bu formu doldurun, bir iş günü içinde size dönüş yapalım.</p>
+          <ContactForm lang="tr" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section map-section">
+    <div class="container map-section__inner reveal">
+      <div>
+        <p class="eyebrow">Ofisimiz</p>
+        <h2>Enfield'daki ofisimizi ziyaret edin</h2>
+        <p class="map-section__desc">
+          Çoğu müşterimiz İngiltere'nin neresinde olurlarsa olsunlar bizimle telefon, görüntülü görüşme ve
+          bulut muhasebe yazılımı üzerinden uzaktan çalışıyor, ama yüz yüze görüşmeyi tercih ederseniz,
+          Enfield ofisimiz bunun için burada.
+        </p>
+      </div>
+      <div class="map-section__frame">
+        <iframe
+          title={`${site.name} Enfield ofisini gösteren harita`}
+          src={`https://maps.google.com/maps?q=${mapQuery}&z=15&output=embed`}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-hero {
+    background: var(--bg-base);
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem);
+  }
+
+  .contact-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-12);
+  }
+
+  .contact-hero__heading {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h1);
+  }
+
+  .contact-hero__lead {
+    margin-top: var(--space-5);
+    font-size: var(--fs-lead);
+    color: var(--text-secondary);
+    max-width: 34rem;
+  }
+
+  .contact-details {
+    list-style: none;
+    margin: var(--space-10) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .contact-details li {
+    display: flex;
+    gap: var(--space-4);
+  }
+
+  .contact-details li > div {
+    min-width: 0;
+  }
+
+  .contact-details a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-details a:hover {
+    color: var(--text-accent);
+  }
+
+  .contact-details p {
+    margin: 0;
+  }
+
+  .contact-details__icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-md);
+    background: var(--bg-muted);
+    color: var(--accent-strong);
+    flex-shrink: 0;
+  }
+
+  .contact-details__icon :global(svg) {
+    width: 19px;
+    height: 19px;
+  }
+
+  .contact-details__label {
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+    color: var(--text-tertiary);
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+
+  .contact-card {
+    background: var(--bg-surface-raised);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-lg);
+    border-top: 3px solid var(--accent);
+  }
+
+  .contact-card__heading {
+    font-size: 1.6rem;
+  }
+
+  .contact-card__intro {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-6);
+    color: var(--text-secondary);
+    font-size: var(--fs-small);
+  }
+
+  @media (min-width: 980px) {
+    .contact-hero__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      align-items: start;
+    }
+  }
+
+  /* ---- Map ---- */
+  .map-section {
+    background: var(--bg-muted);
+  }
+
+  .map-section__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+
+  .map-section__inner h2 {
+    margin-top: var(--space-3);
+    font-size: var(--fs-h2);
+  }
+
+  .map-section__desc {
+    margin-top: var(--space-4);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+    max-width: 32rem;
+  }
+
+  .map-section__frame {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    aspect-ratio: 16 / 10;
+  }
+
+  .map-section__frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  @media (min-width: 900px) {
+    .map-section__inner {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      align-items: center;
+    }
+  }
+</style>

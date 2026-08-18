@@ -1,0 +1,305 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/Button.astro';
+import CTASection from '../../components/CTASection.astro';
+import Icon from '../../components/Icon.astro';
+import imgLimitedCompanies from '../../assets/audiences/limited-companies.jpg';
+import imgSoleTraders from '../../assets/audiences/sole-traders.jpg';
+import imgStartups from '../../assets/audiences/startups.jpg';
+import imgConstruction from '../../assets/audiences/construction.jpg';
+import imgEcommerce from '../../assets/audiences/ecommerce.jpg';
+import imgPersonalTax from '../../assets/audiences/personal-tax.jpg';
+
+const blocks = [
+  {
+    id: 'limited-companies',
+    eyebrow: 'Limited Şirketler',
+    title: 'Bir işletme yürütüyorum',
+    body: 'Limited şirketler için yıllık hesaplar, KDV, bordro, ön muhasebe ve kurumlar vergisini kapsayan destek.',
+    points: ['Yıllık hesaplar ve kurumlar vergisi', 'KDV beyannameleri', 'Bordro ve işyeri emeklilik katkı payı', 'Bulut tabanlı ön muhasebe'],
+    image: imgLimitedCompanies,
+    imageAlt: 'Bir mağaza tezgahında temassız kart ödemesi yapan eller',
+    cta: 'Limited şirket hesapları hakkında bilgi alın',
+  },
+  {
+    id: 'sole-traders',
+    eyebrow: 'Şahıs Şirketleri',
+    title: 'Serbest çalışıyorum',
+    body: 'Şahıs şirketleri ve serbest çalışanlar için Kişisel Vergi Beyannamesi (Self Assessment), indirilebilir giderler ve ileriye dönük vergi planlaması.',
+    points: ['Kişisel Vergi Beyannamesi (Self Assessment)', 'İndirilebilir giderler', 'Peşin vergi ödemesi planlaması', 'Basit, karmaşık terimlerden uzak ön muhasebe'],
+    image: imgSoleTraders,
+    imageAlt: 'Ahşap bir masada dizüstü bilgisayarında çalışan bir serbest çalışan',
+    cta: 'Self Assessment hakkında bilgi alın',
+  },
+  {
+    id: 'startups',
+    eyebrow: 'Yeni Şirketler',
+    title: 'Bir şirket kuruyorum',
+    body: 'Şirket kuruluşu, yapılanma ve yeni bir işletmenin en başından ihtiyaç duyduğu muhasebe temelleri konusunda rehberlik.',
+    points: ['Şirket kuruluşu', 'Doğru yapının seçilmesi', 'KDV ve PAYE kaydı', 'İlk günden itibaren bulut muhasebe kurulumu'],
+    image: imgStartups,
+    imageAlt: 'Gözlük ve bir not defterinin yanında şirket kuruluş aşamalarını anlatan basılı bir rehber',
+    cta: 'Şirket kuruluşu hakkında bilgi alın',
+  },
+  {
+    id: 'construction',
+    eyebrow: 'İnşaat',
+    title: 'İnşaat sektöründe çalışıyorum',
+    body: 'İnşaat sektöründeki müteahhitler ve taşeronlar için CIS kaydı, kesintiler ve beyannameler.',
+    points: ['CIS kaydı', 'Aylık CIS beyannameleri', 'Kesinti bildirimleri', 'Taşeron doğrulaması'],
+    image: imgConstruction,
+    imageAlt: 'Bir inşaat sahasında çatı kenarında duran iki baret',
+    cta: 'CIS hakkında bilgi alın',
+  },
+  {
+    id: 'ecommerce',
+    eyebrow: 'E-Ticaret',
+    title: 'Online satış yapıyorum',
+    body: 'Amazon, eBay, Shopify ve diğer pazar yerleri için muhasebe, çok kanallı KDV dahil.',
+    points: ['Amazon, eBay ve Shopify muhasebesi', 'Çok kanallı KDV', 'Stok ve satılan malın maliyeti (COGS) takibi', 'Uluslararası vergi'],
+    image: imgEcommerce,
+    imageAlt: 'Bantla kapatılan bir karton koliyi tutan bir el',
+    cta: 'E-ticaret muhasebesi hakkında bilgi alın',
+  },
+  {
+    id: 'personal-tax',
+    eyebrow: 'Kişisel Vergi',
+    title: 'Kişisel vergi danışmanlığına ihtiyacım var',
+    body: 'Kişisel Vergi Beyannamesi (Self Assessment), Sermaye Kazancı Vergisi ve kira geliri, açıkça anlatılır ve zamanında beyan edilir.',
+    points: ['Kişisel Vergi Beyannamesi (Self Assessment)', 'Sermaye Kazancı Vergisi', 'Kira geliri vergisi', 'Vergi açısından verimli planlama'],
+    image: imgPersonalTax,
+    imageAlt: 'Bir hesap makinesinin üzerinde duran ev şeklinde bir anahtarlık ve anahtar',
+    cta: 'Kişisel vergi hakkında bilgi alın',
+  },
+];
+---
+
+<BaseLayout
+  title="Kimlere Yardımcı Oluyoruz | Anatolian Accountancy"
+  description="Kim olduğunuza göre kurulmuş muhasebe desteği: limited şirketler, şahıs şirketleri, yeni kurulan şirketler, inşaat ve CIS, e-ticaret satıcıları ve kişisel vergi. Londra ve İngiltere genelinde."
+  path="/tr/kimlere-yardimci-oluyoruz/"
+  lang="tr"
+>
+  <!-- ============ HERO ============ -->
+  <section class="whwh-hero">
+    <div class="whwh-hero__glow" aria-hidden="true"></div>
+    <div class="container whwh-hero__inner reveal">
+      <p class="eyebrow eyebrow--on-ink">Kimlere Yardımcı Oluyoruz</p>
+      <h1 class="whwh-hero__heading">Kim olduğunuza göre destek, genel bir hizmet listesi değil.</h1>
+      <p class="whwh-hero__lead">
+        Her müşteri farklı bir noktadan bize geliyor. Aşağıdakilerden hangisi size uyuyorsa söyleyin,
+        gerçekten geçerli olana sizi doğrudan yönlendirelim, İngilizce veya Türkçe.
+      </p>
+      <div class="whwh-hero__actions">
+        <Button href="/tr/iletisim/" size="lg">Ücretsiz Görüşme Talep Edin</Button>
+        <Button href={`tel:+447541173722`} size="lg" variant="outline-on-ink" icon="phone">Bektaş'ı doğrudan arayın</Button>
+      </div>
+      <nav class="whwh-hero__jump" aria-label="Bir müşteri türüne atla">
+        <a href="#limited-companies">Limited Şirketler</a>
+        <a href="#sole-traders">Şahıs Şirketleri</a>
+        <a href="#startups">Yeni Şirketler</a>
+        <a href="#construction">İnşaat</a>
+        <a href="#ecommerce">E-Ticaret</a>
+        <a href="#personal-tax">Kişisel Vergi</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ============ AUDIENCE BLOCKS ============ -->
+  {blocks.map((block, i) => (
+    <section id={block.id} class={`section whwh-block ${i % 2 === 1 ? 'whwh-block--alt' : ''} ${i % 2 === 1 ? 'whwh-block--reverse' : ''}`}>
+      <div class="container">
+        <div class="whwh-block__grid">
+          <div class="whwh-block__copy reveal">
+            <p class="eyebrow">{block.eyebrow}</p>
+            <h2 class="whwh-block__title">{block.title}</h2>
+            <p class="whwh-block__body">{block.body}</p>
+            <ul class="whwh-block__list">
+              {block.points.map((point) => (
+                <li>
+                  <Icon name="check" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+            <Button href="/tr/iletisim/" variant="outline" icon="arrow-right" class="whwh-block__cta">
+              {block.cta}
+            </Button>
+          </div>
+          <div class="whwh-block__image-wrap reveal">
+            <Image src={block.image} alt={block.imageAlt} width={800} height={600} class="whwh-block__image" />
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <CTASection
+    eyebrow="Hangisi size uyuyor emin değil misiniz?"
+    heading="İşletmenizi bize anlatın, birlikte çözelim."
+    intro="Çoğu müşteri tek bir kategoriye tam olarak uymuyor: hem mülk sahibi hem taşeron, ya da online satış yapan yeni bir şirket. Zorunluluk yok, karmaşık terimler yok."
+    lang="tr"
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Hero ---- */
+  .whwh-hero {
+    position: relative;
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .whwh-hero__glow {
+    position: absolute;
+    inset: -30% auto auto -10%;
+    width: 46rem;
+    height: 46rem;
+    z-index: 1;
+    background: radial-gradient(circle, var(--c-azure-glow), transparent 65%);
+    pointer-events: none;
+  }
+
+  .whwh-hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 42rem;
+  }
+
+  .whwh-hero__heading {
+    margin-top: var(--space-5);
+    font-size: var(--fs-h1);
+    letter-spacing: var(--ls-tighter);
+    color: var(--text-on-ink);
+  }
+
+  .whwh-hero__lead {
+    margin-top: var(--space-5);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-relaxed);
+    color: var(--text-on-ink-muted);
+  }
+
+  .whwh-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .whwh-hero__jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-10);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-on-ink);
+  }
+
+  .whwh-hero__jump a {
+    padding: 0.55rem 1rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-on-ink);
+    color: var(--text-on-ink-muted);
+    text-decoration: none;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    transition: border-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .whwh-hero__jump a:hover {
+    color: var(--text-on-ink);
+    border-color: rgba(250, 246, 238, 0.4);
+    background: rgba(250, 246, 238, 0.06);
+  }
+
+  /* ---- Audience blocks ---- */
+  .whwh-block--alt {
+    background: var(--bg-muted);
+  }
+
+  .whwh-block__grid {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .whwh-block__copy {
+    order: 1;
+  }
+
+  .whwh-block__image-wrap {
+    order: 2;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    aspect-ratio: 4 / 3;
+  }
+
+  .whwh-block__image-wrap :global(.whwh-block__image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .whwh-block__title {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h2);
+  }
+
+  .whwh-block__body {
+    margin-top: var(--space-5);
+    font-size: var(--fs-lead);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+  }
+
+  .whwh-block__list {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .whwh-block__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--fs-small);
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .whwh-block__list :global(svg) {
+    width: 18px;
+    height: 18px;
+    color: var(--text-accent);
+    flex-shrink: 0;
+    margin-top: 0.15em;
+  }
+
+  :global(.whwh-block__cta) {
+    margin-top: var(--space-8);
+  }
+
+  @media (min-width: 900px) {
+    .whwh-block__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-12);
+      align-items: center;
+    }
+
+    .whwh-block--reverse .whwh-block__copy {
+      order: 2;
+    }
+
+    .whwh-block--reverse .whwh-block__image-wrap {
+      order: 1;
+    }
+  }
+</style>

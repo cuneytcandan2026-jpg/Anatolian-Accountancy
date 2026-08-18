@@ -1,0 +1,52 @@
+---
+interface Props {
+  label: string;
+  sublabel?: string;
+  tone?: 'light' | 'ink';
+}
+
+const { label, sublabel, tone = 'light' } = Astro.props;
+---
+
+<div class={`badge badge--${tone}`}>
+  <span class="badge__label">{label}</span>
+  {sublabel && <span class="badge__sublabel">{sublabel}</span>}
+</div>
+
+<style>
+  .badge {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding-inline: var(--space-4);
+    border-left: 1px solid var(--border-subtle);
+  }
+
+  .badge:first-child {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .badge--ink {
+    border-left-color: var(--border-on-ink);
+  }
+
+  .badge__label {
+    font-weight: 700;
+    font-size: var(--fs-small);
+    color: var(--text-primary);
+  }
+
+  .badge--ink .badge__label {
+    color: var(--text-on-ink);
+  }
+
+  .badge__sublabel {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+  }
+
+  .badge--ink .badge__sublabel {
+    color: var(--text-on-ink-muted);
+  }
+</style>

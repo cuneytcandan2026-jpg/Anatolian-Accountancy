@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Terms & Conditions | Anatolian Accountancy"
+  description="Terms and conditions for using the Anatolian Accountancy website and engaging our services."
+  path="/terms/"
+  noIndex
+>
+  <section class="section legal">
+    <div class="container container--narrow reveal">
+      <p class="eyebrow">Legal</p>
+      <h1>Terms &amp; Conditions</h1>
+      <p class="legal__todo">
+        TODO: this page needs proper legal drafting before launch, ideally alongside the firm's formal
+        letter of engagement wording used with clients, so the two are consistent.
+      </p>
+      <p>
+        In the meantime, if you have any questions, contact us at
+        <a href="mailto:info@anatolianaccountancy.com">info@anatolianaccountancy.com</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-block: clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .legal h1 {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h1);
+  }
+
+  .legal p {
+    margin-top: var(--space-5);
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .legal__todo {
+    padding: var(--space-5);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--bg-muted);
+  }
+</style>

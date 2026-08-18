@@ -1,0 +1,54 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  description: string;
+  index: number;
+}
+
+const { number, title, description, index } = Astro.props;
+---
+
+<div class="process-step reveal" style={`--reveal-delay:${index * 100}ms`}>
+  <span class="process-step__number">{number}</span>
+  <h3 class="process-step__title">{title}</h3>
+  <p class="process-step__desc">{description}</p>
+</div>
+
+<style>
+  .process-step {
+    position: relative;
+    padding-top: var(--space-6);
+  }
+
+  .process-step::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2.5rem;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .process-step__number {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 3rem;
+    color: var(--c-ink-700);
+    opacity: 0.35;
+    line-height: 1;
+  }
+
+  .process-step__title {
+    margin-top: var(--space-3);
+    font-size: 1.4rem;
+  }
+
+  .process-step__desc {
+    margin-top: var(--space-3);
+    color: var(--text-on-ink-muted);
+    line-height: var(--lh-relaxed);
+    max-width: 24rem;
+  }
+</style>

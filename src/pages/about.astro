@@ -1,0 +1,399 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CTASection from '../components/CTASection.astro';
+import Icon from '../components/Icon.astro';
+import founderPhoto from '../assets/founder-photo.jpg';
+
+const credentials = [
+  { icon: 'ledger', title: 'MSc Accounting & Auditing', body: 'Istanbul University' },
+  { icon: 'check', title: 'AAT Full Member', body: 'Association of Accounting Technicians' },
+  { icon: 'globe', title: 'ISMMMO', body: 'Turkish CPA Body' },
+  { icon: 'formation', title: 'ACCA Finalist', body: 'Association of Chartered Certified Accountants' },
+];
+
+const industries = ['Construction', 'Food & Beverage', 'Textiles', 'Forestry', 'Outsourced Accounting'];
+const countries = ['Turkey', 'UK', 'Ireland', 'Saudi Arabia', 'Cameroon'];
+
+const howIWork = [
+  {
+    icon: 'phone',
+    title: 'Direct access',
+    body: "You call or message Bektaş, not a support queue. Every return, every question, goes through the person who actually knows your business.",
+  },
+  {
+    icon: 'globe',
+    title: 'Plain English, or Turkish',
+    body: 'No jargon dumped in your inbox, just a clear explanation of what’s happening and what it means for you, in whichever language you’re more comfortable with.',
+  },
+  {
+    icon: 'check',
+    title: 'Built on experience, not guesswork',
+    body: 'Two decades across five countries and five very different industries means less trial and error with your accounts.',
+  },
+];
+---
+
+<BaseLayout
+  title="About Bektaş Ünal | Anatolian Accountancy"
+  description="Meet Bektaş Ünal, founder of Anatolian Accountancy, with over twenty years of accounting experience across Turkey, the UK, Ireland, Saudi Arabia and Cameroon."
+  path="/about/"
+>
+  <!-- ============ HERO ============ -->
+  <section class="section about-hero">
+    <div class="container about-hero__grid">
+      <div class="about-hero__image-wrap reveal">
+        <Image src={founderPhoto} alt="Bektaş Ünal, founder and accountant at Anatolian Accountancy" width={367} height={661} class="about-hero__image" />
+      </div>
+      <div class="about-hero__copy reveal">
+        <p class="eyebrow">About</p>
+        <h1 class="about-hero__heading">Twenty years of accounting experience, and you'll always deal with the same accountant.</h1>
+        <p class="about-hero__lead">
+          Bektaş Ünal founded Anatolian Accountancy in 2019 after more than two decades working across
+          construction, food &amp; beverage, textiles, forestry and outsourced accounting in Turkey, the UK,
+          Ireland, Saudi Arabia and Cameroon. Today he works directly with clients across London and the UK,
+          in English or Turkish.
+        </p>
+        <div class="about-hero__chips">
+          <span>MSc Accounting &amp; Auditing</span>
+          <span>AAT Full Member</span>
+          <span>ACCA Finalist</span>
+        </div>
+        <div class="about-hero__actions">
+          <Button href="/contact/" size="lg">Book a Free Consultation</Button>
+          <Button href={`tel:+447541173722`} size="lg" variant="outline" icon="phone">Call Bektaş directly</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STORY ============ -->
+  <section class="section about-story">
+    <div class="container about-story__inner">
+      <p class="eyebrow">The story so far</p>
+      <h2 class="about-story__heading">From Istanbul to Enfield</h2>
+      <p class="about-story__para reveal">
+        Bektaş trained as an accountant in Turkey, completing an MSc in Accounting &amp; Auditing at Istanbul
+        University before building a career that took him well beyond a single office or a single country.
+        Over more than twenty years he's worked across construction, food &amp; beverage, textiles, forestry
+        and outsourced accounting: sectors with very different rules, rhythms and risks, and each one taught
+        him something the last one didn't.
+      </p>
+      <p class="about-story__para reveal">
+        That path led through Turkey, the UK, Ireland, Saudi Arabia and Cameroon, giving him a rare,
+        first-hand understanding of how businesses actually operate across borders, not just how the numbers
+        are supposed to add up in theory. It's the kind of experience that's difficult to pick up any other
+        way, and it still shapes how he works with clients today.
+      </p>
+      <p class="about-story__para reveal">
+        In 2019, he founded Anatolian Accountancy on a simple idea: clients should deal with a real
+        accountant who understands their business, not a rotating queue of case handlers. Every client works
+        with Bektaş directly, in English or Turkish, whether the conversation is about a Self Assessment
+        return or a five-year plan for growth.
+      </p>
+
+      <div class="about-story__tags reveal">
+        <div class="about-story__tag-group">
+          <span class="about-story__tag-label">Industries</span>
+          <div class="about-story__tag-list">
+            {industries.map((item) => <span>{item}</span>)}
+          </div>
+        </div>
+        <div class="about-story__tag-group">
+          <span class="about-story__tag-label">Countries</span>
+          <div class="about-story__tag-list">
+            {countries.map((item) => <span>{item}</span>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CREDENTIALS ============ -->
+  <section class="section about-credentials">
+    <div class="container">
+      <SectionHeader eyebrow="Qualifications" heading="Recognised, not just claimed" />
+      <div class="about-credentials__grid">
+        {credentials.map((c, i) => (
+          <div class="about-credentials__card reveal" style={`--reveal-delay:${(i % 4) * 80}ms`}>
+            <span class="about-credentials__icon"><Icon name={c.icon} /></span>
+            <h3 class="about-credentials__title">{c.title}</h3>
+            <p class="about-credentials__body">{c.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW I WORK ============ -->
+  <section class="section about-how">
+    <div class="container">
+      <SectionHeader eyebrow="How I work" heading="What working with Bektaş actually looks like" tone="ink" />
+      <div class="about-how__grid">
+        {howIWork.map((item, i) => (
+          <div class="about-how__card reveal" style={`--reveal-delay:${i * 80}ms`}>
+            <span class="about-how__icon"><Icon name={item.icon} /></span>
+            <h3 class="about-how__title">{item.title}</h3>
+            <p class="about-how__body">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    eyebrow="Let's talk"
+    heading="Book a free consultation with Bektaş directly."
+    intro="No account handovers, no call centre, just a conversation about what your business actually needs, in English or Turkish."
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Hero ---- */
+  .about-hero {
+    background: var(--bg-surface);
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .about-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-10);
+    align-items: center;
+  }
+
+  .about-hero__image-wrap {
+    position: relative;
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  .about-hero__image-wrap::before {
+    content: '';
+    position: absolute;
+    top: -1rem;
+    left: -1rem;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    border: 1.5px solid var(--accent);
+    border-radius: var(--radius-lg);
+    z-index: 0;
+  }
+
+  :global(.about-hero__image) {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    object-fit: cover;
+  }
+
+  .about-hero__heading {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h1);
+    letter-spacing: var(--ls-tighter);
+  }
+
+  .about-hero__lead {
+    margin-top: var(--space-5);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .about-hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: var(--space-6) 0 var(--space-8);
+  }
+
+  .about-hero__chips span {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-muted);
+    color: var(--text-secondary);
+  }
+
+  .about-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 900px) {
+    .about-hero__grid {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: var(--space-16);
+    }
+
+    .about-hero__image-wrap {
+      margin-inline: 0;
+    }
+  }
+
+  /* ---- Story ---- */
+  .about-story__inner {
+    max-width: 44rem;
+  }
+
+  .about-story__heading {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h2);
+  }
+
+  .about-story__para {
+    margin-top: var(--space-6);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .about-story__tags {
+    margin-top: var(--space-10);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-subtle);
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .about-story__tag-label {
+    display: block;
+    font-size: var(--fs-eyebrow);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+  }
+
+  .about-story__tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .about-story__tag-list span {
+    font-size: var(--fs-small);
+    font-weight: 600;
+    padding: 0.45rem 0.95rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+  }
+
+  @media (min-width: 700px) {
+    .about-story__tags {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* ---- Credentials ---- */
+  .about-credentials {
+    background: var(--bg-muted);
+  }
+
+  .about-credentials__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about-credentials__card {
+    background: var(--bg-surface-raised);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .about-credentials__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-md);
+    background: var(--bg-muted);
+    color: var(--accent-strong);
+  }
+
+  .about-credentials__icon :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+
+  .about-credentials__title {
+    margin-top: var(--space-4);
+    font-size: 1.1rem;
+  }
+
+  .about-credentials__body {
+    margin-top: var(--space-2);
+    font-size: var(--fs-small);
+    color: var(--text-secondary);
+  }
+
+  @media (min-width: 700px) {
+    .about-credentials__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .about-credentials__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* ---- How I work ---- */
+  .about-how {
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+  }
+
+  .about-how__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-8);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about-how__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-md);
+    background: rgba(250, 246, 238, 0.08);
+    color: var(--text-accent-on-ink);
+  }
+
+  .about-how__icon :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+
+  .about-how__title {
+    margin-top: var(--space-5);
+    font-size: 1.25rem;
+    color: var(--text-on-ink);
+  }
+
+  .about-how__body {
+    margin-top: var(--space-3);
+    line-height: var(--lh-relaxed);
+    color: var(--text-on-ink-muted);
+  }
+
+  @media (min-width: 900px) {
+    .about-how__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

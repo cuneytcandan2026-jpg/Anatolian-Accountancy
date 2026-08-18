@@ -1,0 +1,81 @@
+---
+interface Props {
+  value: number;
+  suffix?: string;
+  label: string;
+}
+
+const { value, suffix = '', label } = Astro.props;
+---
+
+<div class="stat reveal">
+  <p class="stat__value">
+    <span class="stat__number" data-target={value}>0</span><span class="stat__suffix">{suffix}</span>
+  </p>
+  <p class="stat__label">{label}</p>
+</div>
+
+<script>
+  const numbers = document.querySelectorAll<HTMLElement>('.stat__number');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const animate = (el: HTMLElement) => {
+    const target = Number(el.dataset.target ?? '0');
+    if (reduceMotion) {
+      el.textContent = String(target);
+      return;
+    }
+    const duration = 1200;
+    const start = performance.now();
+    const step = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = String(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  if (numbers.length && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            animate(entry.target as HTMLElement);
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.6 }
+    );
+    numbers.forEach((el) => observer.observe(el));
+  }
+</script>
+
+<style>
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .stat__value {
+    display: flex;
+    align-items: baseline;
+    gap: 0.15rem;
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 1.9rem + 1.4vw, 3.25rem);
+    color: var(--text-on-ink);
+    line-height: 1;
+  }
+
+  .stat__suffix {
+    color: var(--text-accent-on-ink);
+  }
+
+  .stat__label {
+    font-size: var(--fs-small);
+    color: var(--text-on-ink-muted);
+    max-width: 12rem;
+  }
+</style>

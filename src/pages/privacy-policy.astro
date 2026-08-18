@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Privacy Policy | Anatolian Accountancy"
+  description="How Anatolian Accountancy collects, uses and protects your personal data."
+  path="/privacy-policy/"
+  noIndex
+>
+  <section class="section legal">
+    <div class="container container--narrow reveal">
+      <p class="eyebrow">Legal</p>
+      <h1>Privacy Policy</h1>
+      <p class="legal__todo">
+        TODO: this page needs proper legal drafting before launch. It should cover what personal data
+        Anatolian Accountancy collects (via the contact form, phone and email enquiries, and any cloud
+        accounting software used on a client's behalf), how it's stored, how long it's retained, and how
+        clients can request access to or deletion of their data under UK GDPR.
+      </p>
+      <p>
+        In the meantime, if you have any questions about your data, contact us at
+        <a href="mailto:info@anatolianaccountancy.com">info@anatolianaccountancy.com</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-block: clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .legal h1 {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h1);
+  }
+
+  .legal p {
+    margin-top: var(--space-5);
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .legal__todo {
+    padding: var(--space-5);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--bg-muted);
+  }
+</style>

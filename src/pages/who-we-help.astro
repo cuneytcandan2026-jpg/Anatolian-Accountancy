@@ -1,0 +1,307 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import CTASection from '../components/CTASection.astro';
+import Icon from '../components/Icon.astro';
+import imgLimitedCompanies from '../assets/audiences/limited-companies.jpg';
+import imgSoleTraders from '../assets/audiences/sole-traders.jpg';
+import imgStartups from '../assets/audiences/startups.jpg';
+import imgConstruction from '../assets/audiences/construction.jpg';
+import imgEcommerce from '../assets/audiences/ecommerce.jpg';
+import imgPersonalTax from '../assets/audiences/personal-tax.jpg';
+
+const audiences = (await getCollection('audiences')).sort((a, b) => a.data.order - b.data.order);
+const byOrder = (n: number) => audiences.find((a) => a.data.order === n)!;
+
+const blocks = [
+  {
+    id: 'limited-companies',
+    eyebrow: 'Limited Companies',
+    title: byOrder(1).data.title,
+    body: byOrder(1).body,
+    points: ['Annual accounts & corporation tax', 'VAT returns', 'Payroll & workplace pensions', 'Cloud bookkeeping'],
+    image: imgLimitedCompanies,
+    imageAlt: 'Hands completing a contactless card payment at a shop counter',
+    cta: 'Ask about limited company accounts',
+  },
+  {
+    id: 'sole-traders',
+    eyebrow: 'Sole Traders',
+    title: byOrder(2).data.title,
+    body: byOrder(2).body,
+    points: ['Self Assessment tax returns', 'Allowable expenses', 'Payments on account planning', 'Simple, jargon-free bookkeeping'],
+    image: imgSoleTraders,
+    imageAlt: 'A freelancer working at a laptop on a wooden desk',
+    cta: 'Ask about Self Assessment',
+  },
+  {
+    id: 'startups',
+    eyebrow: 'Startups',
+    title: byOrder(3).data.title,
+    body: byOrder(3).body,
+    points: ['Company formation', 'Choosing the right structure', 'Registering for VAT & PAYE', 'Cloud accounting set-up from day one'],
+    image: imgStartups,
+    imageAlt: 'A printed guide to setting up a business next to glasses and a notebook',
+    cta: 'Ask about starting a company',
+  },
+  {
+    id: 'construction',
+    eyebrow: 'Construction',
+    title: byOrder(4).data.title,
+    body: byOrder(4).body,
+    points: ['CIS registration', 'Monthly CIS returns', 'Deduction statements', 'Subcontractor verification'],
+    image: imgConstruction,
+    imageAlt: 'Two hard hats resting on the edge of a roof on a construction site',
+    cta: 'Ask about CIS',
+  },
+  {
+    id: 'ecommerce',
+    eyebrow: 'E-commerce',
+    title: byOrder(5).data.title,
+    body: byOrder(5).body,
+    points: ['Amazon, eBay & Shopify accounting', 'Multi-channel VAT', 'Inventory & COGS tracking', 'International tax'],
+    image: imgEcommerce,
+    imageAlt: 'A hand sealing a cardboard parcel with tape',
+    cta: 'Ask about e-commerce accounting',
+  },
+  {
+    id: 'personal-tax',
+    eyebrow: 'Personal Tax',
+    title: byOrder(6).data.title,
+    body: byOrder(6).body,
+    points: ['Self Assessment', 'Capital Gains Tax', 'Rental income tax', 'Tax-efficient planning'],
+    image: imgPersonalTax,
+    imageAlt: 'A house-shaped keyring and key resting on a calculator',
+    cta: 'Ask about personal tax',
+  },
+];
+---
+
+<BaseLayout
+  title="Who We Help | Anatolian Accountancy"
+  description="Accounting support built around who you are: limited companies, sole traders, startups, construction and CIS, e-commerce sellers, and personal tax across London and the UK."
+  path="/who-we-help/"
+>
+  <!-- ============ HERO ============ -->
+  <section class="whwh-hero">
+    <div class="whwh-hero__glow" aria-hidden="true"></div>
+    <div class="container whwh-hero__inner reveal">
+      <p class="eyebrow eyebrow--on-ink">Who We Help</p>
+      <h1 class="whwh-hero__heading">Support built around who you are, not a generic list of services.</h1>
+      <p class="whwh-hero__lead">
+        Every client comes to us with a different starting point. Tell us which of these sounds like you, and
+        we'll point you straight to what actually applies, in English or Turkish.
+      </p>
+      <div class="whwh-hero__actions">
+        <Button href="/contact/" size="lg">Book a Free Consultation</Button>
+        <Button href={`tel:+447541173722`} size="lg" variant="outline-on-ink" icon="phone">Call Bektaş directly</Button>
+      </div>
+      <nav class="whwh-hero__jump" aria-label="Jump to a client type">
+        <a href="#limited-companies">Limited Companies</a>
+        <a href="#sole-traders">Sole Traders</a>
+        <a href="#startups">Startups</a>
+        <a href="#construction">Construction</a>
+        <a href="#ecommerce">E-commerce</a>
+        <a href="#personal-tax">Personal Tax</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ============ AUDIENCE BLOCKS ============ -->
+  {blocks.map((block, i) => (
+    <section id={block.id} class={`section whwh-block ${i % 2 === 1 ? 'whwh-block--alt' : ''} ${i % 2 === 1 ? 'whwh-block--reverse' : ''}`}>
+      <div class="container">
+        <div class="whwh-block__grid">
+          <div class="whwh-block__copy reveal">
+            <p class="eyebrow">{block.eyebrow}</p>
+            <h2 class="whwh-block__title">{block.title}</h2>
+            <p class="whwh-block__body">{block.body}</p>
+            <ul class="whwh-block__list">
+              {block.points.map((point) => (
+                <li>
+                  <Icon name="check" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+            <Button href="/contact/" variant="outline" icon="arrow-right" class="whwh-block__cta">
+              {block.cta}
+            </Button>
+          </div>
+          <div class="whwh-block__image-wrap reveal">
+            <Image src={block.image} alt={block.imageAlt} width={800} height={600} class="whwh-block__image" />
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <CTASection
+    eyebrow="Not sure which one fits?"
+    heading="Tell us about your business and we'll work it out together."
+    intro="Most clients don't fit neatly into one box: a landlord who's also a contractor, a startup selling online. No obligation, no jargon."
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Hero ---- */
+  .whwh-hero {
+    position: relative;
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .whwh-hero__glow {
+    position: absolute;
+    inset: -30% auto auto -10%;
+    width: 46rem;
+    height: 46rem;
+    z-index: 1;
+    background: radial-gradient(circle, var(--c-azure-glow), transparent 65%);
+    pointer-events: none;
+  }
+
+  .whwh-hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 42rem;
+  }
+
+  .whwh-hero__heading {
+    margin-top: var(--space-5);
+    font-size: var(--fs-h1);
+    letter-spacing: var(--ls-tighter);
+    color: var(--text-on-ink);
+  }
+
+  .whwh-hero__lead {
+    margin-top: var(--space-5);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-relaxed);
+    color: var(--text-on-ink-muted);
+  }
+
+  .whwh-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .whwh-hero__jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-10);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-on-ink);
+  }
+
+  .whwh-hero__jump a {
+    padding: 0.55rem 1rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-on-ink);
+    color: var(--text-on-ink-muted);
+    text-decoration: none;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    transition: border-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .whwh-hero__jump a:hover {
+    color: var(--text-on-ink);
+    border-color: rgba(250, 246, 238, 0.4);
+    background: rgba(250, 246, 238, 0.06);
+  }
+
+  /* ---- Audience blocks ---- */
+  .whwh-block--alt {
+    background: var(--bg-muted);
+  }
+
+  .whwh-block__grid {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .whwh-block__copy {
+    order: 1;
+  }
+
+  .whwh-block__image-wrap {
+    order: 2;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    aspect-ratio: 4 / 3;
+  }
+
+  .whwh-block__image-wrap :global(.whwh-block__image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .whwh-block__title {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h2);
+  }
+
+  .whwh-block__body {
+    margin-top: var(--space-5);
+    font-size: var(--fs-lead);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+  }
+
+  .whwh-block__list {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .whwh-block__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--fs-small);
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .whwh-block__list :global(svg) {
+    width: 18px;
+    height: 18px;
+    color: var(--text-accent);
+    flex-shrink: 0;
+    margin-top: 0.15em;
+  }
+
+  :global(.whwh-block__cta) {
+    margin-top: var(--space-8);
+  }
+
+  @media (min-width: 900px) {
+    .whwh-block__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-12);
+      align-items: center;
+    }
+
+    .whwh-block--reverse .whwh-block__copy {
+      order: 2;
+    }
+
+    .whwh-block--reverse .whwh-block__image-wrap {
+      order: 1;
+    }
+  }
+</style>

@@ -1,0 +1,391 @@
+---
+import Icon from './Icon.astro';
+
+interface TestimonialItem {
+  quote: string;
+  name: string;
+  context?: string;
+  source: 'google' | 'direct' | 'placeholder';
+}
+
+interface Props {
+  testimonials: TestimonialItem[];
+  rating: number;
+  reviewCount: number;
+  reviewsUrl: string;
+  lang?: 'en' | 'tr';
+}
+
+const { testimonials, rating, reviewCount, reviewsUrl, lang = 'en' } = Astro.props;
+
+const copy =
+  lang === 'tr'
+    ? {
+        reviews: 'değerlendirme',
+        prev: 'Önceki yorum',
+        next: 'Sonraki yorum',
+        goTo: (i: number) => `${i}. yoruma git`,
+        dotsGroup: 'Yorumlar arasında geçiş yap',
+        sourceLabel: { google: 'Google Yorumu', direct: 'Doğrudan geri bildirim', placeholder: 'Yer tutucu' } as Record<TestimonialItem['source'], string>,
+      }
+    : {
+        reviews: 'reviews',
+        prev: 'Previous testimonial',
+        next: 'Next testimonial',
+        goTo: (i: number) => `Go to testimonial ${i}`,
+        dotsGroup: 'Choose a testimonial',
+        sourceLabel: { google: 'Google Review', direct: 'Direct feedback', placeholder: 'Placeholder' } as Record<TestimonialItem['source'], string>,
+      };
+
+const initial = (name: string) => name.trim().charAt(0).toUpperCase() || '?';
+const stars = Array.from({ length: 5 });
+---
+
+<div class="testimonial-carousel">
+  <a class="testimonial-carousel__badge reveal" href={reviewsUrl} target="_blank" rel="noopener noreferrer">
+    <svg class="testimonial-carousel__glogo" viewBox="0 0 18 18" aria-hidden="true">
+      <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"></path>
+      <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"></path>
+      <path fill="#FBBC05" d="M3.964 10.706A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.706V4.962H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.038l3.007-2.332z"></path>
+      <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.962L3.964 7.294C4.672 5.167 6.656 3.58 9 3.58z"></path>
+    </svg>
+    <span class="testimonial-carousel__stars" aria-hidden="true">
+      {stars.map(() => <Icon name="star" />)}
+    </span>
+    <span class="testimonial-carousel__rating">{rating.toFixed(1)}</span>
+    <span class="testimonial-carousel__count">· {reviewCount} {copy.reviews}</span>
+  </a>
+
+  <div class="testimonial-carousel__stage">
+    {testimonials.length > 1 && (
+      <button type="button" class="testimonial-carousel__nav testimonial-carousel__nav--prev" data-dir="-1" aria-label={copy.prev}>
+        <Icon name="chevron-left" />
+      </button>
+    )}
+
+    <div class="testimonial-carousel__track" aria-roledescription="carousel" aria-label="Testimonials">
+      {testimonials.map((t) => (
+        <article class="testimonial-carousel__slide" aria-roledescription="slide">
+          <div class="testimonial-carousel__card">
+            <span class="testimonial-carousel__card-stars" aria-hidden="true">
+              {stars.map(() => <Icon name="star" />)}
+            </span>
+            <Icon name="quote" class="testimonial-carousel__mark" />
+            <blockquote>
+              <p>&ldquo;{t.quote}&rdquo;</p>
+            </blockquote>
+            <footer class="testimonial-carousel__meta">
+              <span class="testimonial-carousel__avatar" aria-hidden="true">{initial(t.name)}</span>
+              <span class="testimonial-carousel__who">
+                <span class="testimonial-carousel__name">{t.name}</span>
+                <span class="testimonial-carousel__context">{[t.context, copy.sourceLabel[t.source]].filter(Boolean).join(' · ')}</span>
+              </span>
+            </footer>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    {testimonials.length > 1 && (
+      <button type="button" class="testimonial-carousel__nav testimonial-carousel__nav--next" data-dir="1" aria-label={copy.next}>
+        <Icon name="chevron-right" />
+      </button>
+    )}
+  </div>
+
+  {testimonials.length > 1 && (
+    <div class="testimonial-carousel__dots" role="group" aria-label={copy.dotsGroup}>
+      {testimonials.map((_, i) => (
+        <button type="button" class="testimonial-carousel__dot" aria-label={copy.goTo(i + 1)} aria-current={i === 0 ? 'true' : 'false'} data-index={i}></button>
+      ))}
+    </div>
+  )}
+
+  <p class="testimonial-carousel__status sr-only" aria-live="polite"></p>
+</div>
+
+<style>
+  .testimonial-carousel {
+    margin-top: var(--space-10);
+  }
+
+  /* ---- Rating badge ---- */
+  .testimonial-carousel__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-inline: auto;
+    padding: 0.6rem 1.1rem;
+    background: var(--bg-surface-raised);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: var(--fs-small);
+    transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .testimonial-carousel__badge:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .testimonial-carousel__glogo {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .testimonial-carousel__stars {
+    display: inline-flex;
+    gap: 1px;
+    color: var(--c-bronze-400);
+  }
+
+  .testimonial-carousel__badge .testimonial-carousel__stars :global(.icon) {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .testimonial-carousel__rating {
+    font-weight: 700;
+  }
+
+  .testimonial-carousel__count {
+    color: var(--text-secondary);
+  }
+
+  /* ---- Stage (nav + track) ---- */
+  .testimonial-carousel__stage {
+    margin-top: var(--space-10);
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .testimonial-carousel__nav {
+    flex-shrink: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-full);
+    border: none;
+    background: var(--bg-surface-raised);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+  }
+
+  .testimonial-carousel__nav:hover {
+    color: var(--text-accent);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .testimonial-carousel__nav:active {
+    transform: translateY(0);
+  }
+
+  .testimonial-carousel__nav:focus-visible {
+    border-radius: var(--radius-full);
+  }
+
+  .testimonial-carousel__nav :global(.icon) {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+
+  .testimonial-carousel__track {
+    flex: 1;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    border-radius: var(--radius-xl);
+  }
+
+  .testimonial-carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .testimonial-carousel__slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    display: flex;
+    padding: 2px;
+  }
+
+  /* ---- Card ---- */
+  .testimonial-carousel__card {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding: var(--space-8) var(--space-6);
+    background: var(--bg-surface-raised);
+    color: var(--text-primary);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .testimonial-carousel__card-stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--c-bronze-400);
+  }
+
+  .testimonial-carousel__card-stars :global(.icon) {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .testimonial-carousel__card :global(.testimonial-carousel__mark) {
+    width: 2.25rem;
+    height: 2.25rem;
+    color: var(--accent-soft);
+    margin-top: var(--space-4);
+  }
+
+  blockquote {
+    margin: var(--space-4) 0 0;
+  }
+
+  blockquote p {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 1.05rem + 0.7vw, 1.6rem);
+    line-height: 1.5;
+    font-weight: 480;
+    letter-spacing: var(--ls-tight);
+  }
+
+  .testimonial-carousel__meta {
+    margin-top: var(--space-6);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .testimonial-carousel__avatar {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .testimonial-carousel__who {
+    display: flex;
+    flex-direction: column;
+    font-size: var(--fs-small);
+  }
+
+  .testimonial-carousel__name {
+    font-weight: 700;
+  }
+
+  .testimonial-carousel__context {
+    color: var(--text-secondary);
+  }
+
+  /* ---- Dots ---- */
+  .testimonial-carousel__dots {
+    margin-top: var(--space-8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+
+  .testimonial-carousel__dot {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .testimonial-carousel__dot::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: var(--radius-full);
+    background: var(--border-on-ink);
+    transition: width var(--duration-fast) var(--ease-out), background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .testimonial-carousel__dot:hover::before {
+    background: var(--text-on-ink-muted);
+  }
+
+  .testimonial-carousel__dot[aria-current='true']::before {
+    width: 1.5rem;
+    background: var(--cta);
+  }
+
+  .testimonial-carousel__dot:focus-visible {
+    border-radius: var(--radius-full);
+  }
+
+  @media (min-width: 700px) {
+    .testimonial-carousel__nav {
+      display: inline-flex;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.testimonial-carousel').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('.testimonial-carousel__track');
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('.testimonial-carousel__slide'));
+    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('.testimonial-carousel__dot'));
+    const prevBtn = root.querySelector<HTMLButtonElement>('.testimonial-carousel__nav--prev');
+    const nextBtn = root.querySelector<HTMLButtonElement>('.testimonial-carousel__nav--next');
+    const status = root.querySelector<HTMLElement>('.testimonial-carousel__status');
+    if (!track || slides.length < 2) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let activeIndex = 0;
+
+    const setActive = (index: number) => {
+      activeIndex = index;
+      dots.forEach((dot, i) => dot.setAttribute('aria-current', i === index ? 'true' : 'false'));
+      if (status) status.textContent = `Testimonial ${index + 1} of ${slides.length}`;
+    };
+
+    const goTo = (index: number) => {
+      const clamped = (index + slides.length) % slides.length;
+      slides[clamped].scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', inline: 'center', block: 'nearest' });
+    };
+
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+    prevBtn?.addEventListener('click', () => goTo(activeIndex - 1));
+    nextBtn?.addEventListener('click', () => goTo(activeIndex + 1));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = slides.indexOf(entry.target as HTMLElement);
+            if (idx !== -1) setActive(idx);
+          }
+        });
+      },
+      { root: track, threshold: 0.6 }
+    );
+    slides.forEach((slide) => observer.observe(slide));
+  });
+</script>

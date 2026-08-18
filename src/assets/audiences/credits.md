@@ -1,0 +1,6 @@
+- limited-companies.jpg: "contactless card payment shop counter" photo by Kampus Production via Pexels — https://www.pexels.com/photo/person-paying-using-a-bank-card-8475145/
+- sole-traders.jpg: "freelancer working laptop desk home" photo by iam hogir via Pexels — https://www.pexels.com/photo/man-sitting-at-desk-with-mouse-laptop-and-smartphone-17801708/
+- startups.jpg: "notebook business plan desk" photo by RDNE Stock project via Pexels — https://www.pexels.com/photo/blue-and-white-book-on-brown-wooden-table-7947653/
+- construction.jpg: "hard hat tools on site" photo by Los Muertos Crew via Pexels — https://www.pexels.com/photo/red-helmet-on-white-wooden-fence-8853521/
+- ecommerce.jpg: "warehouse packing cardboard boxes small business" photo by Tima Miroshnichenko via Pexels — https://www.pexels.com/photo/person-putting-tape-on-a-cardboard-6169036/
+- personal-tax.jpg: "house keys property calculator" photo by Jakub Zerdzicki via Pexels — https://www.pexels.com/photo/real-estate-business-finance-background-template-calculator-door-key-27920274/

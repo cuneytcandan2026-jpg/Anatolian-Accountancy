@@ -1,0 +1,407 @@
+---
+import Icon from './Icon.astro';
+import Button from './Button.astro';
+import { site, primaryNav, primaryNavTr, langAlternates, langAlternatesReverse } from '../lib/site';
+
+const currentPath = Astro.url.pathname;
+const isTurkish = currentPath.startsWith('/tr/');
+const nav = isTurkish ? primaryNavTr : primaryNav;
+const enHref = isTurkish ? (langAlternatesReverse[currentPath] ?? '/') : currentPath;
+const trHref = isTurkish ? currentPath : (langAlternates[currentPath] ?? '/tr/');
+const ctaLabel = isTurkish ? 'Ücretsiz Görüşme Talep Edin' : 'Book a Free Consultation';
+const contactHref = isTurkish ? '/tr/iletisim/' : '/contact/';
+const homeHref = isTurkish ? '/tr/' : '/';
+---
+
+<header class="header" id="site-header">
+  <div class="header__bar container">
+    <a href={homeHref} class="header__logo" aria-label={`${site.name} home`}>
+      <img src="/logo.svg" alt="" width="163" height="61" class="header__logo-img" />
+      <span class="sr-only">{site.name}</span>
+    </a>
+
+    <nav class="header__nav" aria-label={isTurkish ? 'Ana' : 'Primary'}>
+      <ul>
+        {nav.map((item) => (
+          <li>
+            <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <div class="header__lang" role="group" aria-label={isTurkish ? 'Dil seçin' : 'Choose language'}>
+        <a href={enHref} class={`header__lang-link ${!isTurkish ? 'is-active' : ''}`}>EN</a>
+        <span aria-hidden="true">/</span>
+        <a href={trHref} class={`header__lang-link ${isTurkish ? 'is-active' : ''}`}>TR</a>
+      </div>
+      <a href={site.phoneHref} class="header__call" aria-label={isTurkish ? `${site.phoneDisplay} numarasını arayın` : `Call ${site.phoneDisplay}`}>
+        <Icon name="phone" />
+      </a>
+      <Button href={contactHref} size="md" class="header__cta">{ctaLabel}</Button>
+      <button type="button" class="header__trigger" id="menu-trigger" aria-expanded="false" aria-controls="mobile-drawer">
+        <Icon name="menu" class="header__trigger-icon header__trigger-icon--open" />
+        <Icon name="close" class="header__trigger-icon header__trigger-icon--close" />
+        <span class="sr-only">{isTurkish ? 'Menüyü aç' : 'Open menu'}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="mobile-drawer" hidden>
+  <nav class="drawer__nav" aria-label={isTurkish ? 'Mobil' : 'Mobile'}>
+    <ul>
+      {nav.map((item, i) => (
+        <li style={`--i:${i}`}>
+          <a href={item.href}>{item.label}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="drawer__lang">
+    <a href={enHref} class={`drawer__lang-link ${!isTurkish ? 'is-active' : ''}`}>English</a>
+    <a href={trHref} class={`drawer__lang-link ${isTurkish ? 'is-active' : ''}`}>Türkçe</a>
+  </div>
+
+  <div class="drawer__actions">
+    <a href={site.phoneHref} class="drawer__call">
+      <Icon name="phone" />
+      <span>{site.phoneDisplay}</span>
+    </a>
+    <Button href={contactHref} size="lg" class="drawer__book">{ctaLabel}</Button>
+  </div>
+</div>
+
+<script>
+  const header = document.getElementById('site-header');
+  const trigger = document.getElementById('menu-trigger');
+  const drawer = document.getElementById('mobile-drawer');
+
+  const onScroll = () => {
+    if (!header) return;
+    header.classList.toggle('header--scrolled', window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const closeDrawer = () => {
+    if (!drawer || !trigger) return;
+    drawer.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('drawer-open');
+  };
+
+  const openDrawer = () => {
+    if (!drawer || !trigger) return;
+    drawer.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('drawer-open');
+  };
+
+  trigger?.addEventListener('click', () => {
+    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+    isOpen ? closeDrawer() : openDrawer();
+  });
+
+  drawer?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeDrawer));
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1180) closeDrawer();
+  });
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(253, 251, 247, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+  }
+
+  .header--scrolled {
+    border-bottom-color: var(--border-subtle);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .header__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    padding-block: 1.15rem;
+    transition: padding var(--duration-base) var(--ease-out);
+  }
+
+  .header--scrolled .header__bar {
+    padding-block: 0.75rem;
+  }
+
+  .header__logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .header__logo-img {
+    height: 56px;
+    width: auto;
+  }
+
+  .header__nav {
+    display: none;
+  }
+
+  .header__nav ul {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header__nav a {
+    position: relative;
+    display: inline-block;
+    padding-block: 0.3rem;
+    font-size: var(--fs-small);
+    font-weight: 560;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+
+  .header__nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1.5px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  .header__nav a:hover::after,
+  .header__nav a[aria-current='page']::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .header__lang {
+    display: none;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .header__lang-link {
+    text-decoration: none;
+    color: inherit;
+    padding: 0.15rem 0.3rem;
+  }
+
+  .header__lang-link.is-active {
+    color: var(--text-primary);
+  }
+
+  .header__lang-link:hover {
+    color: var(--text-accent);
+  }
+
+  .header__call {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    background: var(--bg-surface-raised);
+    color: var(--text-primary);
+    transition: border-color var(--duration-fast) var(--ease-out), background-color var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+  }
+
+  .header__call :global(svg) {
+    width: 19px;
+    height: 19px;
+  }
+
+  .header__call:hover {
+    border-color: var(--accent);
+    background: rgba(19, 118, 174, 0.08);
+    color: var(--text-accent);
+  }
+
+  .header__actions :global(.header__cta) {
+    display: none;
+  }
+
+  .header__trigger {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    background: var(--bg-surface-raised);
+    cursor: pointer;
+  }
+
+  .header__trigger :global(.header__trigger-icon) {
+    grid-area: 1 / 1;
+    width: 20px;
+    height: 20px;
+    transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+  }
+
+  .header__trigger :global(.header__trigger-icon--close) {
+    opacity: 0;
+    transform: scale(0.6) rotate(-45deg);
+  }
+
+  .header__trigger[aria-expanded='true'] :global(.header__trigger-icon--open) {
+    opacity: 0;
+    transform: scale(0.6) rotate(45deg);
+  }
+
+  .header__trigger[aria-expanded='true'] :global(.header__trigger-icon--close) {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+
+  /* CTA + call stay visible from the width where MobileActionBar's fixed
+     bottom strip hands off (see that component's 900px breakpoint), so
+     there's no gap where neither a persistent CTA nor a bottom bar shows. */
+  @media (min-width: 900px) {
+    .header__call {
+      display: inline-flex;
+    }
+
+    .header__actions :global(.header__cta) {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 1180px) {
+    .header__nav {
+      display: block;
+    }
+
+    .header__lang {
+      display: inline-flex;
+    }
+
+    .header__trigger {
+      display: none;
+    }
+  }
+
+  /* ---- Mobile drawer ---- */
+  .drawer[hidden] {
+    display: none;
+  }
+
+  .drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    padding: calc(5.5rem + env(safe-area-inset-top)) var(--container-padding) calc(var(--space-8) + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+  }
+
+  .drawer__nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .drawer__nav li {
+    border-bottom: 1px solid var(--border-on-ink);
+  }
+
+  .drawer__nav a {
+    display: block;
+    padding-block: 1.15rem;
+    font-family: var(--font-display);
+    font-size: 1.85rem;
+    text-decoration: none;
+    color: var(--text-on-ink);
+  }
+
+  .drawer__lang {
+    display: flex;
+    gap: var(--space-5);
+    padding-block: var(--space-6);
+    font-size: var(--fs-small);
+  }
+
+  .drawer__lang-link {
+    text-decoration: none;
+    color: var(--text-on-ink-muted);
+    font-weight: 600;
+  }
+
+  .drawer__lang-link.is-active {
+    color: var(--text-on-ink);
+    border-bottom: 1.5px solid var(--accent);
+  }
+
+  .drawer__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .drawer__call {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: 1rem;
+    border: 1px solid var(--border-on-ink);
+    border-radius: var(--radius-full);
+    color: var(--text-on-ink);
+    text-decoration: none;
+    font-weight: 600;
+    min-height: 44px;
+  }
+
+  :global(.drawer__book) {
+    justify-content: center;
+    width: 100%;
+  }
+
+  :global(body.drawer-open) {
+    overflow: hidden;
+  }
+</style>

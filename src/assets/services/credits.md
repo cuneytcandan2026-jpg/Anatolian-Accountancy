@@ -1,0 +1,6 @@
+- business-accounting.jpg: photo by Kindel Media via Pexels — https://www.pexels.com/photo/a-person-holding-a-pen-7054416/
+- tax.jpg: photo by AlphaTradeZone via Pexels — https://www.pexels.com/photo/a-calculator-on-a-notebook-5833258/
+- vat-payroll.jpg: photo by Clément Proust via Pexels — https://www.pexels.com/photo/close-up-of-british-pound-currency-notes-29373898/
+- business-support.jpg: photo by EVG Kowalievska via Pexels — https://www.pexels.com/photo/turned-on-silver-laptop-on-tabletop-1128207/
+- specialist-construction.jpg: photo by Jan van der Wolf via Pexels — https://www.pexels.com/photo/metal-staircases-in-front-of-a-blue-sky-19563057/
+- specialist-ecommerce.jpg: photo by Tima Miroshnichenko via Pexels — https://www.pexels.com/photo/brown-cardboard-boxes-on-a-concrete-ground-6169055/

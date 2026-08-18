@@ -1,0 +1,965 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/Button.astro';
+import StatCounter from '../../components/StatCounter.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import AudienceCard from '../../components/AudienceCard.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import ProcessStep from '../../components/ProcessStep.astro';
+import TestimonialCarousel from '../../components/TestimonialCarousel.astro';
+import Accordion from '../../components/Accordion.astro';
+import CTASection from '../../components/CTASection.astro';
+import Icon from '../../components/Icon.astro';
+import aatLogo from '../../assets/trust/aat-logo.webp';
+import ismmmoLogo from '../../assets/trust/ismmmo-logo.png';
+import capiumLogo from '../../assets/trust/capium-logo.png';
+import XeroLogo from '../../assets/trust/xero-logo.svg';
+import founderPhoto from '../../assets/founder-photo.jpg';
+import heroDesk from '../../assets/hero-collage-desk.jpg';
+import heroGherkin from '../../assets/hero-collage-gherkin.jpg';
+import heroWork from '../../assets/hero-collage-work.jpg';
+import heroStreet from '../../assets/hero-collage-street.jpg';
+import heroCharts from '../../assets/hero-collage-charts.jpg';
+import { site } from '../../lib/site';
+
+const audiences = [
+  {
+    title: 'Bir işletme yürütüyorum',
+    description: 'Hesaplar, KDV, bordro ve ön muhasebe sizin yerinize halledilir, siz işletmenizi yönetmeye odaklanırsınız.',
+    icon: 'building',
+    href: '/tr/kimlere-yardimci-oluyoruz/#limited-companies',
+  },
+  {
+    title: 'Serbest çalışıyorum',
+    description: 'Vaktini evrak işleriyle değil müşterileriyle geçirmek isteyen şahıs şirketi sahipleri için Self Assessment, giderler ve vergi planlaması.',
+    icon: 'briefcase',
+    href: '/tr/kimlere-yardimci-oluyoruz/#sole-traders',
+  },
+  {
+    title: 'Bir şirket kuruyorum',
+    description: 'Şirket kuruluşu, kurulum ve yeni bir işletmeyi ilk günden itibaren uyumlu tutan sürekli muhasebe desteği.',
+    icon: 'rocket',
+    href: '/tr/kimlere-yardimci-oluyoruz/#startups',
+  },
+  {
+    title: 'İnşaat sektöründe çalışıyorum',
+    description: 'Müteahhitlerin ve taşeronların gerçekte nasıl ödeme aldığına göre kurulmuş CIS muhasebe ve vergi desteği.',
+    icon: 'hardhat',
+    href: '/tr/kimlere-yardimci-oluyoruz/#construction',
+  },
+  {
+    title: 'Online satış yapıyorum',
+    description: 'Amazon, eBay, Shopify ve diğer pazar yerleri için muhasebe, çok kanallı KDV dahil.',
+    icon: 'cart',
+    href: '/tr/kimlere-yardimci-oluyoruz/#ecommerce',
+  },
+  {
+    title: 'Kişisel vergi danışmanlığına ihtiyacım var',
+    description: 'Self Assessment, Sermaye Kazancı Vergisi ve kira geliri, açıkça anlatılır ve zamanında beyan edilir.',
+    icon: 'user',
+    href: '/tr/kimlere-yardimci-oluyoruz/#personal-tax',
+  },
+];
+
+const services = [
+  {
+    title: 'Yıllık Hesaplar ve Ön Muhasebe',
+    summary: 'Yasal hesaplar, ara dönem hesapları ve günlük ön muhasebe kayıtları doğru ve güncel tutulur, böylece durumunuzu her zaman bilirsiniz.',
+    icon: 'ledger',
+    href: '/tr/hizmetler/#business-accounting',
+  },
+  {
+    title: 'Kurumlar Vergisi ve Self Assessment',
+    summary: 'Kurumlar vergisi, Self Assessment, ortaklık beyannameleri ve Sermaye Kazancı Vergisi karmaşık terimlerle değil, sade bir dille ele alınır ve anlatılır.',
+    icon: 'tax',
+    href: '/tr/hizmetler/#tax',
+  },
+  {
+    title: 'KDV ve Bordro',
+    summary: 'KDV beyannameleri doğru ve zamanında verilir; bordro ve işyeri emeklilik katkı payları ekibinizin sorunsuzca maaş almasını sağlayacak şekilde yönetilir.',
+    icon: 'vat',
+    href: '/tr/hizmetler/#vat-payroll',
+  },
+  {
+    title: 'Şirket Kuruluşu ve Bulut Muhasebe',
+    summary: 'Bir limited şirketi doğru şekilde kurup, modern bulut yazılımıyla yönetirsiniz, böylece defterleriniz yıl boyunca güncel kalır.',
+    icon: 'formation',
+    href: '/tr/hizmetler/#business-support',
+  },
+  {
+    title: 'İnşaat Sektörü Vergi Sistemi (CIS)',
+    summary: 'Müteahhitler ve taşeronlar için CIS kaydı, kesintiler ve beyannameler, inşaat muhasebeniz uyumlu kalır.',
+    icon: 'hardhat',
+    href: '/tr/hizmetler/#specialist',
+  },
+  {
+    title: 'E-Ticaret Muhasebesi',
+    summary: 'Amazon, eBay, Shopify ve diğer pazar yerleri için muhasebe: uygun olduğunda çok kanallı KDV ve uluslararası vergi dahil.',
+    icon: 'cart',
+    href: '/tr/hizmetler/#specialist',
+  },
+];
+
+const whyPoints = [
+  {
+    icon: 'check',
+    title: 'Anlaşılır tavsiye',
+    desc: 'Muhasebe karmaşık terimler olmadan anlatılır: formda ne yazdığı değil, sizin için ne anlama geldiği.',
+  },
+  {
+    icon: 'user',
+    title: 'Kişisel hizmet',
+    desc: 'Doğrudan Bektaş ile çalışırsınız. Hesap devirleri yok, çağrı merkezi yok, hikayenizi baştan anlatmak yok.',
+  },
+  {
+    icon: 'arrow-up-right',
+    title: 'Proaktif destek',
+    desc: 'Sadece beyanname vermekle kalmayız. Sırada ne olduğunu ve planlarınız için ne anlama geldiğini size anlatırız.',
+  },
+  {
+    icon: 'globe',
+    title: 'İngilizce ve Türkçe',
+    desc: 'Her görüşme, danışmanlık ve belge, en rahat olduğunuz dilde sunulur.',
+  },
+  {
+    icon: 'ledger',
+    title: 'Modern muhasebe',
+    desc: 'Bulut tabanlı ön muhasebe ve raporlama sayesinde rakamlarınız üç ay geride değil, güncel kalır.',
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "Anatolian, muhasebe ihtiyaçlarımı ayrıntılı şekilde inceledi ve benim için en uygun çözümü seçmeme yardımcı oldu; bu da Xero oldu. Anatolian'ın katkısından çok memnunum ve hizmeti tavsiye ederim.",
+    name: 'Emily T.',
+    context: 'İşletme sahibi',
+    source: 'direct' as const,
+  },
+  {
+    quote:
+      'Olağanüstü bir muhasebe hizmeti! Dört yılı aşkın süredir Anatolian Accountancy müşterisiyim ve hizmetleri hep aynı şekilde mükemmel oldu. Ekip profesyonel, bilgili ve her zaman ulaşılabilir. Hesaplarımı titizlikle ve özenle yönetiyorlar, bu da sürecin sorunsuz ve stressiz geçmesini sağlıyor. Gösterdikleri özveri ve detaylara verdikleri önem için gerçekten minnettarım. Güvenilir ve dürüst bir muhasebeci arayan herkese şiddetle tavsiye ederim!',
+    name: 'Mehmet Arslan',
+    context: '4 yıldan uzun süredir müşteri',
+    source: 'google' as const,
+  },
+  {
+    quote:
+      "Bir süredir Anatolian Accountancy Ltd ile çalışıyorum ve hizmetten son derece memnunum. Ekip inanılmaz derecede profesyonel, bilgili ve her türlü muhasebe ihtiyacında her zaman fazlasıyla yardımcı oluyor. Sadece titiz ve verimli değiller, aynı zamanda son derece samimi ve ulaşılabilirler; bu da tüm süreci çok daha kolay ve stressiz hale getiriyor. Güvenilir ve dürüst bir muhasebe firması arayan herkese Anatolian Accountancy Ltd'yi şiddetle tavsiye ederim! Tüm yardımlarınız için teşekkürler.",
+    name: 'Yusuf',
+    context: 'Yerel Rehber',
+    source: 'google' as const,
+  },
+  {
+    quote:
+      'İşini titizlikle takip eden, son derece güvenilir bir muhasebeci. İhtiyacım olduğunda her zaman ulaşabilmek paha biçilemez.',
+    name: 'Nalan Tanriverdi',
+    source: 'google' as const,
+  },
+  {
+    quote: '3 yıldan uzun süredir çalışıyorum. Çok memnunum. Çok yardımcı oluyorlar.',
+    name: 'Gullu Sinan',
+    source: 'google' as const,
+  },
+];
+
+const faqItems = [
+  {
+    question: 'Muhasebecimi değiştirdiğimde ne olur?',
+    answer:
+      "Çoğu kişinin sandığından daha basit. Bizi görevlendirdiğinizde, mevcut muhasebecinizle doğrudan iletişime geçip profesyonel bir devir süreci başlatırız: kayıtlarınız, beyan geçmişiniz ve HMRC yetkilendirmeleri dahil. Geçişi kendiniz yönetmenize gerek kalmaz; bir sonraki son tarihten önce yeterli zamanla bize gelirseniz uyum sürecinde herhangi bir boşluk oluşmaz.",
+  },
+  {
+    question: 'Serbest çalışıyorum. Gerçekte hangi vergileri ödemem gerekiyor?',
+    answer:
+      'Şahıs şirketi sahibi olarak, kârınız üzerinden Gelir Vergisi ve Ulusal Sigorta (National Insurance) ödersiniz; bu her yıl bir Self Assessment beyannamesiyle bildirilir. Çoğu kişinin kafasını karıştıran kısım, neyin indirilebilir gider sayılıp neyin sayılmadığını belirlemektir. Bu hesaplamayı biz yapar, son tarihten çok önce ne kadar borcunuz olduğunu size bildirir ve talep etme hakkınız olup da gözden kaçırabileceğiniz kalemleri size hatırlatırız.',
+  },
+  {
+    question: 'Limited şirket mi kurmalıyım, yoksa şahıs şirketi olarak mı devam etmeliyim?',
+    answer:
+      'Bu; kâr seviyenize, işletmeden parayı nasıl çekmek istediğinize ve üstlendiğiniz riske bağlıdır. Tek bir doğru cevap yoktur. Kârlar belirli bir seviyeye ulaştığında bir limited şirket vergi açısından daha avantajlı olabilir ve size sorumluluk koruması sağlar, ancak beraberinde ek beyan yükümlülükleri getirir. Herhangi bir karar vermeden önce gerçek rakamlarınıza bakar ve artı-eksileri sizinle birlikte değerlendiririz.',
+  },
+  {
+    question: 'KDV için ne zaman kayıt yaptırmam gerekir?',
+    answer:
+      'Vergiye tabi cironuz, HMRC tarafından belirlenen ve herhangi bir hareketli 12 aylık dönemde geçerli olan KDV kayıt eşiğini aştığında kayıt zorunlu hale gelir; bu eşiği aştığınız andan itibaren genellikle kayıt için 30 gününüz vardır. Bazı işletmeler bu noktadan önce, kendi lehlerine olduğu durumlarda gönüllü olarak kayıt yaptırır. Devam eden müşterilerimiz için bunu takip ederiz, böylece asla sürpriz olmaz; gönüllü kaydın sizin için mantıklı olup olmadığını da birlikte değerlendirebiliriz.',
+  },
+  {
+    question: 'Müteahhitler ve taşeronlar için CIS nasıl işler?',
+    answer:
+      "İnşaat Sektörü Vergi Sistemi (CIS) kapsamında müteahhitler, taşeronun ödemesinden kesinti yapar ve bunu vergi ile Ulusal Sigorta'ya karşı bir avans olarak HMRC'ye gönderir. Bu ilişkinin her iki tarafı için de CIS kaydı, aylık beyannameler ve kesinti bildirimlerini biz yönetiriz; taşeronların hak ettikleri tutarı HMRC'de bekletmek yerine geri almalarını sağlarız.",
+  },
+  {
+    question: 'Bir limited şirket kurmak için gerçekte ne yapmam gerekiyor?',
+    answer:
+      "Şirketi Companies House'a kaydettirmeniz, bir işletme banka hesabı açmanız, kurumlar vergisi için kayıt yaptırmanız ve kendinize nasıl ödeme yapacağınıza karar vermeniz gerekir. Kuruluş sürecini biz yürütür; ön muhasebe, gerekirse bordro, bulut yazılımı gibi muhasebe altyapısını ilk günden itibaren doğru şekilde kurarız, böylece bir yıl sonra karmaşayı çözmek zorunda kalmazsınız.",
+  },
+  {
+    question: 'Yüz yüze görüşmem mi gerekiyor, yoksa her şey uzaktan mı halledilebiliyor?',
+    answer:
+      'Çoğu müşterimiz İngiltere\'nin neresinde olurlarsa olsunlar bizimle tamamen uzaktan çalışır: telefon, görüntülü görüşme ve bulut muhasebe yazılımı üzerinden. Yakınımızdaysanız ve yüz yüze oturmayı tercih ederseniz, Enfield ofisimiz bunun için de burada. Her iki durumda da baştan sona aynı muhasebeciyle çalışırsınız.',
+  },
+  {
+    question: 'Türkçe muhasebe desteği alabilir miyim?',
+    answer:
+      'Evet, Bektaş anadili Türkçe olup ileri düzeyde İngilizce konuşmaktadır ve mali durumunuzu görüşmek için daha rahat olduğunuz dilde size destek olabilir. Bu yalnızca çevrilmiş bir broşür değil; görüşmeler, danışmanlıklar ve yazışmalar için de geçerlidir.',
+  },
+  {
+    question: 'Ücretsiz ilk görüşme sırasında neler olur?',
+    answer:
+      'Bu bir satış sunumu değil, bir sohbettir. Bize işletmenizden ya da kişisel durumunuzdan, mevcut düzeninizde neyin işlemediğinden ve hangi konuda yardıma ihtiyacınız olduğundan bahsedin. Hangi hizmetlerin sizin için geçerli olduğunu, bunun kabaca neler içereceğini ve sonraki adımları dürüstçe anlatırız. Görüşme sırasında hemen kaydolma zorunluluğu yoktur.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+---
+
+<BaseLayout
+  title="Anatolian Accountancy | Londra ve İngiltere Genelinde Türkçe Muhasebe"
+  description="Londra ve İngiltere genelinde limited şirketler, şahıs şirketleri, taşeronlar ve mülk sahipleri için İngilizce veya Türkçe muhasebe, vergi ve işletme desteği. Ücretsiz görüşme ayarlayın."
+  path="/tr/"
+  lang="tr"
+  includeLocalBusinessSchema
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow eyebrow--on-ink">Londra ve İngiltere Genelinde Muhasebe</p>
+        <h1 class="hero__heading">İşinizi kolaylaştıran muhasebe.</h1>
+        <p class="hero__lead">
+          Şirketler, taşeronlar, mülk sahipleri ve bireyler için anlaşılır muhasebe, vergi ve işletme
+          desteği, Londra ve İngiltere genelinde, İngilizce veya Türkçe.
+        </p>
+        <div class="hero__actions">
+          <Button href="/tr/iletisim/" size="lg">Ücretsiz Görüşme Talep Edin</Button>
+          <Button href="/tr/hizmetler/" size="lg" variant="outline-on-ink" icon="arrow-right">Hizmetlerimizi Keşfedin</Button>
+        </div>
+
+        <dl class="hero__trust">
+          <div class="hero__trust-item">
+            <StatCounter value={20} suffix="+" label="Yıllık muhasebe deneyimi" />
+          </div>
+          <div class="hero__trust-item hero__trust-item--text">
+            <dt>AAT Üyesi</dt>
+            <dd>Tam üyelik</dd>
+          </div>
+          <div class="hero__trust-item hero__trust-item--text">
+            <dt>İngilizce &amp; Türkçe</dt>
+            <dd>İki dilli hizmet</dd>
+          </div>
+          <div class="hero__trust-item hero__trust-item--text">
+            <dt>Londra ve İngiltere Geneli</dt>
+            <dd>Enfield merkezli ofis</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="hero__collage" aria-hidden="true">
+        <div class="hero__piece hero__piece--blob reveal"></div>
+        <div class="hero__piece hero__piece--street reveal" style="--reveal-delay:80ms">
+          <Image src={heroStreet} alt="" width={500} height={800} class="hero__piece-img" />
+        </div>
+        <div class="hero__piece hero__piece--work reveal" style="--reveal-delay:180ms">
+          <Image src={heroWork} alt="" width={560} height={760} class="hero__piece-img" />
+        </div>
+        <div class="hero__piece hero__piece--gherkin reveal" style="--reveal-delay:260ms">
+          <Image src={heroGherkin} alt="" width={600} height={700} class="hero__piece-img" />
+        </div>
+        <div class="hero__piece hero__piece--charts reveal" style="--reveal-delay:340ms">
+          <Image src={heroCharts} alt="" width={600} height={600} class="hero__piece-img" />
+        </div>
+        <div class="hero__piece hero__piece--desk reveal" style="--reveal-delay:420ms">
+          <Image src={heroDesk} alt="" width={500} height={500} class="hero__piece-img" />
+        </div>
+        <div class="hero__piece hero__piece--blob2 reveal" style="--reveal-delay:500ms"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRUST STRIP ============ -->
+  <section class="trust-strip section" style="padding-block: var(--space-10) calc(var(--space-10) / 2);">
+    <div class="container trust-strip__inner reveal">
+      <p class="trust-strip__label">Mesleki üyelikler ve yazılımlar</p>
+      <div class="trust-strip__badges">
+        <div class="trust-strip__logo">
+          <Image src={aatLogo} alt="AAT Lisanslı Muhasebeci" height={44} />
+        </div>
+        <div class="trust-strip__logo">
+          <Image src={ismmmoLogo} alt="İSMMMO üyesi" height={56} />
+        </div>
+        <div class="trust-strip__logo trust-strip__logo--xero">
+          <XeroLogo width={26} height={26} />
+          <span class="trust-strip__xero-text">
+            <span class="trust-strip__xero-label">Xero</span>
+            <span class="trust-strip__xero-sublabel">Sertifikalı bulut yazılımı</span>
+          </span>
+        </div>
+        <div class="trust-strip__logo">
+          <Image src={capiumLogo} alt="Capium ofis yazılımı" height={30} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW CAN WE HELP ============ -->
+  <section class="section how-we-help">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Kimlerle çalışıyoruz"
+        heading="Size nasıl yardımcı olabiliriz?"
+        intro="Sizi en iyi neyin tanımladığını söyleyin, yaptığımız her şeyin genel bir listesi yerine, gerçekten geçerli olan desteğe sizi yönlendirelim."
+      />
+      <div class="how-we-help__grid">
+        {audiences.map((item, i) => (
+          <AudienceCard title={item.title} description={item.description} icon={item.icon} href={item.href} index={i} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CORE SERVICES ============ -->
+  <section class="section services-section services-section--alt">
+    <div class="container">
+      <div class="services-section__head">
+        <SectionHeader
+          eyebrow="Ne yapıyoruz"
+          heading="Muhasebe ve vergi, uçtan uca"
+          intro="Günlük ön muhasebeden özel vergi durumlarına kadar: müşterilerimizin en çok bize güvendiği alanlar burada."
+        />
+        <Button href="/tr/hizmetler/" variant="ghost" class="services-section__all">Tüm hizmetleri görün</Button>
+      </div>
+      <div class="services-section__grid">
+        {services.map((item, i) => (
+          <ServiceCard title={item.title} summary={item.summary} icon={item.icon} href={item.href} index={i} linkLabel="Daha fazla bilgi" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY ANATOLIAN ============ -->
+  <section class="section why-us">
+    <div class="container">
+      <SectionHeader eyebrow="Neden Anatolian" heading="Müşteriler neden kalıyor" />
+      <div class="why-us__grid">
+        {whyPoints.map((point, i) => (
+          <div class="why-us__item reveal" style={`--reveal-delay:${(i % 3) * 90}ms`}>
+            <span class="why-us__icon"><Icon name={point.icon} /></span>
+            <h3>{point.title}</h3>
+            <p>{point.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOUNDER ============ -->
+  <section class="section founder">
+    <div class="container founder__grid">
+      <div class="founder__image-wrap reveal">
+        <Image src={founderPhoto} alt="Bektaş Ünal, Anatolian Accountancy kurucusu ve muhasebecisi" width={367} height={661} class="founder__image" />
+      </div>
+      <div class="founder__copy reveal">
+        <p class="eyebrow">Muhasebeciniz</p>
+        <h2 class="founder__heading">Bir muhasebe şirketi değil, muhasebeciniz.</h2>
+        <p class="founder__lead">
+          Bektaş Ünal, Türkiye, İngiltere, İrlanda, Suudi Arabistan ve Kamerun'da inşaat, gıda &amp; içecek,
+          tekstil, ormancılık ve dış kaynaklı muhasebe alanlarında yirmi yılı aşkın süre çalıştı. İstanbul
+          Üniversitesi'nden Muhasebe ve Denetim alanında yüksek lisans derecesine sahip, AAT tam üyesi ve
+          ACCA finalistidir.
+        </p>
+        <p class="founder__lead">
+          2019'dan bu yana Anatolian Accountancy'yi tek bir fikir üzerine inşa etti: müşteriler, sürekli
+          değişen bir vaka temsilcileri kuyruğuyla değil, işlerini gerçekten anlayan gerçek bir muhasebeciyle
+          çalışmalı.
+        </p>
+        <div class="founder__chips">
+          <span>Muhasebe ve Denetim Yüksek Lisansı</span>
+          <span>AAT Tam Üyesi</span>
+          <span>ACCA Finalisti</span>
+          <span>Türkiye · İngiltere · İrlanda · Suudi Arabistan · Kamerun</span>
+        </div>
+        <Button href="/tr/hakkimizda/" variant="outline" icon="arrow-right">Bektaş'ın hikayesini okuyun</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section class="section process">
+    <div class="container">
+      <SectionHeader eyebrow="Başlarken" heading="Müşteri olmak basittir" tone="ink" />
+      <div class="process__grid">
+        <ProcessStep
+          number="01"
+          title="Bize kendinizden bahsedin"
+          description="Ücretsiz bir görüşme ayarlayın ve ne tür bir desteğe ihtiyacınız olduğunu bize anlatın. Önce doldurulacak bir form yok."
+          index={0}
+        />
+        <ProcessStep
+          number="02"
+          title="İhtiyaçlarınızı değerlendiriyoruz"
+          description="Durumunuza bakar ve sizin için gerçekten geçerli olan muhasebe ve vergi hizmetlerini öneririz."
+          index={1}
+        />
+        <ProcessStep
+          number="03"
+          title="Rakamlarla biz ilgileniriz"
+          description="Siz işletmenizi yönetmeye devam edersiniz. Devam eden muhasebeyi biz yönetir, son tarihlerin önünde kalmanızı sağlarız."
+          index={2}
+        />
+      </div>
+      <div class="process__cta reveal">
+        <Button href="/tr/iletisim/" size="lg" variant="outline-on-ink">Ücretsiz Görüşme Talep Edin</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="section testimonials">
+    <div class="container">
+      <SectionHeader eyebrow="Müşterilerimiz ne diyor" heading="Londra genelinde işletme sahiplerinin ve bireylerin güvendiği hizmet" tone="ink" align="center" />
+      <TestimonialCarousel
+        testimonials={testimonials}
+        rating={site.googleRating}
+        reviewCount={site.googleReviewCount}
+        reviewsUrl={site.googleReviewsUrl}
+        lang="tr"
+      />
+    </div>
+  </section>
+
+  <!-- ============ ENGLISH CALLOUT ============ -->
+  <section class="section bilingual">
+    <div class="container">
+      <div class="bilingual__panel reveal">
+        <div class="bilingual__text">
+          <p class="eyebrow">İki dilli hizmet</p>
+          <h2>İngilizce görüşmeyi mi tercih edersiniz?</h2>
+          <p class="bilingual__desc">
+            Bektaş anadili Türkçe olup ileri düzey İngilizce konuşmaktadır. Hesaplarınızı, vergi durumunuzu
+            veya iş planlarınızı en rahat olduğunuz dilde görüşebilirsiniz.
+          </p>
+          <p class="bilingual__tr">Click here for information in English.</p>
+        </div>
+        <Button href="/" size="lg" icon="arrow-right">View in English</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section faq">
+    <div class="container faq__grid">
+      <SectionHeader eyebrow="Sık sorulan sorular" heading="Sormadan önce cevaplar" class="faq__header" />
+      <Accordion items={faqItems} />
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <CTASection
+    eyebrow="Ne zaman hazır olursanız"
+    heading="Muhasebenizi birlikte kolaylaştıralım."
+    intro="Bir ilk görüşme ayarlayın ve hangi desteğe ihtiyacınız olduğunu bize anlatın. Herhangi bir ücret ya da kayıt zorunluluğu yok."
+    lang="tr"
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Hero ---- */
+  .hero {
+    position: relative;
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .hero__glow {
+    position: absolute;
+    inset: -30% -10% auto auto;
+    width: 46rem;
+    height: 46rem;
+    z-index: 1;
+    background: radial-gradient(circle, var(--c-azure-glow), transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero__grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  .hero__heading {
+    margin-top: var(--space-5);
+    font-size: var(--fs-hero);
+    letter-spacing: var(--ls-tighter);
+    color: var(--text-on-ink);
+    max-width: 16ch;
+  }
+
+  .hero__lead {
+    margin-top: var(--space-6);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-relaxed);
+    color: var(--text-on-ink-muted);
+    max-width: 38rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .hero__trust {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-on-ink);
+  }
+
+  .hero__trust-item--text dt {
+    font-weight: 700;
+    font-size: var(--fs-small);
+    color: var(--text-on-ink);
+  }
+
+  .hero__trust-item--text dd {
+    margin: 0.2rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--text-on-ink-muted);
+  }
+
+  /* ---- Hero photo collage ---- */
+  .hero__collage {
+    position: relative;
+    width: 100%;
+    max-width: 34rem;
+    aspect-ratio: 1 / 0.88;
+    margin-inline: auto;
+  }
+
+  .hero__piece {
+    position: absolute;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .hero__piece :global(.hero__piece-img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero__piece--blob {
+    top: -4%;
+    right: -4%;
+    width: 24%;
+    height: 17%;
+    z-index: 1;
+    background: var(--c-ink-600);
+    border-radius: 62% 38% 55% 45% / 48% 55% 45% 52%;
+    box-shadow: none;
+  }
+
+  .hero__piece--street {
+    left: 0;
+    top: 4%;
+    width: 30%;
+    height: 60%;
+    z-index: 2;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero__piece--work {
+    left: 26%;
+    top: 0;
+    width: 44%;
+    height: 68%;
+    z-index: 3;
+    border-radius: var(--radius-xl);
+  }
+
+  .hero__piece--gherkin {
+    right: 0;
+    top: 14%;
+    width: 30%;
+    height: 33%;
+    z-index: 2;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero__piece--charts {
+    right: 0;
+    top: 49%;
+    width: 32%;
+    height: 27%;
+    z-index: 2;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero__piece--desk {
+    left: 30%;
+    top: 57%;
+    width: 23%;
+    height: 20%;
+    z-index: 4;
+    border-radius: var(--radius-full);
+    border: 4px solid var(--bg-ink);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero__piece--blob2 {
+    left: 0%;
+    top: 52%;
+    width: 20%;
+    height: 17%;
+    z-index: 1;
+    background: var(--c-azure-500);
+    border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%;
+    box-shadow: none;
+  }
+
+  @media (min-width: 980px) {
+    .hero__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: var(--space-12);
+    }
+
+    .hero__collage {
+      margin-top: var(--space-8);
+      margin-left: auto;
+      margin-right: 0;
+    }
+
+    .hero__trust {
+      grid-template-columns: repeat(4, auto);
+    }
+  }
+
+  /* ---- Trust strip ---- */
+  .trust-strip__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .trust-strip__label {
+    font-size: var(--fs-eyebrow);
+    font-weight: 700;
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .trust-strip__badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) 0;
+  }
+
+  .trust-strip__logo {
+    display: flex;
+    align-items: center;
+    padding-inline: var(--space-4);
+    border-left: 1px solid var(--border-subtle);
+  }
+
+  .trust-strip__logo:first-child {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .trust-strip__logo :global(img) {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .trust-strip__logo--xero {
+    gap: var(--space-3);
+  }
+
+  .trust-strip__xero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .trust-strip__xero-label {
+    font-weight: 700;
+    font-size: var(--fs-small);
+    color: var(--text-primary);
+  }
+
+  .trust-strip__xero-sublabel {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+  }
+
+  /* ---- How we help ---- */
+  .how-we-help__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+  }
+
+  /* ---- Services ---- */
+  .services-section--alt {
+    background: var(--bg-muted);
+  }
+
+  .services-section__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--space-6);
+  }
+
+  :global(.services-section__all) {
+    flex-shrink: 0;
+  }
+
+  .services-section__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+  }
+
+  /* ---- Why us ---- */
+  .why-us__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-8) var(--space-6);
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+
+  .why-us__item {
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .why-us__icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-md);
+    background: var(--bg-muted);
+    color: var(--accent-strong);
+  }
+
+  .why-us__icon :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .why-us__item h3 {
+    margin-top: var(--space-4);
+    font-size: 1.2rem;
+  }
+
+  .why-us__item p {
+    margin-top: var(--space-2);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+    font-size: var(--fs-small);
+  }
+
+  /* ---- Founder ---- */
+  .founder {
+    background: var(--bg-surface);
+  }
+
+  .founder__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-10);
+    align-items: center;
+  }
+
+  .founder__image-wrap {
+    position: relative;
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  .founder__image-wrap::before {
+    content: '';
+    position: absolute;
+    top: -1rem;
+    left: -1rem;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    border: 1.5px solid var(--accent);
+    border-radius: var(--radius-lg);
+    z-index: 0;
+  }
+
+  :global(.founder__image) {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    object-fit: cover;
+  }
+
+  .founder__heading {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h1);
+  }
+
+  .founder__lead {
+    margin-top: var(--space-5);
+    font-size: 1.0625rem;
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .founder__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: var(--space-6) 0 var(--space-8);
+  }
+
+  .founder__chips span {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-muted);
+    color: var(--text-secondary);
+  }
+
+  @media (min-width: 900px) {
+    .founder__grid {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: var(--space-16);
+    }
+
+    .founder__image-wrap {
+      margin-inline: 0;
+    }
+  }
+
+  /* ---- Process ---- */
+  .process {
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+  }
+
+  .process__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    gap: var(--space-10);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .process__cta {
+    margin-top: var(--space-12);
+  }
+
+  @media (min-width: 800px) {
+    .process__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* ---- Testimonials ---- */
+  .testimonials {
+    background: var(--c-ink-800);
+    color: var(--text-on-ink);
+  }
+
+  /* ---- Bilingual ---- */
+  .bilingual__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    border-left: 4px solid var(--accent);
+  }
+
+  .bilingual__text {
+    min-width: 0;
+  }
+
+  .bilingual__panel h2 {
+    margin-top: var(--space-3);
+    font-size: var(--fs-h2);
+  }
+
+  .bilingual__desc {
+    margin-top: var(--space-4);
+    font-size: var(--fs-lead);
+    color: var(--text-secondary);
+    max-width: 34rem;
+  }
+
+  .bilingual__tr {
+    margin-top: var(--space-4);
+    font-style: italic;
+    color: var(--text-tertiary);
+  }
+
+  @media (min-width: 800px) {
+    .bilingual__panel {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  /* ---- FAQ ---- */
+  .faq__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-10);
+  }
+
+  @media (min-width: 900px) {
+    .faq__grid {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    }
+
+    .faq :global(.faq__header) {
+      position: sticky;
+      top: 7rem;
+      align-self: start;
+    }
+  }
+</style>

@@ -1,0 +1,298 @@
+---
+// NOTE: form submissions post to Web3Forms (https://web3forms.com) — a
+// free, no-backend form endpoint that suits static hosting on Hostinger.
+// TODO before launch: create a free Web3Forms account and replace the
+// placeholder access key below with the real one.
+const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+
+interface Props {
+  lang?: 'en' | 'tr';
+}
+
+const { lang = 'en' } = Astro.props;
+const isTurkish = lang === 'tr';
+
+const topicOptions = isTurkish
+  ? [
+      'Yıllık hesaplar ve ön muhasebe',
+      'Kurumlar vergisi',
+      'Kişisel vergi beyannamesi (Self Assessment)',
+      'KDV',
+      'Bordro ve emeklilik katkı payları',
+      'Şirket kuruluşu',
+      'CIS / inşaat sektörü',
+      'E-ticaret muhasebesi',
+      'Muhasebeci değişikliği',
+      'Diğer',
+    ]
+  : [
+      'Annual accounts & bookkeeping',
+      'Corporation tax',
+      'Self Assessment',
+      'VAT',
+      'Payroll & pensions',
+      'Company formation',
+      'CIS / construction',
+      'E-commerce accounting',
+      'Switching accountants',
+      'Something else',
+    ];
+
+const businessTypeOptions = isTurkish
+  ? ['Limited şirket', 'Şahıs şirketi', 'Ortaklık', 'Henüz kayıtlı değil', 'Bireysel / kişisel vergi']
+  : ['Limited company', 'Sole trader', 'Partnership', 'Not yet registered', 'Individual / personal tax'];
+---
+
+<form id="contact-form" class="contact-form" novalidate data-lang={lang}>
+  <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+  <input type="checkbox" name="botcheck" class="sr-only" tabindex="-1" autocomplete="off" />
+  <input
+    type="hidden"
+    name="subject"
+    value={isTurkish ? 'anatolianaccountancy.com üzerinden yeni talep (Türkçe)' : 'New enquiry from anatolianaccountancy.com'}
+  />
+
+  <div class="contact-form__row">
+    <label for="name">{isTurkish ? 'Ad Soyad' : 'Name'}<span aria-hidden="true">*</span></label>
+    <input type="text" id="name" name="name" autocomplete="name" required />
+  </div>
+
+  <div class="contact-form__grid">
+    <div class="contact-form__row">
+      <label for="email">Email<span aria-hidden="true">*</span></label>
+      <input type="email" id="email" name="email" autocomplete="email" required />
+    </div>
+    <div class="contact-form__row">
+      <label for="phone">{isTurkish ? 'Telefon' : 'Phone'}</label>
+      <input type="tel" id="phone" name="phone" autocomplete="tel" />
+    </div>
+  </div>
+
+  <div class="contact-form__grid">
+    <div class="contact-form__row">
+      <label for="topic">{isTurkish ? 'Konu' : 'I need help with'}<span aria-hidden="true">*</span></label>
+      <select id="topic" name="topic" required>
+        <option value="">{isTurkish ? 'Bir seçenek belirleyin' : 'Select an option'}</option>
+        {topicOptions.map((option) => <option>{option}</option>)}
+      </select>
+    </div>
+    <div class="contact-form__row">
+      <label for="business-type">
+        {isTurkish ? 'İşletme türü' : 'Business type'} <span class="contact-form__optional">{isTurkish ? '(isteğe bağlı)' : '(optional)'}</span>
+      </label>
+      <select id="business-type" name="business_type">
+        <option value="">{isTurkish ? 'Bir seçenek belirleyin' : 'Select an option'}</option>
+        {businessTypeOptions.map((option) => <option>{option}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <div class="contact-form__row">
+    <label for="message">{isTurkish ? 'Mesajınız' : 'Message'}<span aria-hidden="true">*</span></label>
+    <textarea id="message" name="message" rows="4" required></textarea>
+  </div>
+
+  <button type="submit" class="contact-form__submit">
+    <span class="contact-form__submit-label">{isTurkish ? 'Görüşme Talebimi Gönder' : 'Request My Consultation'}</span>
+    <span class="contact-form__spinner" aria-hidden="true"></span>
+  </button>
+
+  <p class="contact-form__status" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = form?.querySelector<HTMLParagraphElement>('.contact-form__status');
+  const submitBtn = form?.querySelector<HTMLButtonElement>('.contact-form__submit');
+  const isTurkish = form?.dataset.lang === 'tr';
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+
+    form.classList.add('is-loading');
+    submitBtn?.setAttribute('disabled', 'true');
+    if (status) {
+      status.textContent = '';
+      status.className = 'contact-form__status';
+    }
+
+    try {
+      const formData = new FormData(form);
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        form.reset();
+        form.hidden = true;
+        if (status) {
+          status.textContent = isTurkish
+            ? 'Teşekkürler! Talebiniz elimize ulaştı, en kısa sürede size dönüş yapacağız.'
+            : "Thank you! We've received your enquiry and will be in touch shortly.";
+          status.className = 'contact-form__status contact-form__status--success';
+          status.hidden = false;
+        }
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
+    } catch (err) {
+      if (status) {
+        status.textContent = isTurkish
+          ? 'Mesajınız gönderilirken bir sorun oluştu. Lütfen soldaki bilgileri kullanarak bizi doğrudan arayın veya e-posta gönderin.'
+          : 'Something went wrong sending your message. Please call or email us directly using the details on the left.';
+        status.className = 'contact-form__status contact-form__status--error';
+      }
+    } finally {
+      form.classList.remove('is-loading');
+      submitBtn?.removeAttribute('disabled');
+    }
+  });
+</script>
+
+<style>
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .contact-form__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 560px) {
+    .contact-form__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  .contact-form__row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact-form__row label {
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .contact-form__row label span[aria-hidden] {
+    color: var(--text-accent);
+    margin-left: 0.15rem;
+  }
+
+  .contact-form__optional {
+    font-weight: 400;
+    color: var(--text-tertiary);
+  }
+
+  input,
+  select,
+  textarea {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-strong);
+    background: var(--bg-surface-raised);
+    color: var(--text-primary);
+    min-height: 48px;
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: var(--focus-ring);
+  }
+
+  .contact-form__submit {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: var(--space-2);
+    padding: 1rem 1.75rem;
+    border: none;
+    border-radius: var(--radius-full);
+    background: var(--cta);
+    color: var(--c-ink-950);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    min-height: 48px;
+    transition: background var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+  }
+
+  .contact-form__submit:hover {
+    background: var(--cta-hover);
+  }
+
+  .contact-form__submit:disabled {
+    cursor: progress;
+    opacity: 0.85;
+  }
+
+  .contact-form__spinner {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid rgba(11, 21, 36, 0.3);
+    border-top-color: var(--c-ink-950);
+  }
+
+  .contact-form.is-loading .contact-form__spinner {
+    display: inline-block;
+    animation: spin 700ms linear infinite;
+  }
+
+  .contact-form.is-loading .contact-form__submit-label {
+    opacity: 0.75;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .contact-form__status {
+    margin: 0;
+    font-size: var(--fs-small);
+    font-weight: 600;
+  }
+
+  .contact-form__status:empty {
+    display: none;
+  }
+
+  .contact-form__status--success {
+    color: var(--c-success);
+  }
+
+  .contact-form__status--error {
+    color: var(--c-error);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-form__spinner {
+      animation: none;
+    }
+  }
+</style>

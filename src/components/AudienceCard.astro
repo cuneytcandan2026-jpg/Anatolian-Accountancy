@@ -1,0 +1,110 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  icon: string;
+  href: string;
+  index: number;
+}
+
+const { title, description, icon, href, index } = Astro.props;
+---
+
+<a href={href} class="audience-card reveal" style={`--reveal-delay:${(index % 3) * 80}ms`}>
+  <span class="audience-card__index">{String(index + 1).padStart(2, '0')}</span>
+  <span class="audience-card__icon"><Icon name={icon} /></span>
+  <span class="audience-card__title">{title}</span>
+  <span class="audience-card__desc">{description}</span>
+  <span class="audience-card__arrow"><Icon name="arrow-right" /></span>
+</a>
+
+<style>
+  .audience-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-6) var(--space-6) var(--space-8);
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--text-primary);
+    overflow: hidden;
+    transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out);
+  }
+
+  .audience-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: transparent;
+  }
+
+  .audience-card__index {
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
+    color: var(--text-tertiary);
+  }
+
+  .audience-card__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-md);
+    background: var(--bg-muted);
+    color: var(--accent-strong);
+    margin-top: var(--space-2);
+  }
+
+  .audience-card__icon :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+
+  .audience-card__title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 560;
+    letter-spacing: var(--ls-tight);
+    margin-top: var(--space-2);
+  }
+
+  .audience-card__desc {
+    font-size: var(--fs-small);
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .audience-card__arrow {
+    position: absolute;
+    top: var(--space-6);
+    right: var(--space-6);
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-muted);
+    color: var(--text-primary);
+    opacity: 0;
+    transform: translate(-6px, 6px);
+    transition: opacity var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out),
+      background var(--duration-base) var(--ease-out), color var(--duration-base) var(--ease-out);
+  }
+
+  .audience-card__arrow :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+
+  .audience-card:hover .audience-card__arrow {
+    opacity: 1;
+    transform: translate(0, 0);
+    background: var(--accent);
+    color: var(--c-ink-950);
+  }
+</style>

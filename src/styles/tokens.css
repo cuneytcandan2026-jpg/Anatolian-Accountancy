@@ -1,0 +1,150 @@
+/*
+  Design tokens — Anatolian Accountancy
+  Deep financial navy + warm ivory, with bronze narrowed to a CTA-only
+  action colour and a new azure scale carrying every decorative/informational
+  accent (links, icons, borders, focus rings).
+*/
+
+:root {
+  /* ---- Colour: core palette ---- */
+  --c-ink-950: #081c33;
+  --c-ink-900: #144867;
+  --c-ink-800: #1c5d82;
+  --c-ink-700: #27709b;
+  --c-ink-600: #3487b7;
+  --c-ink-500: #519cc8;
+
+  --c-azure-300: #a4d0ea;
+  --c-azure-400: #65b4e2;
+  --c-azure-500: #1376ae;
+  --c-azure-600: #0c5b88;
+  --c-azure-glow: rgba(19, 118, 174, 0.18);
+
+  --c-ivory-50: #fdfbf7;
+  --c-ivory-100: #faf6ee;
+  --c-ivory-200: #f2ebdd;
+  --c-ivory-300: #e7ddc7;
+
+  --c-stone-400: #b3a996;
+  --c-stone-500: #8f8574;
+  --c-stone-600: #726a5c;
+  --c-stone-700: #574f45;
+
+  --c-bronze-300: #d9b378;
+  --c-bronze-400: #c69a55;
+  --c-bronze-500: #ab7d3a;
+  --c-bronze-600: #8c632c;
+  --c-bronze-glow: rgba(171, 125, 58, 0.35);
+
+  --c-white: #ffffff;
+
+  /* status (used sparingly — form states) */
+  --c-success: #3f6b4f;
+  --c-error: #a3402f;
+
+  /* ---- Colour: semantic tokens ---- */
+  --bg-base: var(--c-ivory-100);
+  --bg-surface: var(--c-ivory-50);
+  --bg-surface-raised: var(--c-white);
+  --bg-muted: var(--c-ivory-200);
+  --bg-ink: var(--c-ink-900);
+  --bg-ink-elevated: var(--c-ink-800);
+  --bg-ink-soft: var(--c-ink-700);
+
+  --text-primary: var(--c-ink-900);
+  --text-secondary: var(--c-stone-600);
+  --text-tertiary: var(--c-stone-500);
+  --text-on-ink: var(--c-ivory-100);
+  --text-on-ink-muted: rgba(250, 246, 238, 0.66);
+  --text-accent: var(--c-azure-500);
+  --text-accent-on-ink: var(--c-azure-300);
+
+  --border-subtle: rgba(20, 72, 103, 0.1);
+  --border-strong: rgba(20, 72, 103, 0.18);
+  --border-on-ink: rgba(250, 246, 238, 0.16);
+
+  --accent: var(--c-azure-500);
+  --accent-strong: var(--c-azure-600);
+  --accent-soft: var(--c-azure-300);
+
+  /* CTA is the one place bronze survives — deliberately distinct from
+     the azure accent used everywhere else, so the action colour pops. */
+  --cta: var(--c-bronze-500);
+  --cta-hover: var(--c-bronze-400);
+
+  --focus-ring: 0 0 0 3px rgba(19, 118, 174, 0.45);
+
+  /* ---- Typography ---- */
+  --font-display: 'Fraunces Variable', 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --fs-eyebrow: 0.8125rem;
+  --fs-small: 0.9375rem;
+  --fs-body: 1.0625rem;
+  --fs-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.375rem);
+  --fs-h3: clamp(1.375rem, 1.25rem + 0.55vw, 1.75rem);
+  --fs-h2: clamp(1.85rem, 1.55rem + 1.3vw, 2.75rem);
+  --fs-h1: clamp(2.5rem, 1.9rem + 2.6vw, 4rem);
+  --fs-hero: clamp(2.75rem, 1.9rem + 3.8vw, 5.25rem);
+
+  --lh-tight: 1.05;
+  --lh-snug: 1.25;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.7;
+
+  --ls-tight: -0.025em;
+  --ls-tighter: -0.035em;
+  --ls-wide: 0.06em;
+  --ls-wider: 0.14em;
+
+  /* ---- Spacing (4px grid) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+  --space-10: 4rem;
+  --space-12: 5rem;
+  --space-16: 6rem;
+  --space-20: clamp(4rem, 3rem + 4vw, 8rem);
+  --space-section: clamp(4.5rem, 3.5rem + 4.5vw, 9rem);
+
+  /* ---- Layout ---- */
+  --container-max: 1320px;
+  --container-narrow: 860px;
+  --container-padding: clamp(1.25rem, 3vw + 0.5rem, 4rem);
+
+  /* Height of MobileActionBar's fixed CTA strip (<900px) — used to reserve
+     scroll clearance so it never permanently covers page-bottom content. */
+  --mobile-action-bar-h: calc(56px + env(safe-area-inset-bottom));
+
+  /* ---- Radius ---- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --radius-full: 999px;
+
+  /* ---- Shadow (navy-tinted, low opacity) ---- */
+  --shadow-sm: 0 1px 2px rgba(20, 72, 103, 0.07);
+  --shadow-md: 0 12px 28px -12px rgba(20, 72, 103, 0.22);
+  --shadow-lg: 0 28px 56px -20px rgba(20, 72, 103, 0.28);
+  --shadow-cta: 0 16px 32px -14px var(--c-bronze-glow);
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 180ms;
+  --duration-base: 360ms;
+  --duration-slow: 720ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}

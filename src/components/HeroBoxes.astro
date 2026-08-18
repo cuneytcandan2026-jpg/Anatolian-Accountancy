@@ -1,0 +1,93 @@
+---
+/*
+  Vanilla recreation of the Aceternity "Background Boxes" effect — a skewed
+  grid of bordered cells that light up on hover. The original ships as a
+  React/framer-motion component rendering 150x100 (15,000) divs with
+  rainbow hover colours; this project is a static Astro site with no
+  client framework (see CLAUDE.md), so this version:
+  - builds the grid at build time (zero client JS — hover is plain CSS)
+  - uses a ~1,900-cell grid (87% fewer nodes) sized to still cover a
+    full-bleed hero at typical desktop widths/heights
+  - cycles hover colours through the site's own azure/bronze/ink tokens
+    instead of the original's rainbow palette
+  Decorative only — aria-hidden, hidden on small screens (no hover there,
+  and it's unnecessary DOM weight on mobile).
+*/
+const COLS = 40;
+const CELLS_PER_COL = 48;
+const columns = Array.from({ length: COLS });
+const cells = Array.from({ length: CELLS_PER_COL });
+---
+
+<div class="hero-boxes" aria-hidden="true">
+  {columns.map((_, i) => (
+    <div class="hero-boxes__col">
+      {cells.map((_, j) => (
+        <div class:list={["hero-boxes__cell", `hero-boxes__cell--c${(i + j) % 5}`]}>
+          {i % 3 === 0 && j % 4 === 0 && (
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              class="hero-boxes__plus"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+            </svg>
+          )}
+        </div>
+      ))}
+    </div>
+  ))}
+</div>
+
+<style>
+  .hero-boxes {
+    position: absolute;
+    inset: -20%;
+    z-index: 0;
+    display: flex;
+    transform: skewX(-18deg) skewY(9deg);
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, white 45%, transparent 92%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, white 45%, transparent 92%);
+  }
+
+  .hero-boxes__col {
+    position: relative;
+    width: 64px;
+    height: 32px;
+    flex-shrink: 0;
+    border-left: 1px solid var(--border-on-ink);
+  }
+
+  .hero-boxes__cell {
+    position: relative;
+    width: 64px;
+    height: 32px;
+    border-right: 1px solid var(--border-on-ink);
+    border-top: 1px solid var(--border-on-ink);
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .hero-boxes__cell--c0:hover { background-color: var(--c-azure-300); }
+  .hero-boxes__cell--c1:hover { background-color: var(--c-azure-400); }
+  .hero-boxes__cell--c2:hover { background-color: var(--c-azure-500); }
+  .hero-boxes__cell--c3:hover { background-color: var(--c-bronze-400); }
+  .hero-boxes__cell--c4:hover { background-color: var(--c-ink-500); }
+
+  .hero-boxes__plus {
+    position: absolute;
+    top: -14px;
+    left: -22px;
+    width: 40px;
+    height: 24px;
+    color: var(--border-on-ink);
+    pointer-events: none;
+  }
+
+  @media (max-width: 767px) {
+    .hero-boxes {
+      display: none;
+    }
+  }
+</style>

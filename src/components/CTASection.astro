@@ -1,0 +1,78 @@
+---
+import Button from './Button.astro';
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  intro?: string;
+  lang?: 'en' | 'tr';
+}
+
+const { eyebrow, heading, intro, lang = 'en' } = Astro.props;
+const isTurkish = lang === 'tr';
+const contactHref = isTurkish ? '/tr/iletisim/' : '/contact/';
+---
+
+<section class="final-cta">
+  <div class="container final-cta__inner reveal">
+    <p class="eyebrow eyebrow--on-ink">{eyebrow}</p>
+    <h2 class="final-cta__heading">{heading}</h2>
+    {intro && <p class="final-cta__intro">{intro}</p>}
+    <div class="final-cta__actions">
+      <Button href={contactHref} size="lg">{isTurkish ? 'Ücretsiz Görüşme Talep Edin' : 'Book a Free Consultation'}</Button>
+      <Button href="tel:+447541173722" size="lg" variant="outline-on-ink" icon="phone">
+        {isTurkish ? "Bektaş'ı doğrudan arayın" : 'Call Bektaş directly'}
+      </Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .final-cta {
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    inset: -20% -10% auto auto;
+    width: 40rem;
+    height: 40rem;
+    background: radial-gradient(circle, var(--c-azure-glow), transparent 65%);
+    pointer-events: none;
+  }
+
+  .final-cta__inner {
+    position: relative;
+    padding-block: calc(var(--space-section) / 2) var(--space-section);
+    text-align: center;
+    max-width: 46rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .final-cta__heading {
+    font-size: var(--fs-h1);
+    color: var(--text-on-ink);
+  }
+
+  .final-cta__intro {
+    font-size: var(--fs-lead);
+    color: var(--text-on-ink-muted);
+    max-width: 34rem;
+  }
+
+  .final-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+  }
+</style>

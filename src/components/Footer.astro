@@ -1,0 +1,231 @@
+---
+import Icon from './Icon.astro';
+import { site, primaryNav, primaryNavTr } from '../lib/site';
+
+const isTurkish = Astro.url.pathname.startsWith('/tr/');
+const nav = isTurkish ? primaryNavTr : primaryNav;
+const homeHref = isTurkish ? '/tr/' : '/';
+const year = new Date().getFullYear();
+const socialLinks = [
+  { key: 'facebook', href: site.social.facebook, label: 'Facebook' },
+  { key: 'instagram', href: site.social.instagram, label: 'Instagram' },
+  { key: 'linkedin', href: site.social.linkedin, label: 'LinkedIn' },
+].filter((s) => s.href);
+---
+
+<footer class="footer">
+  <div class="container footer__top">
+    <div class="footer__brand">
+      <a href={homeHref} class="footer__logo" aria-label={`${site.name} home`}>
+        <img src="/logo.svg" alt="" width="163" height="61" />
+        <span class="sr-only">{site.name}</span>
+      </a>
+      <p class="footer__desc">
+        {isTurkish
+          ? 'Londra ve İngiltere genelinde şirketler, taşeronlar, mülk sahipleri ve bireyler için İngilizce veya Türkçe muhasebe, vergi ve işletme desteği.'
+          : 'Accounting, tax and business support for companies, contractors, landlords and individuals across London and the UK, in English or Turkish.'}
+      </p>
+      {socialLinks.length > 0 && (
+        <div class="footer__social">
+          {socialLinks.map((s) => (
+            <a href={s.href ?? '#'} aria-label={s.label} target="_blank" rel="noopener noreferrer">
+              <Icon name={s.key} />
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <nav class="footer__nav" aria-label={isTurkish ? 'Alt bilgi' : 'Footer'}>
+      <p class="footer__col-title">{isTurkish ? 'Site' : 'Site'}</p>
+      <ul>
+        <li><a href={homeHref}>{isTurkish ? 'Ana Sayfa' : 'Home'}</a></li>
+        {nav.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="footer__contact">
+      <p class="footer__col-title">{isTurkish ? 'İletişim' : 'Get in touch'}</p>
+      <ul>
+        <li>
+          <a href={site.phoneHref} class="footer__contact-row"><Icon name="phone" /><span>{site.phoneDisplay}</span></a>
+        </li>
+        <li>
+          <a href={site.emailHref} class="footer__contact-row"><Icon name="mail" /><span>{site.email}</span></a>
+        </li>
+        <li>
+          <span class="footer__contact-row"><Icon name="map-pin" /><span>{site.address.line1}, {site.address.city} {site.address.postcode}</span></span>
+        </li>
+        <li>
+          <span class="footer__contact-row"><Icon name="clock" /><span>{isTurkish ? site.hoursTr : site.hours}</span></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>&copy; {year} {site.name}. {isTurkish ? 'Tüm hakları saklıdır.' : 'All rights reserved.'}</p>
+    <div class="footer__legal">
+      <a href="/privacy-policy/">{isTurkish ? 'Gizlilik Politikası' : 'Privacy Policy'}</a>
+      <a href="/terms/">{isTurkish ? 'Şartlar ve Koşullar' : 'Terms & Conditions'}</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--bg-ink);
+    color: var(--text-on-ink-muted);
+  }
+
+  .footer__top {
+    display: grid;
+    gap: var(--space-10);
+    padding-block: var(--space-16) var(--space-10);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .footer__logo {
+    display: inline-flex;
+    background: var(--bg-surface-raised);
+    padding: 0.6rem 0.85rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .footer__brand img {
+    height: 48px;
+    width: auto;
+  }
+
+  .footer__desc {
+    margin-top: var(--space-4);
+    max-width: 26rem;
+    line-height: var(--lh-relaxed);
+    font-size: var(--fs-small);
+  }
+
+  .footer__social {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  .footer__social a {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-on-ink);
+    color: var(--text-on-ink-muted);
+    transition: border-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer__social a :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+
+  .footer__social a:hover {
+    color: var(--text-accent-on-ink);
+    border-color: var(--text-accent-on-ink);
+  }
+
+  .footer__col-title {
+    font-family: var(--font-body);
+    font-size: var(--fs-eyebrow);
+    font-weight: 700;
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--text-on-ink);
+    margin-bottom: var(--space-5);
+  }
+
+  .footer__nav ul,
+  .footer__contact ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    font-size: var(--fs-small);
+  }
+
+  .footer__nav a {
+    text-decoration: none;
+    color: var(--text-on-ink-muted);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer__nav a:hover {
+    color: var(--text-on-ink);
+  }
+
+  .footer__contact li {
+    display: flex;
+    min-width: 0;
+  }
+
+  .footer__contact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    min-width: 0;
+    text-decoration: none;
+    color: var(--text-on-ink-muted);
+  }
+
+  .footer__contact-row span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .footer__contact-row {
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  a.footer__contact-row:hover {
+    color: var(--text-on-ink);
+  }
+
+  .footer__contact :global(svg) {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    margin-top: 0.1em;
+    color: var(--text-accent-on-ink);
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    justify-content: space-between;
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--border-on-ink);
+    font-size: var(--fs-eyebrow);
+  }
+
+  .footer__legal {
+    display: flex;
+    gap: var(--space-5);
+  }
+
+  .footer__legal a {
+    text-decoration: none;
+    color: var(--text-on-ink-muted);
+  }
+
+  .footer__legal a:hover {
+    color: var(--text-on-ink);
+  }
+
+  @media (min-width: 700px) {
+    .footer__top {
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1fr);
+    }
+  }
+</style>
