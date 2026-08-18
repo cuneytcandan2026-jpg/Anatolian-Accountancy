@@ -1,8 +1,8 @@
 ---
 import Icon from './Icon.astro';
-import { site, primaryNav, primaryNavTr } from '../lib/site';
+import { site, primaryNav, primaryNavTr, withBase, stripBase } from '../lib/site';
 
-const isTurkish = Astro.url.pathname.startsWith('/tr/');
+const isTurkish = stripBase(Astro.url.pathname).startsWith('/tr/');
 const nav = isTurkish ? primaryNavTr : primaryNav;
 const homeHref = isTurkish ? '/tr/' : '/';
 const year = new Date().getFullYear();
@@ -16,8 +16,8 @@ const socialLinks = [
 <footer class="footer">
   <div class="container footer__top">
     <div class="footer__brand">
-      <a href={homeHref} class="footer__logo" aria-label={`${site.name} home`}>
-        <img src="/logo.svg" alt="" width="163" height="61" />
+      <a href={withBase(homeHref)} class="footer__logo" aria-label={`${site.name} home`}>
+        <img src={withBase('/logo.svg')} alt="" width="163" height="61" />
         <span class="sr-only">{site.name}</span>
       </a>
       <p class="footer__desc">
@@ -39,9 +39,9 @@ const socialLinks = [
     <nav class="footer__nav" aria-label={isTurkish ? 'Alt bilgi' : 'Footer'}>
       <p class="footer__col-title">{isTurkish ? 'Site' : 'Site'}</p>
       <ul>
-        <li><a href={homeHref}>{isTurkish ? 'Ana Sayfa' : 'Home'}</a></li>
+        <li><a href={withBase(homeHref)}>{isTurkish ? 'Ana Sayfa' : 'Home'}</a></li>
         {nav.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
+          <li><a href={withBase(item.href)}>{item.label}</a></li>
         ))}
       </ul>
     </nav>
@@ -68,8 +68,8 @@ const socialLinks = [
   <div class="container footer__bottom">
     <p>&copy; {year} {site.name}. {isTurkish ? 'Tüm hakları saklıdır.' : 'All rights reserved.'}</p>
     <div class="footer__legal">
-      <a href="/privacy-policy/">{isTurkish ? 'Gizlilik Politikası' : 'Privacy Policy'}</a>
-      <a href="/terms/">{isTurkish ? 'Şartlar ve Koşullar' : 'Terms & Conditions'}</a>
+      <a href={withBase('/privacy-policy/')}>{isTurkish ? 'Gizlilik Politikası' : 'Privacy Policy'}</a>
+      <a href={withBase('/terms/')}>{isTurkish ? 'Şartlar ve Koşullar' : 'Terms & Conditions'}</a>
     </div>
   </div>
 </footer>

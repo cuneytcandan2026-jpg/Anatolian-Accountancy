@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { withBase } from '../lib/site';
 
 interface Props {
   href: string;
@@ -11,10 +12,11 @@ interface Props {
 
 const { href, variant = 'primary', size = 'md', icon = 'arrow-right', class: className = '' } = Astro.props;
 const isExternal = href.startsWith('http') || href.startsWith('tel:') || href.startsWith('mailto:');
+const resolvedHref = isExternal || href.startsWith('#') ? href : withBase(href);
 ---
 
 <a
-  href={href}
+  href={resolvedHref}
   class={`btn btn--${variant} btn--${size} ${className}`}
   target={isExternal && href.startsWith('http') ? '_blank' : undefined}
   rel={isExternal && href.startsWith('http') ? 'noopener noreferrer' : undefined}

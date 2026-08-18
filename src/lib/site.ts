@@ -36,6 +36,23 @@ export type NavItem = {
   href: string;
 };
 
+// All hrefs in this file (and in content collection frontmatter) are root-
+// relative, written for the real domain. withBase()/stripBase() translate
+// between that and Astro.url.pathname, which includes the configured `base`
+// (e.g. the /Anatolian-Accountancy prefix on the GitHub Pages preview build).
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+
+export function withBase(path: string): string {
+  return path === '/' ? base : base + path.replace(/^\//, '');
+}
+
+export function stripBase(pathname: string): string {
+  if (base === '/') return pathname;
+  if (pathname === base.slice(0, -1)) return '/';
+  if (!pathname.startsWith(base)) return pathname;
+  return '/' + pathname.slice(base.length);
+}
+
 export const primaryNav: NavItem[] = [
   { label: 'Services', href: '/services/' },
   { label: 'Who We Help', href: '/who-we-help/' },

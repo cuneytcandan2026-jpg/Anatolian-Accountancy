@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { withBase } from '../lib/site';
 
 interface Props {
   title: string;
@@ -12,7 +13,7 @@ interface Props {
 const { title, description, icon, href, index } = Astro.props;
 ---
 
-<a href={href} class="audience-card reveal" style={`--reveal-delay:${(index % 3) * 80}ms`}>
+<a href={withBase(href)} class="audience-card reveal" style={`--reveal-delay:${(index % 3) * 80}ms`}>
   <span class="audience-card__index">{String(index + 1).padStart(2, '0')}</span>
   <span class="audience-card__icon"><Icon name={icon} /></span>
   <span class="audience-card__title">{title}</span>

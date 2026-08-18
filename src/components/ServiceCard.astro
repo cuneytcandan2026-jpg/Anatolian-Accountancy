@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { withBase } from '../lib/site';
 
 interface Props {
   title: string;
@@ -13,7 +14,7 @@ interface Props {
 const { title, summary, icon, href, index, linkLabel = 'Learn more' } = Astro.props;
 ---
 
-<a href={href} class="service-card reveal" style={`--reveal-delay:${(index % 3) * 80}ms`}>
+<a href={withBase(href)} class="service-card reveal" style={`--reveal-delay:${(index % 3) * 80}ms`}>
   <span class="service-card__icon"><Icon name={icon} /></span>
   <span class="service-card__title">{title}</span>
   <span class="service-card__summary">{summary}</span>
