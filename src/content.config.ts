@@ -6,7 +6,7 @@ const services = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
   schema: z.object({
     title: z.string(),
-    category: z.enum(['business-accounting', 'tax', 'vat-payroll', 'business-support', 'specialist']),
+    category: z.enum(['business-accounting', 'tax', 'vat-payroll', 'business-support', 'mtd', 'specialist']),
     summary: z.string(),
     icon: z.string(),
     order: z.number(),

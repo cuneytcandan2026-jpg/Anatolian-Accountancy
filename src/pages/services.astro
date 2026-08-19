@@ -10,6 +10,7 @@ import imgAccounting from '../assets/services/business-accounting.jpg';
 import imgTax from '../assets/services/tax.jpg';
 import imgVatPayroll from '../assets/services/vat-payroll.jpg';
 import imgSupport from '../assets/services/business-support.jpg';
+import imgMtd from '../assets/services/mtd.jpg';
 import imgConstruction from '../assets/services/specialist-construction.jpg';
 import imgEcommerce from '../assets/services/specialist-ecommerce.jpg';
 
@@ -20,6 +21,7 @@ const accounting = byCategory('business-accounting')[0];
 const tax = byCategory('tax')[0];
 const vatPayroll = byCategory('vat-payroll')[0];
 const support = byCategory('business-support')[0];
+const mtd = byCategory('mtd')[0];
 const [cis, ecommerce] = byCategory('specialist');
 
 const blocks = [
@@ -59,6 +61,15 @@ const blocks = [
     image: imgSupport,
     imageAlt: 'A laptop on a calm, modern desk beside a window',
   },
+  {
+    id: 'mtd',
+    eyebrow: 'Making Tax Digital',
+    title: mtd.data.title,
+    body: mtd.body,
+    points: ['Digital record-keeping set-up', 'MTD for VAT compliance', 'Quarterly updates for Self Assessment', 'Cloud software set-up and training'],
+    image: imgMtd,
+    imageAlt: 'A hand holding a pen beside a tablet, with printed financial charts and a calculator on the desk',
+  },
 ];
 ---
 
@@ -86,6 +97,7 @@ const blocks = [
         <a href="#tax">Tax</a>
         <a href="#vat-payroll">VAT &amp; Payroll</a>
         <a href="#business-support">Business Support</a>
+        <a href="#mtd">Making Tax Digital</a>
         <a href="#specialist">Specialist Services</a>
       </nav>
     </div>

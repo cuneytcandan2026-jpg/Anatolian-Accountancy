@@ -1,0 +1,85 @@
+---
+import Icon from './Icon.astro';
+import { stripBase } from '../lib/site';
+
+const isTurkish = stripBase(Astro.url.pathname).startsWith('/tr/');
+const label = isTurkish ? 'Yukarı çık' : 'Back to top';
+---
+
+<button type="button" id="scroll-to-top" class="scroll-top" aria-label={label} title={label}>
+  <Icon name="arrow-up" />
+</button>
+
+<script>
+  const btn = document.getElementById('scroll-to-top');
+
+  if (btn) {
+    const onScroll = () => {
+      btn.classList.toggle('is-visible', window.scrollY > 480);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    btn.addEventListener('click', () => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+  }
+</script>
+
+<style>
+  .scroll-top {
+    position: fixed;
+    right: var(--fab-edge-gap);
+    bottom: calc(env(safe-area-inset-bottom) + 1.25rem + var(--fab-size) + var(--fab-gap));
+    z-index: 95;
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: var(--radius-full);
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transform: translateY(14px) scale(0.9);
+    pointer-events: none;
+    transition: opacity var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out),
+      background var(--duration-fast) var(--ease-out);
+  }
+
+  .scroll-top.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .scroll-top:hover,
+  .scroll-top:focus-visible {
+    background: var(--accent);
+    transform: translateY(-3px) scale(1.06);
+  }
+
+  .scroll-top:active {
+    transform: scale(0.94);
+  }
+
+  .scroll-top svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (max-width: 899px) {
+    .scroll-top {
+      bottom: calc(var(--mobile-action-bar-h) + 1rem + var(--fab-size) + var(--fab-gap));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-top {
+      transition: opacity var(--duration-fast) linear;
+    }
+  }
+</style>

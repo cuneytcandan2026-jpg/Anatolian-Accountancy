@@ -4,6 +4,7 @@ export const site = {
   url: 'https://anatolianaccountancy.com',
   phoneDisplay: '+44 7541 173722',
   phoneHref: 'tel:+447541173722',
+  whatsappNumber: '447541173722',
   email: 'info@anatolianaccountancy.com',
   emailHref: 'mailto:info@anatolianaccountancy.com',
   address: {
@@ -51,6 +52,10 @@ export function stripBase(pathname: string): string {
   if (pathname === base.slice(0, -1)) return '/';
   if (!pathname.startsWith(base)) return pathname;
   return '/' + pathname.slice(base.length);
+}
+
+export function whatsappHref(message: string): string {
+  return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 
 export const primaryNav: NavItem[] = [

@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 import ContactForm from '../../components/ContactForm.astro';
-import { site } from '../../lib/site';
+import { site, whatsappHref } from '../../lib/site';
 
 const mapQuery = encodeURIComponent(
   `${site.address.line1}, ${site.address.line2}, ${site.address.city} ${site.address.postcode}`
@@ -31,6 +31,15 @@ const mapQuery = encodeURIComponent(
             <div>
               <p class="contact-details__label">Telefon</p>
               <a href={site.phoneHref}>{site.phoneDisplay}</a>
+            </div>
+          </li>
+          <li>
+            <span class="contact-details__icon contact-details__icon--whatsapp"><Icon name="whatsapp" /></span>
+            <div>
+              <p class="contact-details__label">WhatsApp</p>
+              <a href={whatsappHref('Merhaba, web sitenizden yazıyorum.')} target="_blank" rel="noopener noreferrer">
+                WhatsApp'tan yazın
+              </a>
             </div>
           </li>
           <li>
@@ -168,6 +177,11 @@ const mapQuery = encodeURIComponent(
   .contact-details__icon :global(svg) {
     width: 19px;
     height: 19px;
+  }
+
+  .contact-details__icon--whatsapp {
+    background: rgba(37, 211, 102, 0.12);
+    color: #25d366;
   }
 
   .contact-details__label {

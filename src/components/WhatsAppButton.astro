@@ -1,0 +1,117 @@
+---
+import Icon from './Icon.astro';
+import { stripBase, whatsappHref } from '../lib/site';
+
+const isTurkish = stripBase(Astro.url.pathname).startsWith('/tr/');
+const label = isTurkish ? 'WhatsApp’tan yazın' : 'Chat on WhatsApp';
+const prefill = isTurkish
+  ? 'Merhaba, web sitenizden yazıyorum.'
+  : "Hello, I'm messaging from your website.";
+---
+
+<a
+  href={whatsappHref(prefill)}
+  class="whatsapp-fab"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={label}
+>
+  <span class="whatsapp-fab__icon"><Icon name="whatsapp" /></span>
+  <span class="whatsapp-fab__label">{label}</span>
+</a>
+
+<style>
+  .whatsapp-fab {
+    position: fixed;
+    right: var(--fab-edge-gap);
+    bottom: calc(env(safe-area-inset-bottom) + 1.25rem);
+    z-index: 95;
+    display: inline-flex;
+    align-items: center;
+    height: var(--fab-size);
+    min-width: var(--fab-size);
+    border-radius: var(--radius-full);
+    background: #25d366;
+    color: #fff;
+    text-decoration: none;
+    overflow: hidden;
+    box-shadow: 0 16px 32px -12px rgba(37, 211, 102, 0.55);
+    transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .whatsapp-fab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: #25d366;
+    opacity: 0.55;
+    animation: whatsapp-pulse 2.4s var(--ease-out) infinite;
+    z-index: -1;
+  }
+
+  .whatsapp-fab:hover,
+  .whatsapp-fab:focus-visible {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 20px 40px -12px rgba(37, 211, 102, 0.65);
+  }
+
+  .whatsapp-fab:active {
+    transform: scale(0.96);
+  }
+
+  .whatsapp-fab__icon {
+    display: grid;
+    place-items: center;
+    width: var(--fab-size);
+    height: var(--fab-size);
+    flex-shrink: 0;
+  }
+
+  .whatsapp-fab__icon :global(svg) {
+    width: 29px;
+    height: 29px;
+  }
+
+  .whatsapp-fab__label {
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    white-space: nowrap;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: max-width var(--duration-base) var(--ease-out), opacity var(--duration-fast) var(--ease-out),
+      padding var(--duration-base) var(--ease-out);
+  }
+
+  .whatsapp-fab:hover .whatsapp-fab__label,
+  .whatsapp-fab:focus-visible .whatsapp-fab__label {
+    max-width: 14rem;
+    opacity: 1;
+    padding-right: 1.35rem;
+  }
+
+  @keyframes whatsapp-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    100% {
+      transform: scale(1.9);
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .whatsapp-fab {
+      bottom: calc(var(--mobile-action-bar-h) + 1rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .whatsapp-fab::before {
+      animation: none;
+    }
+  }
+</style>
