@@ -6,6 +6,10 @@ import MobileActionBar from '../components/MobileActionBar.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
 import { site, withBase, langAlternates, langAlternatesReverse } from '../lib/site';
+import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-standard-normal.woff2?url';
+import frauncesLatinExt from '@fontsource-variable/fraunces/files/fraunces-latin-ext-standard-normal.woff2?url';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import interLatinExt from '@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -69,6 +73,11 @@ const localBusinessSchema = {
 const altPath = langAlternates[path] ?? langAlternatesReverse[path];
 const enPath = lang === 'tr' ? altPath : path;
 const trPath = lang === 'tr' ? path : altPath;
+
+// Turkish headings use characters (ş, ğ, İ, ı) outside the "latin" subset,
+// so preload the "latin-ext" font files on TR pages instead.
+const frauncesPreload = lang === 'tr' ? frauncesLatinExt : frauncesLatin;
+const interPreload = lang === 'tr' ? interLatinExt : interLatin;
 ---
 
 <!doctype html>
@@ -77,6 +86,8 @@ const trPath = lang === 'tr' ? path : altPath;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="preload" href={frauncesPreload} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interPreload} as="font" type="font/woff2" crossorigin />
     <link rel="canonical" href={canonicalURL} />
     {altPath && (
       <>
