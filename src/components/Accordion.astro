@@ -42,11 +42,11 @@ if (items) {
           </button>
         </h3>
         <div
-          class="accordion__panel"
+          class={`accordion__panel ${i === 0 ? 'is-open' : ''}`}
           id={`faq-panel-${row.id}`}
           role="region"
           aria-labelledby={`faq-trigger-${row.id}`}
-          hidden={i !== 0}
+          aria-hidden={i === 0 ? 'false' : 'true'}
         >
           <div class="accordion__panel-inner">
             {Content ? <Content /> : <p>{row.answer}</p>}
@@ -66,7 +66,10 @@ if (items) {
     trigger?.addEventListener('click', () => {
       const isOpen = trigger.getAttribute('aria-expanded') === 'true';
       trigger.setAttribute('aria-expanded', String(!isOpen));
-      if (panel) panel.hidden = isOpen;
+      if (panel) {
+        panel.classList.toggle('is-open', !isOpen);
+        panel.setAttribute('aria-hidden', String(isOpen));
+      }
     });
   });
 </script>
@@ -115,12 +118,21 @@ if (items) {
   }
 
   .accordion__panel {
+    display: grid;
+    grid-template-rows: 0fr;
     overflow: hidden;
-    padding-bottom: 1.5rem;
+    transition: grid-template-rows var(--duration-base) var(--ease-out);
+  }
+
+  .accordion__panel.is-open {
+    grid-template-rows: 1fr;
   }
 
   .accordion__panel-inner {
+    min-height: 0;
+    overflow: hidden;
     max-width: 42rem;
+    padding-bottom: 1.5rem;
     color: var(--text-secondary);
     line-height: var(--lh-relaxed);
   }
