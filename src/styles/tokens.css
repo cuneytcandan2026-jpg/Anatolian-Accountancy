@@ -150,6 +150,7 @@
   --duration-fast: 180ms;
   --duration-base: 360ms;
   --duration-slow: 720ms;
+  --duration-reveal: 450ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -157,5 +158,6 @@
     --duration-fast: 0ms;
     --duration-base: 0ms;
     --duration-slow: 0ms;
+    --duration-reveal: 0ms;
   }
 }

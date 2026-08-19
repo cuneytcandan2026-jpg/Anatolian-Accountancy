@@ -224,7 +224,7 @@ const whyPoints = [
           poster="/videos/calculator-poster.jpg"
         />
       </div>
-      <div class="how-we-help__grid">
+      <div class="how-we-help__grid reveal">
         {audiences.map((item, i) => (
           <AudienceCard
             title={item.data.title}
@@ -249,9 +249,9 @@ const whyPoints = [
         />
         <Button href="/services/" variant="ghost" class="services-section__all">View all services</Button>
       </div>
-      <div class="services-section__grid">
-        {services.map((item, i) => (
-          <ServiceCard title={item.data.title} summary={item.data.summary} icon={item.data.icon} href={item.data.href} index={i} />
+      <div class="services-section__grid reveal">
+        {services.map((item) => (
+          <ServiceCard title={item.data.title} summary={item.data.summary} icon={item.data.icon} href={item.data.href} />
         ))}
       </div>
     </div>
@@ -261,9 +261,9 @@ const whyPoints = [
   <section class="section why-us">
     <div class="container">
       <SectionHeader eyebrow="Why Anatolian" heading="Why clients stay" />
-      <div class="why-us__grid">
-        {whyPoints.map((point, i) => (
-          <div class="why-us__item reveal" style={`--reveal-delay:${(i % 3) * 90}ms`}>
+      <div class="why-us__grid reveal">
+        {whyPoints.map((point) => (
+          <div class="why-us__item">
             <span class="why-us__icon"><Icon name={point.icon} /></span>
             <h3>{point.title}</h3>
             <p>{point.desc}</p>
@@ -311,24 +311,21 @@ const whyPoints = [
         heading="Becoming a client is simple"
         tone="ink"
       />
-      <div class="process__grid">
+      <div class="process__grid reveal">
         <ProcessStep
           number="01"
           title="Tell us about yourself"
           description="Book a free consultation and tell us what kind of support you need. No forms to fill in first."
-          index={0}
         />
         <ProcessStep
           number="02"
           title="We review your requirements"
           description="We look at your situation and recommend the accounting and tax services that actually apply to you."
-          index={1}
         />
         <ProcessStep
           number="03"
           title="We take care of the numbers"
           description="You get on with running your business. We manage the ongoing accounting and keep you ahead of deadlines."
-          index={2}
         />
       </div>
       <div class="process__cta reveal">

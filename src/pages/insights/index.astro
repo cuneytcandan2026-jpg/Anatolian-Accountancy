@@ -31,7 +31,7 @@ const posts = (await getCollection('blog', (e) => e.id.startsWith('en/'))).sort(
   <!-- ============ ARTICLES ============ -->
   <section class="section">
     <div class="container">
-      <div class="insights-grid">
+      <div class="insights-grid reveal">
         {posts.map((post) => (
           <BlogCard
             title={post.data.title}

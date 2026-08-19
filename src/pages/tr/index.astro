@@ -406,7 +406,7 @@ const faqSchema = {
           poster="/videos/calculator-poster.jpg"
         />
       </div>
-      <div class="how-we-help__grid">
+      <div class="how-we-help__grid reveal">
         {audiences.map((item, i) => (
           <AudienceCard title={item.title} description={item.description} icon={item.icon} href={item.href} index={i} />
         ))}
@@ -425,9 +425,9 @@ const faqSchema = {
         />
         <Button href="/tr/hizmetler/" variant="ghost" class="services-section__all">Tüm hizmetleri görün</Button>
       </div>
-      <div class="services-section__grid">
-        {services.map((item, i) => (
-          <ServiceCard title={item.title} summary={item.summary} icon={item.icon} href={item.href} index={i} linkLabel="Daha fazla bilgi" />
+      <div class="services-section__grid reveal">
+        {services.map((item) => (
+          <ServiceCard title={item.title} summary={item.summary} icon={item.icon} href={item.href} linkLabel="Daha fazla bilgi" />
         ))}
       </div>
     </div>
@@ -437,9 +437,9 @@ const faqSchema = {
   <section class="section why-us">
     <div class="container">
       <SectionHeader eyebrow="Neden Anatolian" heading="Müşteriler neden kalıyor" />
-      <div class="why-us__grid">
-        {whyPoints.map((point, i) => (
-          <div class="why-us__item reveal" style={`--reveal-delay:${(i % 3) * 90}ms`}>
+      <div class="why-us__grid reveal">
+        {whyPoints.map((point) => (
+          <div class="why-us__item">
             <span class="why-us__icon"><Icon name={point.icon} /></span>
             <h3>{point.title}</h3>
             <p>{point.desc}</p>
@@ -484,24 +484,21 @@ const faqSchema = {
   <section class="section process">
     <div class="container">
       <SectionHeader eyebrow="Başlarken" heading="Müşteri olmak basittir" tone="ink" />
-      <div class="process__grid">
+      <div class="process__grid reveal">
         <ProcessStep
           number="01"
           title="Bize kendinizden bahsedin"
           description="Ücretsiz bir görüşme ayarlayın ve ne tür bir desteğe ihtiyacınız olduğunu bize anlatın. Önce doldurulacak bir form yok."
-          index={0}
         />
         <ProcessStep
           number="02"
           title="İhtiyaçlarınızı değerlendiriyoruz"
           description="Durumunuza bakar ve sizin için gerçekten geçerli olan muhasebe ve vergi hizmetlerini öneririz."
-          index={1}
         />
         <ProcessStep
           number="03"
           title="Rakamlarla biz ilgileniriz"
           description="Siz işletmenizi yönetmeye devam edersiniz. Devam eden muhasebeyi biz yönetir, son tarihlerin önünde kalmanızı sağlarız."
-          index={2}
         />
       </div>
       <div class="process__cta reveal">

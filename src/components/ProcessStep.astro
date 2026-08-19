@@ -3,13 +3,12 @@ interface Props {
   number: string;
   title: string;
   description: string;
-  index: number;
 }
 
-const { number, title, description, index } = Astro.props;
+const { number, title, description } = Astro.props;
 ---
 
-<div class="process-step reveal" style={`--reveal-delay:${index * 100}ms`}>
+<div class="process-step">
   <span class="process-step__number">{number}</span>
   <h3 class="process-step__title">{title}</h3>
   <p class="process-step__desc">{description}</p>
