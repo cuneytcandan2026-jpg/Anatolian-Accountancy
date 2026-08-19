@@ -164,6 +164,11 @@ const homeHref = isTurkish ? '/tr/' : '/';
   .header__logo-img {
     height: 56px;
     width: auto;
+    transition: height var(--duration-base) var(--ease-out);
+  }
+
+  .header--scrolled .header__logo-img {
+    height: 44px;
   }
 
   .header__nav {
