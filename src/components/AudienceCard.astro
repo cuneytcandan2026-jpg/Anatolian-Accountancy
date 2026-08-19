@@ -38,10 +38,23 @@ const { title, description, icon, href, index } = Astro.props;
       border-color var(--duration-base) var(--ease-out);
   }
 
-  .audience-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-    border-color: transparent;
+  .audience-card:active {
+    transform: scale(0.985);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .audience-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: transparent;
+    }
+
+    .audience-card:hover .audience-card__arrow {
+      opacity: 1;
+      transform: translate(0, 0);
+      background: var(--accent);
+      color: var(--c-ink-950);
+    }
   }
 
   .audience-card__index {
@@ -100,12 +113,5 @@ const { title, description, icon, href, index } = Astro.props;
   .audience-card__arrow :global(svg) {
     width: 16px;
     height: 16px;
-  }
-
-  .audience-card:hover .audience-card__arrow {
-    opacity: 1;
-    transform: translate(0, 0);
-    background: var(--accent);
-    color: var(--c-ink-950);
   }
 </style>

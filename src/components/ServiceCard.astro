@@ -46,13 +46,23 @@ const { title, summary, icon, href, linkLabel = 'Learn more' } = Astro.props;
     transition: opacity var(--duration-base) var(--ease-out);
   }
 
-  .service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+  .service-card:active {
+    transform: scale(0.985);
   }
 
-  .service-card:hover::before {
-    opacity: 1;
+  @media (hover: hover) and (pointer: fine) {
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-card:hover .service-card__link :global(svg) {
+      transform: translateX(3px);
+    }
   }
 
   .service-card__icon {
@@ -100,9 +110,5 @@ const { title, summary, icon, href, linkLabel = 'Learn more' } = Astro.props;
     width: 15px;
     height: 15px;
     transition: transform var(--duration-fast) var(--ease-out);
-  }
-
-  .service-card:hover .service-card__link :global(svg) {
-    transform: translateX(3px);
   }
 </style>
