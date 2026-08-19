@@ -46,7 +46,7 @@ const { value, suffix = '', label } = Astro.props;
           }
         }
       },
-      { threshold: 0.6 }
+      { threshold: 0.4 }
     );
     numbers.forEach((el) => observer.observe(el));
   }
