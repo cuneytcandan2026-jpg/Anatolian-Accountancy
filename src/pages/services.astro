@@ -7,7 +7,7 @@ import SectionHeader from '../components/SectionHeader.astro';
 import CTASection from '../components/CTASection.astro';
 import TrustStrip from '../components/TrustStrip.astro';
 import Icon from '../components/Icon.astro';
-import { site } from '../lib/site';
+import { site, withBase } from '../lib/site';
 import imgAccounting from '../assets/services/business-accounting.jpg';
 import imgTax from '../assets/services/tax.jpg';
 import imgVatPayroll from '../assets/services/vat-payroll.jpg';
@@ -26,6 +26,13 @@ const support = byCategory('business-support')[0];
 const mtd = byCategory('mtd')[0];
 const [cis, ecommerce] = byCategory('specialist');
 
+// Related-reading links into /insights/ — titles are pulled from the blog
+// collection by slug so copy can't drift out of sync with the posts.
+const enPosts = await getCollection('blog', (e) => e.id.startsWith('en/'));
+const postBySlug = (slug: string) => enPosts.find((p) => p.id === `en/${slug}`);
+const relatedLinks = (slugs: string[]) =>
+  slugs.map((slug) => postBySlug(slug)).filter((p): p is NonNullable<typeof p> => Boolean(p));
+
 const blocks = [
   {
     id: 'business-accounting',
@@ -35,6 +42,7 @@ const blocks = [
     points: ['Annual accounts', 'Management accounts', 'Financial statements', 'Bookkeeping'],
     image: imgAccounting,
     imageAlt: 'A hand reviewing a printed financial report with charts and figures',
+    related: relatedLinks([]),
   },
   {
     id: 'tax',
@@ -44,6 +52,7 @@ const blocks = [
     points: ['Corporation tax returns', 'Self Assessment', 'Partnership returns', 'Capital Gains Tax', 'Rental income tax'],
     image: imgTax,
     imageAlt: 'A calculator and notebook used to work through a tax return',
+    related: relatedLinks(['self-assessment-deadlines', 'self-employed-allowable-expenses']),
   },
   {
     id: 'vat-payroll',
@@ -53,6 +62,7 @@ const blocks = [
     points: ['VAT registration and returns', 'Payroll processing', 'Workplace pension compliance'],
     image: imgVatPayroll,
     imageAlt: 'British pound sterling banknotes',
+    related: relatedLinks(['vat-registration-thresholds']),
   },
   {
     id: 'business-support',
@@ -62,6 +72,7 @@ const blocks = [
     points: ['Company formation and structuring advice', 'Cloud accounting set-up'],
     image: imgSupport,
     imageAlt: 'A laptop on a calm, modern desk beside a window',
+    related: relatedLinks(['sole-trader-vs-limited-company']),
   },
   {
     id: 'mtd',
@@ -71,8 +82,12 @@ const blocks = [
     points: ['Digital record-keeping set-up', 'MTD for VAT compliance', 'Quarterly updates for Self Assessment', 'Cloud software set-up and training'],
     image: imgMtd,
     imageAlt: 'A hand holding a pen beside a tablet, with printed financial charts and a calculator on the desk',
+    related: relatedLinks(['making-tax-digital-explained']),
   },
 ];
+
+const cisRelated = relatedLinks(['cis-guide-contractors-subcontractors']);
+const ecommerceRelated = relatedLinks(['ecommerce-multichannel-vat']);
 ---
 
 <BaseLayout
@@ -126,6 +141,17 @@ const blocks = [
             <Button href="/contact/" variant="outline" icon="arrow-right" class="service-block__cta">
               Ask about {block.title}
             </Button>
+            {block.related.length > 0 && (
+              <p class="service-block__related">
+                Related reading:{' '}
+                {block.related.map((post, i) => (
+                  <>
+                    {i > 0 && ', '}
+                    <a href={withBase(`/insights/${post.id.replace('en/', '')}/`)}>{post.data.title}</a>
+                  </>
+                ))}
+              </p>
+            )}
           </div>
           <div class="service-block__image-wrap reveal">
             <Image src={block.image} alt={block.imageAlt} width={800} height={600} class="service-block__image" />
@@ -163,6 +189,11 @@ const blocks = [
             <li><Icon name="check" /><span>Deduction statements</span></li>
           </ul>
           <Button href="/contact/" variant="outline" icon="arrow-right" class="service-block__cta">Ask about CIS</Button>
+          {cisRelated.length > 0 && (
+            <p class="service-block__related">
+              Related reading: <a href={withBase(`/insights/${cisRelated[0].id.replace('en/', '')}/`)}>{cisRelated[0].data.title}</a>
+            </p>
+          )}
         </div>
 
         <div class="specialist-card reveal" style="--reveal-delay:100ms">
@@ -185,6 +216,11 @@ const blocks = [
             <li><Icon name="check" /><span>R&amp;D tax relief, where it applies</span></li>
           </ul>
           <Button href="/contact/" variant="outline" icon="arrow-right" class="service-block__cta">Ask about e-commerce accounting</Button>
+          {ecommerceRelated.length > 0 && (
+            <p class="service-block__related">
+              Related reading: <a href={withBase(`/insights/${ecommerceRelated[0].id.replace('en/', '')}/`)}>{ecommerceRelated[0].data.title}</a>
+            </p>
+          )}
         </div>
       </div>
     </div>
@@ -341,6 +377,17 @@ const blocks = [
 
   :global(.service-block__cta) {
     margin-top: var(--space-8);
+  }
+
+  .service-block__related {
+    margin-top: var(--space-4);
+    font-size: var(--fs-small);
+    color: var(--text-tertiary);
+  }
+
+  .service-block__related a {
+    color: var(--text-accent);
+    font-weight: 600;
   }
 
   @media (min-width: 900px) {

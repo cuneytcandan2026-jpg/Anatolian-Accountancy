@@ -1,0 +1,127 @@
+---
+import Icon from './Icon.astro';
+import { withBase } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  categoryLabel: string;
+  isPlaceholder?: boolean;
+  draftLabel?: string;
+}
+
+const { title, description, href, categoryLabel, isPlaceholder = false, draftLabel = 'Draft' } = Astro.props;
+---
+
+<a href={withBase(href)} class="blog-card">
+  <div class="blog-card__tags">
+    <span class="blog-card__category">{categoryLabel}</span>
+    {isPlaceholder && <span class="blog-card__draft">{draftLabel}</span>}
+  </div>
+  <span class="blog-card__title">{title}</span>
+  <span class="blog-card__desc">{description}</span>
+  <span class="blog-card__arrow"><Icon name="arrow-right" /></span>
+</a>
+
+<style>
+  .blog-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-6) var(--space-6) var(--space-8);
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--text-primary);
+    overflow: hidden;
+    transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: transparent;
+    }
+  }
+
+  .blog-card:active {
+    transform: scale(0.985);
+  }
+
+  .blog-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .blog-card__category {
+    font-size: var(--fs-eyebrow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+    color: var(--text-accent);
+  }
+
+  .blog-card__draft {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-muted);
+    color: var(--text-tertiary);
+  }
+
+  .blog-card__title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 560;
+    letter-spacing: var(--ls-tight);
+    margin-top: var(--space-2);
+  }
+
+  .blog-card__desc {
+    font-size: var(--fs-small);
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+    flex-grow: 1;
+  }
+
+  .blog-card__arrow {
+    position: absolute;
+    top: var(--space-6);
+    right: var(--space-6);
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-muted);
+    color: var(--text-primary);
+    opacity: 0;
+    transform: translate(-6px, 6px);
+    transition: opacity var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out),
+      background var(--duration-base) var(--ease-out), color var(--duration-base) var(--ease-out);
+  }
+
+  .blog-card__arrow :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .blog-card:hover .blog-card__arrow {
+      opacity: 1;
+      transform: translate(0, 0);
+      background: var(--accent);
+      color: var(--c-ink-950);
+    }
+  }
+</style>

@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Button from '../../components/Button.astro';
@@ -6,7 +7,7 @@ import SectionHeader from '../../components/SectionHeader.astro';
 import CTASection from '../../components/CTASection.astro';
 import TrustStrip from '../../components/TrustStrip.astro';
 import Icon from '../../components/Icon.astro';
-import { site } from '../../lib/site';
+import { site, withBase } from '../../lib/site';
 import imgAccounting from '../../assets/services/business-accounting.jpg';
 import imgTax from '../../assets/services/tax.jpg';
 import imgVatPayroll from '../../assets/services/vat-payroll.jpg';
@@ -14,6 +15,13 @@ import imgSupport from '../../assets/services/business-support.jpg';
 import imgMtd from '../../assets/services/mtd.jpg';
 import imgConstruction from '../../assets/services/specialist-construction.jpg';
 import imgEcommerce from '../../assets/services/specialist-ecommerce.jpg';
+
+// Related-reading links into /tr/blog/ — titles pulled from the blog
+// collection by slug so copy can't drift out of sync with the posts.
+const trPosts = await getCollection('blog', (e) => e.id.startsWith('tr/'));
+const postBySlug = (slug: string) => trPosts.find((p) => p.id === `tr/${slug}`);
+const relatedLinks = (slugs: string[]) =>
+  slugs.map((slug) => postBySlug(slug)).filter((p): p is NonNullable<typeof p> => Boolean(p));
 
 const blocks = [
   {
@@ -25,6 +33,7 @@ const blocks = [
     image: imgAccounting,
     imageAlt: 'Basılı bir finansal raporu inceleyen bir el',
     cta: 'Yıllık hesaplar ve ön muhasebe hakkında bilgi alın',
+    related: relatedLinks([]),
   },
   {
     id: 'tax',
@@ -35,6 +44,7 @@ const blocks = [
     image: imgTax,
     imageAlt: 'Bir vergi beyannamesi üzerinde kullanılan hesap makinesi ve not defteri',
     cta: 'Vergi hizmetleri hakkında bilgi alın',
+    related: relatedLinks(['self-assessment-deadlines', 'self-employed-allowable-expenses']),
   },
   {
     id: 'vat-payroll',
@@ -45,6 +55,7 @@ const blocks = [
     image: imgVatPayroll,
     imageAlt: 'İngiliz sterlini banknotları',
     cta: 'KDV ve bordro hakkında bilgi alın',
+    related: relatedLinks(['vat-registration-thresholds']),
   },
   {
     id: 'business-support',
@@ -55,6 +66,7 @@ const blocks = [
     image: imgSupport,
     imageAlt: 'Sakin, modern bir masada pencere kenarında duran bir dizüstü bilgisayar',
     cta: 'Şirket kuruluşu hakkında bilgi alın',
+    related: relatedLinks(['sole-trader-vs-limited-company']),
   },
   {
     id: 'mtd',
@@ -65,8 +77,12 @@ const blocks = [
     image: imgMtd,
     imageAlt: 'Bir elin kalem tutarken yanında tablet, masada basılı finansal grafikler ve bir hesap makinesi',
     cta: 'Making Tax Digital hakkında bilgi alın',
+    related: relatedLinks(['making-tax-digital-explained']),
   },
 ];
+
+const cisRelated = relatedLinks(['cis-guide-contractors-subcontractors']);
+const ecommerceRelated = relatedLinks(['ecommerce-multichannel-vat']);
 ---
 
 <BaseLayout
@@ -122,6 +138,17 @@ const blocks = [
             <Button href="/tr/iletisim/" variant="outline" icon="arrow-right" class="service-block__cta">
               {block.cta}
             </Button>
+            {block.related.length > 0 && (
+              <p class="service-block__related">
+                İlgili yazılar:{' '}
+                {block.related.map((post, i) => (
+                  <>
+                    {i > 0 && ', '}
+                    <a href={withBase(`/tr/blog/${post.id.replace('tr/', '')}/`)}>{post.data.title}</a>
+                  </>
+                ))}
+              </p>
+            )}
           </div>
           <div class="service-block__image-wrap reveal">
             <Image src={block.image} alt={block.imageAlt} width={800} height={600} class="service-block__image" />
@@ -162,6 +189,11 @@ const blocks = [
             <li><Icon name="check" /><span>Kesinti bildirimleri</span></li>
           </ul>
           <Button href="/tr/iletisim/" variant="outline" icon="arrow-right" class="service-block__cta">CIS hakkında bilgi alın</Button>
+          {cisRelated.length > 0 && (
+            <p class="service-block__related">
+              İlgili yazı: <a href={withBase(`/tr/blog/${cisRelated[0].id.replace('tr/', '')}/`)}>{cisRelated[0].data.title}</a>
+            </p>
+          )}
         </div>
 
         <div class="specialist-card reveal" style="--reveal-delay:100ms">
@@ -187,6 +219,11 @@ const blocks = [
             <li><Icon name="check" /><span>Uygun olduğunda Ar-Ge vergi indirimi</span></li>
           </ul>
           <Button href="/tr/iletisim/" variant="outline" icon="arrow-right" class="service-block__cta">E-ticaret muhasebesi hakkında bilgi alın</Button>
+          {ecommerceRelated.length > 0 && (
+            <p class="service-block__related">
+              İlgili yazı: <a href={withBase(`/tr/blog/${ecommerceRelated[0].id.replace('tr/', '')}/`)}>{ecommerceRelated[0].data.title}</a>
+            </p>
+          )}
         </div>
       </div>
     </div>
@@ -344,6 +381,17 @@ const blocks = [
 
   :global(.service-block__cta) {
     margin-top: var(--space-8);
+  }
+
+  .service-block__related {
+    margin-top: var(--space-4);
+    font-size: var(--fs-small);
+    color: var(--text-tertiary);
+  }
+
+  .service-block__related a {
+    color: var(--text-accent);
+    font-weight: 600;
   }
 
   @media (min-width: 900px) {

@@ -61,6 +61,7 @@ export function whatsappHref(message: string): string {
 export const primaryNav: NavItem[] = [
   { label: 'Services', href: '/services/' },
   { label: 'Who We Help', href: '/who-we-help/' },
+  { label: 'Insights', href: '/insights/' },
   { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' },
 ];
@@ -68,17 +69,21 @@ export const primaryNav: NavItem[] = [
 export const primaryNavTr: NavItem[] = [
   { label: 'Hizmetler', href: '/tr/hizmetler/' },
   { label: 'Kimlere Yardımcı Oluyoruz', href: '/tr/kimlere-yardimci-oluyoruz/' },
+  { label: 'Blog', href: '/tr/blog/' },
   { label: 'Hakkımızda', href: '/tr/hakkimizda/' },
   { label: 'İletişim', href: '/tr/iletisim/' },
 ];
 
 // Maps each EN path to its TR equivalent (and vice versa via the reverse
 // lookup below) so the language switcher lands on the matching page
-// instead of always bouncing to the home page.
+// instead of always bouncing to the home page. Individual blog posts
+// aren't listed here (their pairing isn't a fixed 1:1 path) — see
+// Header.astro's altHref prop instead.
 export const langAlternates: Record<string, string> = {
   '/': '/tr/',
   '/services/': '/tr/hizmetler/',
   '/who-we-help/': '/tr/kimlere-yardimci-oluyoruz/',
+  '/insights/': '/tr/blog/',
   '/about/': '/tr/hakkimizda/',
   '/contact/': '/tr/iletisim/',
 };

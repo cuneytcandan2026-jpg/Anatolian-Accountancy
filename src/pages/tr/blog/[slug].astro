@@ -1,0 +1,168 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Button from '../../../components/Button.astro';
+import Icon from '../../../components/Icon.astro';
+import { categoryLabels } from '../../../lib/blog';
+import { withBase } from '../../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (e) => e.id.startsWith('tr/'));
+  return posts.map((post) => ({
+    params: { slug: post.id.replace('tr/', '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const slug = post.id.replace('tr/', '');
+const enSibling = await getEntry('blog', `en/${slug}`);
+const altHref = enSibling ? `/insights/${slug}/` : undefined;
+---
+
+<BaseLayout
+  title={`${post.data.title} | Anatolian Accountancy`}
+  description={post.data.description}
+  path={`/tr/blog/${slug}/`}
+  lang="tr"
+  altHref={altHref}
+>
+  <article>
+    <section class="post-hero">
+      <div class="post-hero__glow" aria-hidden="true"></div>
+      <div class="container post-hero__inner reveal">
+        <a href={withBase('/tr/blog/')} class="post-hero__back"><Icon name="chevron-left" /> Tüm yazılar</a>
+        <p class="eyebrow eyebrow--on-ink">{categoryLabels[post.data.category].tr}</p>
+        <h1 class="post-hero__heading">{post.data.title}</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container post-body-grid">
+        <div class="post-body reveal">
+          <Content />
+        </div>
+        <div class="post-cta reveal">
+          <p class="post-cta__label">Bu konuda şimdi bir sorunuz mu var?</p>
+          <p class="post-cta__desc">Yazının tamamlanmasını beklemenize gerek yok — ihtiyacınızı bize anlatın, doğrudan cevaplayalım.</p>
+          <div class="post-cta__actions">
+            <Button href="/tr/iletisim/" size="md">Ücretsiz Görüşme Talep Edin</Button>
+            {post.data.relatedServiceHref && (
+              <Button
+                href={post.data.relatedServiceHref.replace('/services/', '/tr/hizmetler/').replace('/contact/', '/tr/iletisim/')}
+                size="md"
+                variant="outline"
+              >
+                İlgili hizmete bakın
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-hero {
+    position: relative;
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem) clamp(3rem, 2rem + 4vw, 5rem);
+  }
+
+  .post-hero__glow {
+    position: absolute;
+    inset: -30% auto auto -10%;
+    width: 46rem;
+    height: 46rem;
+    z-index: 1;
+    background: radial-gradient(circle, var(--c-azure-glow), transparent 65%);
+    pointer-events: none;
+  }
+
+  .post-hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 42rem;
+  }
+
+  .post-hero__back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-decoration: none;
+    color: var(--text-on-ink-muted);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .post-hero__back:hover {
+    color: var(--text-on-ink);
+  }
+
+  .post-hero__back :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+
+  .post-hero__heading {
+    margin-top: var(--space-5);
+    font-size: var(--fs-h1);
+    letter-spacing: var(--ls-tighter);
+    color: var(--text-on-ink);
+  }
+
+  .eyebrow--on-ink {
+    margin-top: var(--space-6);
+  }
+
+  .post-body-grid {
+    display: grid;
+    gap: var(--space-10);
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .post-body {
+    max-width: var(--container-narrow);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+    font-size: var(--fs-lead);
+  }
+
+  .post-body :global(p) {
+    margin: 0 0 var(--space-5);
+  }
+
+  .post-cta {
+    padding: var(--space-8);
+    background: var(--bg-muted);
+    border-radius: var(--radius-xl);
+    max-width: var(--container-narrow);
+  }
+
+  .post-cta__label {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 560;
+    color: var(--text-primary);
+  }
+
+  .post-cta__desc {
+    margin-top: var(--space-2);
+    color: var(--text-secondary);
+    font-size: var(--fs-small);
+    line-height: var(--lh-relaxed);
+  }
+
+  .post-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+</style>

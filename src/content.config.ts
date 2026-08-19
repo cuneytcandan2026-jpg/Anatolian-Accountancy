@@ -43,4 +43,21 @@ const testimonials = defineCollection({
   }),
 });
 
-export const collections = { services, audiences, faq, testimonials };
+// EN/TR pairs live side by side as src/content/blog/en/<slug>.md and
+// src/content/blog/tr/<slug>.md — the glob loader's id (e.g. "en/cis-guide")
+// links each pair by matching slug across the two folders, since (unlike
+// services/audiences/faq) blog needs real bilingual content rather than a
+// hardcoded TR array.
+const blog = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    category: z.enum(['cis', 'business-structure', 'vat', 'tax', 'mtd', 'general']),
+    order: z.number(),
+    status: z.enum(['placeholder', 'published']).default('placeholder'),
+    relatedServiceHref: z.string().optional(),
+  }),
+});
+
+export const collections = { services, audiences, faq, testimonials, blog };

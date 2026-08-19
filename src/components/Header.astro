@@ -3,11 +3,20 @@ import Icon from './Icon.astro';
 import Button from './Button.astro';
 import { site, primaryNav, primaryNavTr, langAlternates, langAlternatesReverse, withBase, stripBase } from '../lib/site';
 
+interface Props {
+  altHref?: string;
+}
+
+const { altHref } = Astro.props;
+
 const currentPath = stripBase(Astro.url.pathname);
 const isTurkish = currentPath.startsWith('/tr/');
 const nav = isTurkish ? primaryNavTr : primaryNav;
-const enHref = isTurkish ? (langAlternatesReverse[currentPath] ?? '/') : currentPath;
-const trHref = isTurkish ? currentPath : (langAlternates[currentPath] ?? '/tr/');
+// altHref overrides the static langAlternates lookup for pages whose
+// EN<->TR pairing isn't a fixed 1:1 path map (e.g. individual blog posts) —
+// see BaseLayout.astro's Props.
+const enHref = isTurkish ? (altHref ?? langAlternatesReverse[currentPath] ?? '/') : currentPath;
+const trHref = isTurkish ? currentPath : (altHref ?? langAlternates[currentPath] ?? '/tr/');
 const ctaLabel = isTurkish ? 'Ücretsiz Görüşme Talep Edin' : 'Book a Free Consultation';
 const contactHref = isTurkish ? '/tr/iletisim/' : '/contact/';
 const homeHref = isTurkish ? '/tr/' : '/';
