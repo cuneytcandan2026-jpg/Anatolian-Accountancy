@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import ContactForm from '../components/ContactForm.astro';
+import TrustStrip from '../components/TrustStrip.astro';
 import { site, whatsappHref } from '../lib/site';
 
 const mapQuery = encodeURIComponent(
@@ -13,6 +14,7 @@ const mapQuery = encodeURIComponent(
   title="Contact Us | Anatolian Accountancy | Book a Free Consultation"
   description="Get in touch with Anatolian Accountancy in Enfield for a free consultation. Call, email or send an enquiry. We support clients across London and the UK in English or Turkish."
   path="/contact/"
+  includeLocalBusinessSchema
 >
   <section class="contact-hero">
     <div class="container contact-hero__grid">
@@ -81,6 +83,8 @@ const mapQuery = encodeURIComponent(
       </div>
     </div>
   </section>
+
+  <TrustStrip />
 
   <section class="section map-section">
     <div class="container map-section__inner reveal">

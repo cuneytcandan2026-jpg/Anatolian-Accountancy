@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 import MobileActionBar from '../components/MobileActionBar.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
-import { site, withBase } from '../lib/site';
+import { site, withBase, langAlternates, langAlternatesReverse } from '../lib/site';
 
 interface Props {
   title: string;
@@ -33,6 +33,7 @@ const localBusinessSchema = {
   '@type': 'AccountingService',
   name: site.name,
   url: site.url,
+  image: ogImageURL,
   telephone: site.phoneDisplay,
   email: site.email,
   address: {
@@ -55,7 +56,19 @@ const localBusinessSchema = {
   })),
   areaServed: ['London', 'Enfield', 'United Kingdom'],
   availableLanguage: ['English', 'Turkish'],
+  sameAs: Object.values(site.social),
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: site.googleRating,
+    reviewCount: site.googleReviewCount,
+  },
 };
+
+// hreflang: only emitted for the 5 real EN<->TR page pairs (langAlternates
+// in site.ts) — pages with no translated twin (legal, 404) get none.
+const altPath = langAlternates[path] ?? langAlternatesReverse[path];
+const enPath = lang === 'tr' ? altPath : path;
+const trPath = lang === 'tr' ? path : altPath;
 ---
 
 <!doctype html>
@@ -65,6 +78,13 @@ const localBusinessSchema = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <link rel="canonical" href={canonicalURL} />
+    {altPath && (
+      <>
+        <link rel="alternate" hreflang="en" href={new URL(withBase(enPath), site.url).toString()} />
+        <link rel="alternate" hreflang="tr" href={new URL(withBase(trPath), site.url).toString()} />
+        <link rel="alternate" hreflang="x-default" href={new URL(withBase(enPath), site.url).toString()} />
+      </>
+    )}
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
 
     <title>{title}</title>

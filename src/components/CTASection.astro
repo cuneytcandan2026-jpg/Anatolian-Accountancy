@@ -1,5 +1,6 @@
 ---
 import Button from './Button.astro';
+import { site } from '../lib/site';
 
 interface Props {
   eyebrow: string;
@@ -20,7 +21,7 @@ const contactHref = isTurkish ? '/tr/iletisim/' : '/contact/';
     {intro && <p class="final-cta__intro">{intro}</p>}
     <div class="final-cta__actions">
       <Button href={contactHref} size="lg">{isTurkish ? 'Ücretsiz Görüşme Talep Edin' : 'Book a Free Consultation'}</Button>
-      <Button href="tel:+447541173722" size="lg" variant="outline-on-ink" icon="phone">
+      <Button href={site.phoneHref} size="lg" variant="outline-on-ink" icon="phone">
         {isTurkish ? "Bektaş'ı doğrudan arayın" : 'Call Bektaş directly'}
       </Button>
     </div>

@@ -4,7 +4,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Button from '../../components/Button.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import CTASection from '../../components/CTASection.astro';
+import TrustStrip from '../../components/TrustStrip.astro';
 import Icon from '../../components/Icon.astro';
+import { site } from '../../lib/site';
 import imgAccounting from '../../assets/services/business-accounting.jpg';
 import imgTax from '../../assets/services/tax.jpg';
 import imgVatPayroll from '../../assets/services/vat-payroll.jpg';
@@ -72,6 +74,7 @@ const blocks = [
   description="Yıllık hesaplar, kurumlar vergisi, Self Assessment, KDV, bordro, şirket kuruluşu, CIS ve e-ticaret muhasebesi: Londra ve İngiltere genelinde işletmeler ve bireyler için."
   path="/tr/hizmetler/"
   lang="tr"
+  includeLocalBusinessSchema
 >
   <!-- ============ HERO ============ -->
   <section class="services-hero">
@@ -86,7 +89,7 @@ const blocks = [
       </p>
       <div class="services-hero__actions">
         <Button href="/tr/iletisim/" size="lg">Ücretsiz Görüşme Talep Edin</Button>
-        <Button href={`tel:+447541173722`} size="lg" variant="outline-on-ink" icon="phone">Bektaş'ı doğrudan arayın</Button>
+        <Button href={site.phoneHref} size="lg" variant="outline-on-ink" icon="phone">Bektaş'ı doğrudan arayın</Button>
       </div>
       <nav class="services-hero__jump" aria-label="Bir hizmet kategorisine atla">
         <a href="#business-accounting">Muhasebe</a>
@@ -188,6 +191,8 @@ const blocks = [
       </div>
     </div>
   </section>
+
+  <TrustStrip lang="tr" />
 
   <CTASection
     eyebrow="Ne zaman hazır olursanız"

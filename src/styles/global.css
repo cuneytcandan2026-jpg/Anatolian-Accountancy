@@ -26,6 +26,14 @@ html {
   }
 }
 
+/* Anchor-jump targets (in-page nav on Services/Who-We-Help, both languages)
+   would otherwise land with their heading hidden under the sticky Header. */
+.service-block,
+.whwh-block,
+#specialist {
+  scroll-margin-top: calc(var(--header-h) + var(--space-4));
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

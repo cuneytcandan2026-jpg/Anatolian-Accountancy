@@ -116,6 +116,11 @@
   --container-narrow: 860px;
   --container-padding: clamp(1.25rem, 3vw + 0.5rem, 4rem);
 
+  /* Tallest rendered height of the sticky Header (unscrolled state — logo
+     plus its largest padding-block) — used as scroll-margin-top clearance
+     so anchor-jump targets don't land underneath it. */
+  --header-h: 5.75rem;
+
   /* Height of MobileActionBar's fixed CTA strip (<900px) — used to reserve
      scroll clearance so it never permanently covers page-bottom content. */
   --mobile-action-bar-h: calc(56px + env(safe-area-inset-bottom));

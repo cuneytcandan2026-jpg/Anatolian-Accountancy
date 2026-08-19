@@ -3,7 +3,9 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Button from '../../components/Button.astro';
 import CTASection from '../../components/CTASection.astro';
+import TrustStrip from '../../components/TrustStrip.astro';
 import Icon from '../../components/Icon.astro';
+import { site } from '../../lib/site';
 import imgLimitedCompanies from '../../assets/audiences/limited-companies.jpg';
 import imgSoleTraders from '../../assets/audiences/sole-traders.jpg';
 import imgStartups from '../../assets/audiences/startups.jpg';
@@ -80,6 +82,7 @@ const blocks = [
   description="Kim olduğunuza göre kurulmuş muhasebe desteği: limited şirketler, şahıs şirketleri, yeni kurulan şirketler, inşaat ve CIS, e-ticaret satıcıları ve kişisel vergi. Londra ve İngiltere genelinde."
   path="/tr/kimlere-yardimci-oluyoruz/"
   lang="tr"
+  includeLocalBusinessSchema
 >
   <!-- ============ HERO ============ -->
   <section class="whwh-hero">
@@ -93,7 +96,7 @@ const blocks = [
       </p>
       <div class="whwh-hero__actions">
         <Button href="/tr/iletisim/" size="lg">Ücretsiz Görüşme Talep Edin</Button>
-        <Button href={`tel:+447541173722`} size="lg" variant="outline-on-ink" icon="phone">Bektaş'ı doğrudan arayın</Button>
+        <Button href={site.phoneHref} size="lg" variant="outline-on-ink" icon="phone">Bektaş'ı doğrudan arayın</Button>
       </div>
       <nav class="whwh-hero__jump" aria-label="Bir müşteri türüne atla">
         <a href="#limited-companies">Limited Şirketler</a>
@@ -134,6 +137,8 @@ const blocks = [
       </div>
     </section>
   ))}
+
+  <TrustStrip lang="tr" />
 
   <CTASection
     eyebrow="Hangisi size uyuyor emin değil misiniz?"

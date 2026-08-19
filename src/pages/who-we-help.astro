@@ -4,7 +4,9 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import CTASection from '../components/CTASection.astro';
+import TrustStrip from '../components/TrustStrip.astro';
 import Icon from '../components/Icon.astro';
+import { site } from '../lib/site';
 import imgLimitedCompanies from '../assets/audiences/limited-companies.jpg';
 import imgSoleTraders from '../assets/audiences/sole-traders.jpg';
 import imgStartups from '../assets/audiences/startups.jpg';
@@ -83,6 +85,7 @@ const blocks = [
   title="Who We Help | Anatolian Accountancy"
   description="Accounting support built around who you are: limited companies, sole traders, startups, construction and CIS, e-commerce sellers, and personal tax across London and the UK."
   path="/who-we-help/"
+  includeLocalBusinessSchema
 >
   <!-- ============ HERO ============ -->
   <section class="whwh-hero">
@@ -96,7 +99,7 @@ const blocks = [
       </p>
       <div class="whwh-hero__actions">
         <Button href="/contact/" size="lg">Book a Free Consultation</Button>
-        <Button href={`tel:+447541173722`} size="lg" variant="outline-on-ink" icon="phone">Call Bektaş directly</Button>
+        <Button href={site.phoneHref} size="lg" variant="outline-on-ink" icon="phone">Call Bektaş directly</Button>
       </div>
       <nav class="whwh-hero__jump" aria-label="Jump to a client type">
         <a href="#limited-companies">Limited Companies</a>
@@ -137,6 +140,8 @@ const blocks = [
       </div>
     </section>
   ))}
+
+  <TrustStrip />
 
   <CTASection
     eyebrow="Not sure which one fits?"

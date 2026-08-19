@@ -5,6 +5,7 @@ import Button from '../../components/Button.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import CTASection from '../../components/CTASection.astro';
 import Icon from '../../components/Icon.astro';
+import { site } from '../../lib/site';
 import founderPhoto from '../../assets/founder-photo.jpg';
 
 const credentials = [
@@ -41,6 +42,7 @@ const howIWork = [
   description="Anatolian Accountancy'nin kurucusu Bektaş Ünal ile tanışın: Türkiye, İngiltere, İrlanda, Suudi Arabistan ve Kamerun'da yirmi yılı aşkın muhasebe deneyimi."
   path="/tr/hakkimizda/"
   lang="tr"
+  includeLocalBusinessSchema
 >
   <!-- ============ HERO ============ -->
   <section class="section about-hero">
@@ -64,7 +66,7 @@ const howIWork = [
         </div>
         <div class="about-hero__actions">
           <Button href="/tr/iletisim/" size="lg">Ücretsiz Görüşme Talep Edin</Button>
-          <Button href={`tel:+447541173722`} size="lg" variant="outline" icon="phone">Bektaş'ı doğrudan arayın</Button>
+          <Button href={site.phoneHref} size="lg" variant="outline" icon="phone">Bektaş'ı doğrudan arayın</Button>
         </div>
       </div>
     </div>

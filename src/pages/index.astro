@@ -14,10 +14,7 @@ import CTASection from '../components/CTASection.astro';
 import Icon from '../components/Icon.astro';
 import HeroBoxes from '../components/HeroBoxes.astro';
 import VideoShowcase from '../components/VideoShowcase.astro';
-import aatLogo from '../assets/trust/aat-logo-transparent.webp';
-import ismmmoLogo from '../assets/trust/ismmmo-logo-transparent.png';
-import capiumLogo from '../assets/trust/capium-logo-transparent.png';
-import XeroLogo from '../assets/trust/xero-logo.svg';
+import TrustStrip from '../components/TrustStrip.astro';
 import founderPhoto from '../assets/founder-photo.jpg';
 import heroDesk from '../assets/hero-collage-desk.jpg';
 import heroPhonebox from '../assets/hero-collage-phonebox.jpg';
@@ -204,29 +201,7 @@ const whyPoints = [
   </script>
 
   <!-- ============ TRUST STRIP ============ -->
-  <section class="trust-strip section" style="padding-block: var(--space-10) calc(var(--space-10) / 2);">
-    <div class="container trust-strip__inner reveal">
-      <p class="trust-strip__label">Professional memberships &amp; software</p>
-      <div class="trust-strip__badges">
-        <div class="trust-strip__logo">
-          <Image src={aatLogo} alt="AAT Licensed Accountant" height={44} />
-        </div>
-        <div class="trust-strip__logo">
-          <Image src={ismmmoLogo} alt="İSMMMO member" height={56} />
-        </div>
-        <div class="trust-strip__logo trust-strip__logo--xero">
-          <XeroLogo width={26} height={26} />
-          <span class="trust-strip__xero-text">
-            <span class="trust-strip__xero-label">Xero</span>
-            <span class="trust-strip__xero-sublabel">Certified cloud software</span>
-          </span>
-        </div>
-        <div class="trust-strip__logo">
-          <Image src={capiumLogo} alt="Capium practice software" height={30} />
-        </div>
-      </div>
-    </div>
-  </section>
+  <TrustStrip />
 
   <!-- ============ HOW CAN WE HELP ============ -->
   <section class="section how-we-help">
@@ -689,66 +664,6 @@ const whyPoints = [
       border-top: 1px solid var(--border-on-ink);
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-  }
-
-  /* ---- Trust strip ---- */
-  .trust-strip__inner {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-  }
-
-  .trust-strip__label {
-    font-size: var(--fs-eyebrow);
-    font-weight: 700;
-    letter-spacing: var(--ls-wide);
-    text-transform: uppercase;
-    color: var(--text-tertiary);
-  }
-
-  .trust-strip__badges {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-2) 0;
-  }
-
-  .trust-strip__logo {
-    display: flex;
-    align-items: center;
-    padding-inline: var(--space-4);
-    border-left: 1px solid var(--border-subtle);
-  }
-
-  .trust-strip__logo:first-child {
-    padding-left: 0;
-    border-left: none;
-  }
-
-  .trust-strip__logo :global(img) {
-    width: auto;
-    max-width: 100%;
-  }
-
-  .trust-strip__logo--xero {
-    gap: var(--space-3);
-  }
-
-  .trust-strip__xero-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-
-  .trust-strip__xero-label {
-    font-weight: 700;
-    font-size: var(--fs-small);
-    color: var(--text-primary);
-  }
-
-  .trust-strip__xero-sublabel {
-    font-size: 0.8125rem;
-    color: var(--text-tertiary);
   }
 
   /* ---- How we help ---- */

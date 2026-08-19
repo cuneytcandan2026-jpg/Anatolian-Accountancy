@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../lib/site';
 ---
 
 <BaseLayout
@@ -20,7 +21,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </p>
       <p>
         In the meantime, if you have any questions about your data, contact us at
-        <a href="mailto:info@anatolianaccountancy.com">info@anatolianaccountancy.com</a>.
+        <a href={site.emailHref}>{site.email}</a>.
       </p>
     </div>
   </section>

@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+import aatLogo from '../assets/trust/aat-logo-transparent.webp';
+import ismmmoLogo from '../assets/trust/ismmmo-logo-transparent.png';
+import capiumLogo from '../assets/trust/capium-logo-transparent.png';
+import XeroLogo from '../assets/trust/xero-logo.svg';
+
+interface Props {
+  lang?: 'en' | 'tr';
+}
+
+const { lang = 'en' } = Astro.props;
+const isTurkish = lang === 'tr';
+---
+
+<section class="trust-strip section" style="padding-block: var(--space-10) calc(var(--space-10) / 2);">
+  <div class="container trust-strip__inner reveal">
+    <p class="trust-strip__label">{isTurkish ? 'Mesleki üyelikler ve yazılımlar' : 'Professional memberships & software'}</p>
+    <div class="trust-strip__badges">
+      <div class="trust-strip__logo">
+        <Image src={aatLogo} alt={isTurkish ? 'AAT Lisanslı Muhasebeci' : 'AAT Licensed Accountant'} height={44} />
+      </div>
+      <div class="trust-strip__logo">
+        <Image src={ismmmoLogo} alt={isTurkish ? 'İSMMMO üyesi' : 'İSMMMO member'} height={56} />
+      </div>
+      <div class="trust-strip__logo trust-strip__logo--xero">
+        <XeroLogo width={26} height={26} />
+        <span class="trust-strip__xero-text">
+          <span class="trust-strip__xero-label">Xero</span>
+          <span class="trust-strip__xero-sublabel">{isTurkish ? 'Sertifikalı bulut yazılımı' : 'Certified cloud software'}</span>
+        </span>
+      </div>
+      <div class="trust-strip__logo">
+        <Image src={capiumLogo} alt={isTurkish ? 'Capium ofis yazılımı' : 'Capium practice software'} height={30} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .trust-strip__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .trust-strip__label {
+    font-size: var(--fs-eyebrow);
+    font-weight: 700;
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .trust-strip__badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) 0;
+  }
+
+  .trust-strip__logo {
+    display: flex;
+    align-items: center;
+    padding-inline: var(--space-4);
+    border-left: 1px solid var(--border-subtle);
+  }
+
+  .trust-strip__logo:first-child {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .trust-strip__logo :global(img) {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .trust-strip__logo--xero {
+    gap: var(--space-3);
+  }
+
+  .trust-strip__xero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .trust-strip__xero-label {
+    font-weight: 700;
+    font-size: var(--fs-small);
+    color: var(--text-primary);
+  }
+
+  .trust-strip__xero-sublabel {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+  }
+</style>

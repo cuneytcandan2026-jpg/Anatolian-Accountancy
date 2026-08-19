@@ -1,12 +1,87 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import StubSection from '../components/StubSection.astro';
+import Button from '../components/Button.astro';
 ---
 
 <BaseLayout title="Page Not Found | Anatolian Accountancy" description="This page could not be found." path="/404/" noIndex>
-  <StubSection
-    eyebrow="404"
-    heading="We can't find that page."
-    intro="The page you're looking for may have moved. Head back home, or get in touch and we'll point you in the right direction."
-  />
+  <section class="notfound">
+    <div class="notfound__glow" aria-hidden="true"></div>
+    <div class="container notfound__inner">
+      <div class="notfound__lang">
+        <p class="eyebrow eyebrow--on-ink">404</p>
+        <h1 class="notfound__heading">We can't find that page.</h1>
+        <p class="notfound__intro">
+          The page you're looking for may have moved or no longer exists. Head back home, or get in touch and we'll
+          point you in the right direction.
+        </p>
+        <div class="notfound__actions">
+          <Button href="/contact/" size="lg">Book a Free Consultation</Button>
+          <Button href="/" size="lg" variant="outline-on-ink">Back to Home</Button>
+        </div>
+      </div>
+
+      <hr class="notfound__divider" />
+
+      <div class="notfound__lang" lang="tr">
+        <p class="eyebrow eyebrow--on-ink">404</p>
+        <h2 class="notfound__heading">Bu sayfayı bulamıyoruz.</h2>
+        <p class="notfound__intro">
+          Aradığınız sayfa taşınmış veya artık mevcut olmayabilir. Ana sayfaya dönebilir ya da bizimle iletişime
+          geçebilirsiniz, size doğru yönü gösterelim.
+        </p>
+        <div class="notfound__actions">
+          <Button href="/tr/iletisim/" size="lg">Ücretsiz Görüşme Ayarlayın</Button>
+          <Button href="/tr/" size="lg" variant="outline-on-ink">Ana Sayfaya Dön</Button>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .notfound {
+    position: relative;
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .notfound__glow {
+    position: absolute;
+    inset: -20% auto auto -10%;
+    width: 36rem;
+    height: 36rem;
+    background: radial-gradient(circle, var(--c-azure-glow), transparent 65%);
+    pointer-events: none;
+  }
+
+  .notfound__inner {
+    position: relative;
+    max-width: 42rem;
+  }
+
+  .notfound__heading {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h1);
+  }
+
+  .notfound__intro {
+    margin-top: var(--space-5);
+    font-size: var(--fs-lead);
+    color: var(--text-on-ink-muted);
+  }
+
+  .notfound__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .notfound__divider {
+    margin-block: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    border: none;
+    border-top: 1px solid var(--border-on-ink);
+  }
+</style>

@@ -5,7 +5,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import CTASection from '../components/CTASection.astro';
+import TrustStrip from '../components/TrustStrip.astro';
 import Icon from '../components/Icon.astro';
+import { site } from '../lib/site';
 import imgAccounting from '../assets/services/business-accounting.jpg';
 import imgTax from '../assets/services/tax.jpg';
 import imgVatPayroll from '../assets/services/vat-payroll.jpg';
@@ -77,6 +79,7 @@ const blocks = [
   title="Accounting & Tax Services | Anatolian Accountancy"
   description="Annual accounts, corporation tax, Self Assessment, VAT, payroll, company formation, CIS and e-commerce accounting for businesses and individuals across London and the UK."
   path="/services/"
+  includeLocalBusinessSchema
 >
   <!-- ============ HERO ============ -->
   <section class="services-hero">
@@ -90,7 +93,7 @@ const blocks = [
       </p>
       <div class="services-hero__actions">
         <Button href="/contact/" size="lg">Book a Free Consultation</Button>
-        <Button href={`tel:+447541173722`} size="lg" variant="outline-on-ink" icon="phone">Call Bektaş directly</Button>
+        <Button href={site.phoneHref} size="lg" variant="outline-on-ink" icon="phone">Call Bektaş directly</Button>
       </div>
       <nav class="services-hero__jump" aria-label="Jump to a service category">
         <a href="#business-accounting">Business Accounting</a>
@@ -186,6 +189,8 @@ const blocks = [
       </div>
     </div>
   </section>
+
+  <TrustStrip />
 
   <CTASection
     eyebrow="Ready when you are"
