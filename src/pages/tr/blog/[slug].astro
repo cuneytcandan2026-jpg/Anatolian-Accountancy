@@ -3,7 +3,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Button from '../../../components/Button.astro';
 import Icon from '../../../components/Icon.astro';
-import { categoryLabels } from '../../../lib/blog';
+import { categoryLabels, categoryIcons } from '../../../lib/blog';
 import { withBase } from '../../../lib/site';
 
 export async function getStaticPaths() {
@@ -22,7 +22,7 @@ const altHref = enSibling ? `/insights/${slug}/` : undefined;
 ---
 
 <BaseLayout
-  title={`${post.data.title} | Anatolian Accountancy`}
+  title={`${post.data.metaTitle ?? post.data.title} | Anatolian Accountancy`}
   description={post.data.description}
   path={`/tr/blog/${slug}/`}
   lang="tr"
@@ -33,6 +33,7 @@ const altHref = enSibling ? `/insights/${slug}/` : undefined;
       <div class="post-hero__glow" aria-hidden="true"></div>
       <div class="container post-hero__inner reveal">
         <a href={withBase('/tr/blog/')} class="post-hero__back"><Icon name="chevron-left" /> Tüm yazılar</a>
+        <span class="post-hero__icon"><Icon name={categoryIcons[post.data.category]} /></span>
         <p class="eyebrow eyebrow--on-ink">{categoryLabels[post.data.category].tr}</p>
         <h1 class="post-hero__heading">{post.data.title}</h1>
       </div>
@@ -42,6 +43,13 @@ const altHref = enSibling ? `/insights/${slug}/` : undefined;
       <div class="container post-body-grid">
         <div class="post-body reveal">
           <Content />
+          {post.data.lastReviewed && (
+            <p class="post-reviewed">
+              Son güncelleme: {post.data.lastReviewed}. Bu genel bir bilgilendirmedir, kişiye özel tavsiye
+              değildir — yayımlandığından bu yana kurallar ve rakamlar değişmiş olabilir, harekete geçmeden
+              önce bizimle görüşün.
+            </p>
+          )}
         </div>
         <div class="post-cta reveal">
           <p class="post-cta__label">Bu konuda şimdi bir sorunuz mu var?</p>
@@ -87,6 +95,27 @@ const altHref = enSibling ? `/insights/${slug}/` : undefined;
     position: relative;
     z-index: 2;
     max-width: 42rem;
+  }
+
+  .post-hero__icon {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    margin-top: var(--space-6);
+    border-radius: var(--radius-md);
+    background: rgba(250, 246, 238, 0.08);
+    border: 1px solid var(--border-on-ink);
+    color: var(--text-accent-on-ink);
+  }
+
+  .post-hero__icon :global(svg) {
+    width: 24px;
+    height: 24px;
+  }
+
+  .post-hero__icon + .eyebrow--on-ink {
+    margin-top: var(--space-4);
   }
 
   .post-hero__back {
@@ -136,6 +165,85 @@ const altHref = enSibling ? `/insights/${slug}/` : undefined;
 
   .post-body :global(p) {
     margin: 0 0 var(--space-5);
+  }
+
+  .post-body :global(h2) {
+    margin: var(--space-10) 0 var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    font-weight: 560;
+    letter-spacing: var(--ls-tight);
+    color: var(--text-primary);
+  }
+
+  .post-body :global(h3) {
+    margin: var(--space-8) 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 560;
+    letter-spacing: var(--ls-tight);
+    color: var(--text-primary);
+  }
+
+  .post-body :global(ul),
+  .post-body :global(ol) {
+    margin: 0 0 var(--space-5);
+    padding-left: 1.3em;
+  }
+
+  .post-body :global(li) {
+    margin-bottom: var(--space-2);
+  }
+
+  .post-body :global(li > p) {
+    margin: 0;
+  }
+
+  .post-body :global(strong) {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .post-body :global(a) {
+    color: var(--text-accent);
+    text-decoration-color: var(--border-strong);
+  }
+
+  .post-body :global(table) {
+    width: 100%;
+    margin: 0 0 var(--space-6);
+    border-collapse: collapse;
+    font-size: var(--fs-small);
+  }
+
+  .post-body :global(th),
+  .post-body :global(td) {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .post-body :global(th) {
+    font-family: var(--font-body);
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .post-body :global(blockquote) {
+    margin: 0 0 var(--space-5);
+    padding-left: var(--space-5);
+    border-left: 2px solid var(--accent);
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .post-reviewed {
+    margin-top: var(--space-8);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--border-subtle);
+    font-size: var(--fs-eyebrow);
+    line-height: var(--lh-relaxed);
+    color: var(--text-tertiary);
   }
 
   .post-cta {

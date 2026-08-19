@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogCard from '../../components/BlogCard.astro';
-import { categoryLabels } from '../../lib/blog';
+import { categoryLabels, categoryIcons } from '../../lib/blog';
 
 const posts = (await getCollection('blog', (e) => e.id.startsWith('en/'))).sort(
   (a, b) => a.data.order - b.data.order
@@ -38,6 +38,7 @@ const posts = (await getCollection('blog', (e) => e.id.startsWith('en/'))).sort(
             description={post.data.description}
             href={`/insights/${post.id.replace('en/', '')}/`}
             categoryLabel={categoryLabels[post.data.category].en}
+            categoryIcon={categoryIcons[post.data.category]}
             isPlaceholder={post.data.status === 'placeholder'}
             draftLabel="Draft"
           />

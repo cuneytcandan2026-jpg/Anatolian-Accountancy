@@ -8,3 +8,14 @@ export const categoryLabels: Record<string, { en: string; tr: string }> = {
   mtd: { en: 'Making Tax Digital', tr: 'Dijital Vergi (MTD)' },
   general: { en: 'General', tr: 'Genel' },
 };
+
+// Reuses Icon.astro's existing icon set (no new icons drawn) so each
+// category gets an on-brand cover treatment instead of a stock photo.
+export const categoryIcons: Record<string, string> = {
+  cis: 'hardhat',
+  'business-structure': 'formation',
+  vat: 'vat',
+  tax: 'tax',
+  mtd: 'cloud',
+  general: 'briefcase',
+};

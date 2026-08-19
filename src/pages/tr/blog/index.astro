@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BlogCard from '../../../components/BlogCard.astro';
-import { categoryLabels } from '../../../lib/blog';
+import { categoryLabels, categoryIcons } from '../../../lib/blog';
 
 const posts = (await getCollection('blog', (e) => e.id.startsWith('tr/'))).sort(
   (a, b) => a.data.order - b.data.order
@@ -39,6 +39,7 @@ const posts = (await getCollection('blog', (e) => e.id.startsWith('tr/'))).sort(
             description={post.data.description}
             href={`/tr/blog/${post.id.replace('tr/', '')}/`}
             categoryLabel={categoryLabels[post.data.category].tr}
+            categoryIcon={categoryIcons[post.data.category]}
             isPlaceholder={post.data.status === 'placeholder'}
             draftLabel="Taslak"
           />

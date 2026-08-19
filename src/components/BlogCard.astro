@@ -7,14 +7,16 @@ interface Props {
   description: string;
   href: string;
   categoryLabel: string;
+  categoryIcon: string;
   isPlaceholder?: boolean;
   draftLabel?: string;
 }
 
-const { title, description, href, categoryLabel, isPlaceholder = false, draftLabel = 'Draft' } = Astro.props;
+const { title, description, href, categoryLabel, categoryIcon, isPlaceholder = false, draftLabel = 'Draft' } = Astro.props;
 ---
 
 <a href={withBase(href)} class="blog-card">
+  <span class="blog-card__icon"><Icon name={categoryIcon} /></span>
   <div class="blog-card__tags">
     <span class="blog-card__category">{categoryLabel}</span>
     {isPlaceholder && <span class="blog-card__draft">{draftLabel}</span>}
@@ -53,11 +55,27 @@ const { title, description, href, categoryLabel, isPlaceholder = false, draftLab
     transform: scale(0.985);
   }
 
+  .blog-card__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-md);
+    background: var(--bg-muted);
+    color: var(--accent-strong);
+  }
+
+  .blog-card__icon :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+
   .blog-card__tags {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-2);
+    margin-top: var(--space-2);
   }
 
   .blog-card__category {

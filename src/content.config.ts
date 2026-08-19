@@ -53,11 +53,22 @@ const blog = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
   schema: z.object({
     title: z.string(),
+    // Unique <title>-tag copy, separate from the on-page H1 (`title`) so SEO
+    // titles aren't just the heading with a suffix templated on — optional
+    // because older/untranslated placeholder posts fall back to `title`.
+    metaTitle: z.string().optional(),
     description: z.string(),
     category: z.enum(['cis', 'business-structure', 'vat', 'tax', 'mtd', 'general']),
     order: z.number(),
     status: z.enum(['placeholder', 'published']).default('placeholder'),
     relatedServiceHref: z.string().optional(),
+    // Display string (e.g. "19 August 2026") shown on the post; absent on
+    // posts that don't have real content yet.
+    lastReviewed: z.string().optional(),
+    // ISO date (YYYY-MM-DD): when this post's figures/rules should next be
+    // checked against gov.uk. Cadence varies by topic — see the article's
+    // own notes for why. Not rendered on the page, tracked for content ops.
+    reviewBy: z.string().optional(),
   }),
 });
 
