@@ -125,7 +125,7 @@ button {
 
 .skip-link {
   position: fixed;
-  top: -3rem;
+  top: var(--space-4);
   left: var(--space-4);
   z-index: 200;
   background: var(--bg-ink);
@@ -134,11 +134,12 @@ button {
   border-radius: var(--radius-sm);
   font-size: var(--fs-small);
   font-weight: 600;
-  transition: top var(--duration-fast) var(--ease-out);
+  transform: translateY(-150%);
+  transition: transform var(--duration-fast) var(--ease-out);
 }
 
 .skip-link:focus-visible {
-  top: var(--space-4);
+  transform: translateY(0);
 }
 
 /* ---- Shared type helpers ---- */

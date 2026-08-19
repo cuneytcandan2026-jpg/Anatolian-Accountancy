@@ -112,7 +112,7 @@ const homeHref = isTurkish ? '/tr/' : '/';
   });
 
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 1180) closeDrawer();
+    if (window.innerWidth > 1320) closeDrawer();
   });
 </script>
 
@@ -178,6 +178,7 @@ const homeHref = isTurkish ? '/tr/' : '/';
     font-weight: 560;
     text-decoration: none;
     color: var(--text-primary);
+    white-space: nowrap;
   }
 
   .header__nav a::after {
@@ -305,7 +306,12 @@ const homeHref = isTurkish ? '/tr/' : '/';
     }
   }
 
-  @media (min-width: 1180px) {
+  /* 1320px matches --container-max — the width at which the container
+     stops growing, so this is the first breakpoint guaranteed to have
+     room for the longest nav label in either language (Turkish's
+     "Kimlere Yardımcı Oluyoruz" needs ~1300px; see Header.astro's
+     resize listener for the matching drawer-close threshold). */
+  @media (min-width: 1320px) {
     .header__nav {
       display: block;
     }

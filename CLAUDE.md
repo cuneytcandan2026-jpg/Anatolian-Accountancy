@@ -13,6 +13,8 @@ npm run astro     # pass-through to the astro CLI (e.g. npm run astro -- add <in
 
 There is no test suite and no linter configured — `astro check` (part of `build`) is the only correctness gate, run via the Astro/TypeScript strict config.
 
+On this Windows/OneDrive-synced checkout, stray `astro dev`/`astro preview` node processes from previous sessions can keep running for a long time (observed: over 24h) without anyone noticing, and they hold file locks under `src/`. If overwriting or renaming a tracked file fails with `EBUSY`/`EPERM`, check for leftover processes bound to this project before assuming it's a generic lock: `Get-CimInstance Win32_Process -Filter "Name='node.exe'" | Select ProcessId, CommandLine` (PowerShell), looking for `astro.js dev`/`astro.js preview` with this repo's path. Stopping them (with user confirmation — killing a process is a shared/hard-to-reverse action) usually clears it; restarting is just `npm run dev`. If the lock persists even with no matching process, write the new content under a new filename and update the importing `.astro` file(s) instead of fighting the lock further.
+
 ### Fetching stock photography
 
 ```bash
@@ -59,3 +61,5 @@ English pages live at the top of `src/pages/` (`/`, `/services/`, `/who-we-help/
 ### Images
 
 Photography is Pexels stock, fetched at authoring time via `npm run pexels` (see Commands above) into per-section folders under `src/assets/` (`assets/services/`, `assets/audiences/`, plus one-off files like `hero-collage-*.jpg`) and imported as ES modules for use with `astro:assets`' `<Image>` — never fetched at request/runtime and never referenced as plain `/public` paths. Each folder's `credits.md` records photographer attribution per image; keep adding to it when fetching new images into that folder.
+
+`src/assets/trust/` is a separate case: third-party membership/software badge logos (AAT, İSMMMO, Xero, Capium) shown in the homepage's "Professional memberships & software" strip, sourced as vendor brand assets rather than via `npm run pexels`. `<Image>` renders these directly with no wrapping background box in CSS, so a logo whose source file has a baked-in white background needs de-matting into a true alpha channel before import, not just a crop. `sharp` (Astro's own image dependency, already present in `node_modules` without any extra install — there's no ImageMagick or Python in this environment) can do this: key alpha off `255 - min(r,g,b)` per pixel, then unpremultiply the RGB against white for the semi-transparent edge pixels, so edges stay anti-aliased instead of a hard cutout. Files that have been through this step carry a `-transparent` suffix (e.g. `aat-logo-transparent.webp`) — keep that convention for any new vendor logo that ships on a white background.

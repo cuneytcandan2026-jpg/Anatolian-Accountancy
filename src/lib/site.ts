@@ -13,9 +13,9 @@ export const site = {
     postcode: 'EN3 7GD',
     country: 'GB',
   },
-  hours: 'Mon–Fri, 9:00–16:00',
-  hoursTr: 'Pzt–Cuma, 9:00–16:00',
-  hoursSchema: [{ days: ['Mo', 'Tu', 'We', 'Th', 'Fr'], opens: '09:00', closes: '16:00' }],
+  hours: 'Mon–Fri, 9:00–18:00',
+  hoursTr: 'Pzt–Cuma, 9:00–18:00',
+  hoursSchema: [{ days: ['Mo', 'Tu', 'We', 'Th', 'Fr'], opens: '09:00', closes: '18:00' }],
   geo: { lat: 51.6742, lng: -0.0217 },
   googleReviewsUrl:
     'https://www.google.com/maps/place/Anatolian+Accountancy/@51.6741991,-0.0216902,17z/data=!3m1!4b1!4m6!3m5!1s0x48761d42ba7d16cb:0x5b720422b04e8d0b!8m2!3d51.6741991!4d-0.0216902',
