@@ -4,9 +4,10 @@ import Icon from './Icon.astro';
 
 interface Props {
   items?: { question: string; answer: string }[];
+  group?: string;
 }
 
-const { items } = Astro.props;
+const { items, group } = Astro.props;
 
 type Row = { id: string; question: string; Content?: any; answer?: string };
 
@@ -15,7 +16,9 @@ let rows: Row[];
 if (items) {
   rows = items.map((item, i) => ({ id: `faq-tr-${i}`, question: item.question, answer: item.answer }));
 } else {
-  const faqEntries = (await getCollection('faq')).sort((a, b) => a.data.order - b.data.order);
+  const faqEntries = (await getCollection('faq', (e) => !group || e.data.group === group)).sort(
+    (a, b) => a.data.order - b.data.order
+  );
   const rendered = await Promise.all(faqEntries.map((entry) => render(entry)));
   rows = faqEntries.map((entry, i) => ({ id: entry.id, question: entry.data.question, Content: rendered[i].Content }));
 }

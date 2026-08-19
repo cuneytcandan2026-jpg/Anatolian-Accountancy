@@ -30,6 +30,7 @@ const faq = defineCollection({
   schema: z.object({
     question: z.string(),
     order: z.number(),
+    group: z.enum(['getting-started', 'tax', 'cis', 'general']),
   }),
 });
 
