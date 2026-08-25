@@ -3,7 +3,7 @@ title: "Switching Accountants: What Actually Happens"
 metaTitle: "Switching Accountants in the UK: What Actually Happens"
 description: "A step-by-step look at what happens when you switch accountants in the UK — professional clearance, authorising HMRC, records handover, and the best time to move."
 category: general
-order: 1
+order: 6
 status: placeholder
 relatedServiceHref: /contact/
 lastReviewed: "19 August 2026"
