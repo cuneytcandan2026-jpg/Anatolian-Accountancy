@@ -40,7 +40,7 @@ const altHref = trSibling ? `/tr/blog/${slug}/` : undefined;
 
     <section class="section">
       <div class="container post-body-grid">
-        <div class="post-body reveal">
+        <div class="post-body">
           <Content />
           {post.data.lastReviewed && (
             <p class="post-reviewed">
@@ -49,7 +49,7 @@ const altHref = trSibling ? `/tr/blog/${slug}/` : undefined;
             </p>
           )}
         </div>
-        <div class="post-cta reveal">
+        <div class="post-cta">
           <p class="post-cta__label">Have a question about this now?</p>
           <p class="post-cta__desc">No need to wait for the full article — tell us what you need and we'll answer directly.</p>
           <div class="post-cta__actions">
