@@ -4,9 +4,10 @@ import Icon from './Icon.astro';
 
 interface Props {
   items?: { question: string; answer: string }[];
+  group?: string;
 }
 
-const { items } = Astro.props;
+const { items, group } = Astro.props;
 
 type Row = { id: string; question: string; Content?: any; answer?: string };
 
@@ -15,17 +16,19 @@ let rows: Row[];
 if (items) {
   rows = items.map((item, i) => ({ id: `faq-tr-${i}`, question: item.question, answer: item.answer }));
 } else {
-  const faqEntries = (await getCollection('faq')).sort((a, b) => a.data.order - b.data.order);
+  const faqEntries = (await getCollection('faq', (e) => !group || e.data.group === group)).sort(
+    (a, b) => a.data.order - b.data.order
+  );
   const rendered = await Promise.all(faqEntries.map((entry) => render(entry)));
   rows = faqEntries.map((entry, i) => ({ id: entry.id, question: entry.data.question, Content: rendered[i].Content }));
 }
 ---
 
-<div class="accordion">
+<div class="accordion reveal">
   {rows.map((row, i) => {
     const { Content } = row;
     return (
-      <div class="accordion__item reveal" style={`--reveal-delay:${(i % 4) * 60}ms`}>
+      <div class="accordion__item">
         <h3>
           <button
             type="button"
@@ -39,11 +42,11 @@ if (items) {
           </button>
         </h3>
         <div
-          class="accordion__panel"
+          class={`accordion__panel ${i === 0 ? 'is-open' : ''}`}
           id={`faq-panel-${row.id}`}
           role="region"
           aria-labelledby={`faq-trigger-${row.id}`}
-          hidden={i !== 0}
+          aria-hidden={i === 0 ? 'false' : 'true'}
         >
           <div class="accordion__panel-inner">
             {Content ? <Content /> : <p>{row.answer}</p>}
@@ -63,7 +66,10 @@ if (items) {
     trigger?.addEventListener('click', () => {
       const isOpen = trigger.getAttribute('aria-expanded') === 'true';
       trigger.setAttribute('aria-expanded', String(!isOpen));
-      if (panel) panel.hidden = isOpen;
+      if (panel) {
+        panel.classList.toggle('is-open', !isOpen);
+        panel.setAttribute('aria-hidden', String(isOpen));
+      }
     });
   });
 </script>
@@ -112,12 +118,21 @@ if (items) {
   }
 
   .accordion__panel {
+    display: grid;
+    grid-template-rows: 0fr;
     overflow: hidden;
-    padding-bottom: 1.5rem;
+    transition: grid-template-rows var(--duration-base) var(--ease-out);
+  }
+
+  .accordion__panel.is-open {
+    grid-template-rows: 1fr;
   }
 
   .accordion__panel-inner {
+    min-height: 0;
+    overflow: hidden;
     max-width: 42rem;
+    padding-bottom: 1.5rem;
     color: var(--text-secondary);
     line-height: var(--lh-relaxed);
   }

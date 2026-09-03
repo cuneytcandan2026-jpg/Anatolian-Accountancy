@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BlogCard from '../../../components/BlogCard.astro';
+import { categoryLabels, categoryIcons } from '../../../lib/blog';
+
+const posts = (await getCollection('blog', (e) => e.id.startsWith('tr/'))).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<BaseLayout
+  title="Blog | Anatolian Accountancy"
+  description="CIS, şirket yapısı, KDV, Self Assessment ve daha fazlası hakkında sade dilde rehberler — Anatolian Accountancy'den."
+  path="/tr/blog/"
+  lang="tr"
+  includeLocalBusinessSchema
+>
+  <!-- ============ HERO ============ -->
+  <section class="insights-hero">
+    <div class="insights-hero__glow" aria-hidden="true"></div>
+    <div class="container insights-hero__inner reveal">
+      <p class="eyebrow eyebrow--on-ink">Blog</p>
+      <h1 class="insights-hero__heading">Vergi ve muhasebe hakkında sade dilde rehberlik.</h1>
+      <p class="insights-hero__lead">
+        Londra ve İngiltere genelindeki taşeronlardan, şirket yöneticilerinden, şahıs şirketi sahiplerinden ve
+        online satıcılardan en sık duyduğumuz sorulara pratik cevaplar.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ ARTICLES ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="insights-grid reveal">
+        {posts.map((post) => (
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            href={`/tr/blog/${post.id.replace('tr/', '')}/`}
+            categoryLabel={categoryLabels[post.data.category].tr}
+            categoryIcon={categoryIcons[post.data.category]}
+            isPlaceholder={post.data.status === 'placeholder'}
+            draftLabel="Taslak"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---- Hero ---- */
+  .insights-hero {
+    position: relative;
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .insights-hero__glow {
+    position: absolute;
+    inset: -30% auto auto -10%;
+    width: 46rem;
+    height: 46rem;
+    z-index: 1;
+    background: radial-gradient(circle, var(--c-azure-glow), transparent 65%);
+    pointer-events: none;
+  }
+
+  .insights-hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 42rem;
+  }
+
+  .insights-hero__heading {
+    margin-top: var(--space-5);
+    font-size: var(--fs-h1);
+    letter-spacing: var(--ls-tighter);
+    color: var(--text-on-ink);
+  }
+
+  .insights-hero__lead {
+    margin-top: var(--space-5);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-relaxed);
+    color: var(--text-on-ink-muted);
+  }
+
+  /* ---- Grid ---- */
+  .insights-grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+  }
+</style>

@@ -5,24 +5,29 @@ import { withBase } from '../lib/site';
 interface Props {
   title: string;
   description: string;
-  icon: string;
   href: string;
-  index: number;
+  categoryLabel: string;
+  categoryIcon: string;
+  isPlaceholder?: boolean;
+  draftLabel?: string;
 }
 
-const { title, description, icon, href, index } = Astro.props;
+const { title, description, href, categoryLabel, categoryIcon, isPlaceholder = false, draftLabel = 'Draft' } = Astro.props;
 ---
 
-<a href={withBase(href)} class="audience-card">
-  <span class="audience-card__index">{String(index + 1).padStart(2, '0')}</span>
-  <span class="audience-card__icon"><Icon name={icon} /></span>
-  <span class="audience-card__title">{title}</span>
-  <span class="audience-card__desc">{description}</span>
-  <span class="audience-card__arrow"><Icon name="arrow-right" /></span>
+<a href={withBase(href)} class="blog-card">
+  <span class="blog-card__icon"><Icon name={categoryIcon} /></span>
+  <div class="blog-card__tags">
+    <span class="blog-card__category">{categoryLabel}</span>
+    {isPlaceholder && <span class="blog-card__draft">{draftLabel}</span>}
+  </div>
+  <span class="blog-card__title">{title}</span>
+  <span class="blog-card__desc">{description}</span>
+  <span class="blog-card__arrow"><Icon name="arrow-right" /></span>
 </a>
 
 <style>
-  .audience-card {
+  .blog-card {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -38,32 +43,19 @@ const { title, description, icon, href, index } = Astro.props;
       border-color var(--duration-base) var(--ease-out);
   }
 
-  .audience-card:active {
-    transform: scale(0.985);
-  }
-
   @media (hover: hover) and (pointer: fine) {
-    .audience-card:hover {
+    .blog-card:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow-md);
       border-color: transparent;
     }
-
-    .audience-card:hover .audience-card__arrow {
-      opacity: 1;
-      transform: translate(0, 0);
-      background: var(--accent);
-      color: var(--c-ink-950);
-    }
   }
 
-  .audience-card__index {
-    font-family: var(--font-display);
-    font-size: var(--fs-small);
-    color: var(--text-tertiary);
+  .blog-card:active {
+    transform: scale(0.985);
   }
 
-  .audience-card__icon {
+  .blog-card__icon {
     display: grid;
     place-items: center;
     width: 3rem;
@@ -71,15 +63,41 @@ const { title, description, icon, href, index } = Astro.props;
     border-radius: var(--radius-md);
     background: var(--bg-muted);
     color: var(--accent-strong);
-    margin-top: var(--space-2);
   }
 
-  .audience-card__icon :global(svg) {
+  .blog-card__icon :global(svg) {
     width: 22px;
     height: 22px;
   }
 
-  .audience-card__title {
+  .blog-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+  }
+
+  .blog-card__category {
+    font-size: var(--fs-eyebrow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+    color: var(--text-accent);
+  }
+
+  .blog-card__draft {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-muted);
+    color: var(--text-tertiary);
+  }
+
+  .blog-card__title {
     font-family: var(--font-display);
     font-size: 1.3rem;
     font-weight: 560;
@@ -87,13 +105,14 @@ const { title, description, icon, href, index } = Astro.props;
     margin-top: var(--space-2);
   }
 
-  .audience-card__desc {
+  .blog-card__desc {
     font-size: var(--fs-small);
     line-height: var(--lh-relaxed);
     color: var(--text-secondary);
+    flex-grow: 1;
   }
 
-  .audience-card__arrow {
+  .blog-card__arrow {
     position: absolute;
     top: var(--space-6);
     right: var(--space-6);
@@ -110,8 +129,17 @@ const { title, description, icon, href, index } = Astro.props;
       background var(--duration-base) var(--ease-out), color var(--duration-base) var(--ease-out);
   }
 
-  .audience-card__arrow :global(svg) {
+  .blog-card__arrow :global(svg) {
     width: 16px;
     height: 16px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .blog-card:hover .blog-card__arrow {
+      opacity: 1;
+      transform: translate(0, 0);
+      background: var(--accent);
+      color: var(--c-ink-950);
+    }
   }
 </style>

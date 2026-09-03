@@ -30,6 +30,12 @@ const testimonials = (await getCollection('testimonials'))
   .map((t) => ({ quote: t.body ?? '', name: t.data.name, context: t.data.context, source: t.data.source }));
 
 const faqEntries = (await getCollection('faq')).sort((a, b) => a.data.order - b.data.order);
+const faqGroups = [
+  { key: 'getting-started', label: 'Getting Started' },
+  { key: 'tax', label: 'Tax' },
+  { key: 'cis', label: 'CIS' },
+  { key: 'general', label: 'General' },
+];
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -218,7 +224,7 @@ const whyPoints = [
           poster="/videos/calculator-poster.jpg"
         />
       </div>
-      <div class="how-we-help__grid">
+      <div class="how-we-help__grid reveal">
         {audiences.map((item, i) => (
           <AudienceCard
             title={item.data.title}
@@ -243,9 +249,9 @@ const whyPoints = [
         />
         <Button href="/services/" variant="ghost" class="services-section__all">View all services</Button>
       </div>
-      <div class="services-section__grid">
-        {services.map((item, i) => (
-          <ServiceCard title={item.data.title} summary={item.data.summary} icon={item.data.icon} href={item.data.href} index={i} />
+      <div class="services-section__grid reveal">
+        {services.map((item) => (
+          <ServiceCard title={item.data.title} summary={item.data.summary} icon={item.data.icon} href={item.data.href} />
         ))}
       </div>
     </div>
@@ -255,9 +261,9 @@ const whyPoints = [
   <section class="section why-us">
     <div class="container">
       <SectionHeader eyebrow="Why Anatolian" heading="Why clients stay" />
-      <div class="why-us__grid">
-        {whyPoints.map((point, i) => (
-          <div class="why-us__item reveal" style={`--reveal-delay:${(i % 3) * 90}ms`}>
+      <div class="why-us__grid reveal">
+        {whyPoints.map((point) => (
+          <div class="why-us__item">
             <span class="why-us__icon"><Icon name={point.icon} /></span>
             <h3>{point.title}</h3>
             <p>{point.desc}</p>
@@ -305,24 +311,21 @@ const whyPoints = [
         heading="Becoming a client is simple"
         tone="ink"
       />
-      <div class="process__grid">
+      <div class="process__grid reveal">
         <ProcessStep
           number="01"
           title="Tell us about yourself"
           description="Book a free consultation and tell us what kind of support you need. No forms to fill in first."
-          index={0}
         />
         <ProcessStep
           number="02"
           title="We review your requirements"
           description="We look at your situation and recommend the accounting and tax services that actually apply to you."
-          index={1}
         />
         <ProcessStep
           number="03"
           title="We take care of the numbers"
           description="You get on with running your business. We manage the ongoing accounting and keep you ahead of deadlines."
-          index={2}
         />
       </div>
       <div class="process__cta reveal">
@@ -367,7 +370,14 @@ const whyPoints = [
   <section class="section faq">
     <div class="container faq__grid">
       <SectionHeader eyebrow="Common questions" heading="Answers before you ask" class="faq__header" />
-      <Accordion />
+      <div class="faq__groups">
+        {faqGroups.map((g) => (
+          <div class="faq__group">
+            <p class="eyebrow faq__group-label">{g.label}</p>
+            <Accordion group={g.key} />
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -915,6 +925,16 @@ const whyPoints = [
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-10);
+  }
+
+  .faq__groups {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .faq__group-label {
+    margin-bottom: var(--space-2);
   }
 
   @media (min-width: 900px) {

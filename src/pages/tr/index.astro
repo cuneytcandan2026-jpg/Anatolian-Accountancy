@@ -169,65 +169,93 @@ const testimonials = [
   },
 ];
 
-const faqItems = [
+// Grouped under the same 4 topic headers as the English FAQ collection
+// (src/content/faq/*.md's `group` field) — same 9 questions, same order.
+const faqGroups = [
   {
-    question: 'Muhasebecimi değiştirdiğimde ne olur?',
-    answer:
-      "Çoğu kişinin sandığından daha basit. Bizi görevlendirdiğinizde, mevcut muhasebecinizle doğrudan iletişime geçip profesyonel bir devir süreci başlatırız: kayıtlarınız, beyan geçmişiniz ve HMRC yetkilendirmeleri dahil. Geçişi kendiniz yönetmenize gerek kalmaz; bir sonraki son tarihten önce yeterli zamanla bize gelirseniz uyum sürecinde herhangi bir boşluk oluşmaz.",
+    key: 'getting-started',
+    label: 'Başlarken',
+    items: [
+      {
+        question: 'Muhasebecimi değiştirdiğimde ne olur?',
+        answer:
+          "Çoğu kişinin sandığından daha basit. Bizi görevlendirdiğinizde, mevcut muhasebecinizle doğrudan iletişime geçip profesyonel bir devir süreci başlatırız: kayıtlarınız, beyan geçmişiniz ve HMRC yetkilendirmeleri dahil. Geçişi kendiniz yönetmenize gerek kalmaz; bir sonraki son tarihten önce yeterli zamanla bize gelirseniz uyum sürecinde herhangi bir boşluk oluşmaz.",
+      },
+      {
+        question: 'Bir limited şirket kurmak için gerçekte ne yapmam gerekiyor?',
+        answer:
+          "Şirketi Companies House'a kaydettirmeniz, bir işletme banka hesabı açmanız, kurumlar vergisi için kayıt yaptırmanız ve kendinize nasıl ödeme yapacağınıza karar vermeniz gerekir. Kuruluş sürecini biz yürütür; ön muhasebe, gerekirse bordro, bulut yazılımı gibi muhasebe altyapısını ilk günden itibaren doğru şekilde kurarız, böylece bir yıl sonra karmaşayı çözmek zorunda kalmazsınız.",
+      },
+      {
+        question: 'Ücretsiz ilk görüşme sırasında neler olur?',
+        answer:
+          'Bu bir satış sunumu değil, bir sohbettir. Bize işletmenizden ya da kişisel durumunuzdan, mevcut düzeninizde neyin işlemediğinden ve hangi konuda yardıma ihtiyacınız olduğundan bahsedin. Hangi hizmetlerin sizin için geçerli olduğunu, bunun kabaca neler içereceğini ve sonraki adımları dürüstçe anlatırız. Görüşme sırasında hemen kaydolma zorunluluğu yoktur.',
+      },
+    ],
   },
   {
-    question: 'Serbest çalışıyorum. Gerçekte hangi vergileri ödemem gerekiyor?',
-    answer:
-      'Şahıs şirketi sahibi olarak, kârınız üzerinden Gelir Vergisi ve Ulusal Sigorta (National Insurance) ödersiniz; bu her yıl bir Self Assessment beyannamesiyle bildirilir. Çoğu kişinin kafasını karıştıran kısım, neyin indirilebilir gider sayılıp neyin sayılmadığını belirlemektir. Bu hesaplamayı biz yapar, son tarihten çok önce ne kadar borcunuz olduğunu size bildirir ve talep etme hakkınız olup da gözden kaçırabileceğiniz kalemleri size hatırlatırız.',
+    key: 'tax',
+    label: 'Vergi',
+    items: [
+      {
+        question: 'Serbest çalışıyorum. Gerçekte hangi vergileri ödemem gerekiyor?',
+        answer:
+          'Şahıs şirketi sahibi olarak, kârınız üzerinden Gelir Vergisi ve Ulusal Sigorta (National Insurance) ödersiniz; bu her yıl bir Self Assessment beyannamesiyle bildirilir. Çoğu kişinin kafasını karıştıran kısım, neyin indirilebilir gider sayılıp neyin sayılmadığını belirlemektir. Bu hesaplamayı biz yapar, son tarihten çok önce ne kadar borcunuz olduğunu size bildirir ve talep etme hakkınız olup da gözden kaçırabileceğiniz kalemleri size hatırlatırız.',
+      },
+      {
+        question: 'Limited şirket mi kurmalıyım, yoksa şahıs şirketi olarak mı devam etmeliyim?',
+        answer:
+          'Bu; kâr seviyenize, işletmeden parayı nasıl çekmek istediğinize ve üstlendiğiniz riske bağlıdır. Tek bir doğru cevap yoktur. Kârlar belirli bir seviyeye ulaştığında bir limited şirket vergi açısından daha avantajlı olabilir ve size sorumluluk koruması sağlar, ancak beraberinde ek beyan yükümlülükleri getirir. Herhangi bir karar vermeden önce gerçek rakamlarınıza bakar ve artı-eksileri sizinle birlikte değerlendiririz.',
+      },
+      {
+        question: 'KDV için ne zaman kayıt yaptırmam gerekir?',
+        answer:
+          'Vergiye tabi cironuz, HMRC tarafından belirlenen ve herhangi bir hareketli 12 aylık dönemde geçerli olan KDV kayıt eşiğini aştığında kayıt zorunlu hale gelir; bu eşiği aştığınız andan itibaren genellikle kayıt için 30 gününüz vardır. Bazı işletmeler bu noktadan önce, kendi lehlerine olduğu durumlarda gönüllü olarak kayıt yaptırır. Devam eden müşterilerimiz için bunu takip ederiz, böylece asla sürpriz olmaz; gönüllü kaydın sizin için mantıklı olup olmadığını da birlikte değerlendirebiliriz.',
+      },
+    ],
   },
   {
-    question: 'Limited şirket mi kurmalıyım, yoksa şahıs şirketi olarak mı devam etmeliyim?',
-    answer:
-      'Bu; kâr seviyenize, işletmeden parayı nasıl çekmek istediğinize ve üstlendiğiniz riske bağlıdır. Tek bir doğru cevap yoktur. Kârlar belirli bir seviyeye ulaştığında bir limited şirket vergi açısından daha avantajlı olabilir ve size sorumluluk koruması sağlar, ancak beraberinde ek beyan yükümlülükleri getirir. Herhangi bir karar vermeden önce gerçek rakamlarınıza bakar ve artı-eksileri sizinle birlikte değerlendiririz.',
+    key: 'cis',
+    label: 'CIS',
+    items: [
+      {
+        question: 'Müteahhitler ve taşeronlar için CIS nasıl işler?',
+        answer:
+          "İnşaat Sektörü Vergi Sistemi (CIS) kapsamında müteahhitler, taşeronun ödemesinden kesinti yapar ve bunu vergi ile Ulusal Sigorta'ya karşı bir avans olarak HMRC'ye gönderir. Bu ilişkinin her iki tarafı için de CIS kaydı, aylık beyannameler ve kesinti bildirimlerini biz yönetiriz; taşeronların hak ettikleri tutarı HMRC'de bekletmek yerine geri almalarını sağlarız.",
+      },
+    ],
   },
   {
-    question: 'KDV için ne zaman kayıt yaptırmam gerekir?',
-    answer:
-      'Vergiye tabi cironuz, HMRC tarafından belirlenen ve herhangi bir hareketli 12 aylık dönemde geçerli olan KDV kayıt eşiğini aştığında kayıt zorunlu hale gelir; bu eşiği aştığınız andan itibaren genellikle kayıt için 30 gününüz vardır. Bazı işletmeler bu noktadan önce, kendi lehlerine olduğu durumlarda gönüllü olarak kayıt yaptırır. Devam eden müşterilerimiz için bunu takip ederiz, böylece asla sürpriz olmaz; gönüllü kaydın sizin için mantıklı olup olmadığını da birlikte değerlendirebiliriz.',
-  },
-  {
-    question: 'Müteahhitler ve taşeronlar için CIS nasıl işler?',
-    answer:
-      "İnşaat Sektörü Vergi Sistemi (CIS) kapsamında müteahhitler, taşeronun ödemesinden kesinti yapar ve bunu vergi ile Ulusal Sigorta'ya karşı bir avans olarak HMRC'ye gönderir. Bu ilişkinin her iki tarafı için de CIS kaydı, aylık beyannameler ve kesinti bildirimlerini biz yönetiriz; taşeronların hak ettikleri tutarı HMRC'de bekletmek yerine geri almalarını sağlarız.",
-  },
-  {
-    question: 'Bir limited şirket kurmak için gerçekte ne yapmam gerekiyor?',
-    answer:
-      "Şirketi Companies House'a kaydettirmeniz, bir işletme banka hesabı açmanız, kurumlar vergisi için kayıt yaptırmanız ve kendinize nasıl ödeme yapacağınıza karar vermeniz gerekir. Kuruluş sürecini biz yürütür; ön muhasebe, gerekirse bordro, bulut yazılımı gibi muhasebe altyapısını ilk günden itibaren doğru şekilde kurarız, böylece bir yıl sonra karmaşayı çözmek zorunda kalmazsınız.",
-  },
-  {
-    question: 'Yüz yüze görüşmem mi gerekiyor, yoksa her şey uzaktan mı halledilebiliyor?',
-    answer:
-      'Çoğu müşterimiz İngiltere\'nin neresinde olurlarsa olsunlar bizimle tamamen uzaktan çalışır: telefon, görüntülü görüşme ve bulut muhasebe yazılımı üzerinden. Yakınımızdaysanız ve yüz yüze oturmayı tercih ederseniz, Enfield ofisimiz bunun için de burada. Her iki durumda da baştan sona aynı muhasebeciyle çalışırsınız.',
-  },
-  {
-    question: 'Türkçe muhasebe desteği alabilir miyim?',
-    answer:
-      'Evet, Bektaş anadili Türkçe olup ileri düzeyde İngilizce konuşmaktadır ve mali durumunuzu görüşmek için daha rahat olduğunuz dilde size destek olabilir. Bu yalnızca çevrilmiş bir broşür değil; görüşmeler, danışmanlıklar ve yazışmalar için de geçerlidir.',
-  },
-  {
-    question: 'Ücretsiz ilk görüşme sırasında neler olur?',
-    answer:
-      'Bu bir satış sunumu değil, bir sohbettir. Bize işletmenizden ya da kişisel durumunuzdan, mevcut düzeninizde neyin işlemediğinden ve hangi konuda yardıma ihtiyacınız olduğundan bahsedin. Hangi hizmetlerin sizin için geçerli olduğunu, bunun kabaca neler içereceğini ve sonraki adımları dürüstçe anlatırız. Görüşme sırasında hemen kaydolma zorunluluğu yoktur.',
+    key: 'general',
+    label: 'Genel',
+    items: [
+      {
+        question: 'Yüz yüze görüşmem mi gerekiyor, yoksa her şey uzaktan mı halledilebiliyor?',
+        answer:
+          'Çoğu müşterimiz İngiltere\'nin neresinde olurlarsa olsunlar bizimle tamamen uzaktan çalışır: telefon, görüntülü görüşme ve bulut muhasebe yazılımı üzerinden. Yakınımızdaysanız ve yüz yüze oturmayı tercih ederseniz, Enfield ofisimiz bunun için de burada. Her iki durumda da baştan sona aynı muhasebeciyle çalışırsınız.',
+      },
+      {
+        question: 'Türkçe muhasebe desteği alabilir miyim?',
+        answer:
+          'Evet, Bektaş anadili Türkçe olup ileri düzeyde İngilizce konuşmaktadır ve mali durumunuzu görüşmek için daha rahat olduğunuz dilde size destek olabilir. Bu yalnızca çevrilmiş bir broşür değil; görüşmeler, danışmanlıklar ve yazışmalar için de geçerlidir.',
+      },
+    ],
   },
 ];
 
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqItems.map((item) => ({
-    '@type': 'Question',
-    name: item.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: item.answer,
-    },
-  })),
+  mainEntity: faqGroups.flatMap((g) =>
+    g.items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    }))
+  ),
 };
 ---
 
@@ -378,7 +406,7 @@ const faqSchema = {
           poster="/videos/calculator-poster.jpg"
         />
       </div>
-      <div class="how-we-help__grid">
+      <div class="how-we-help__grid reveal">
         {audiences.map((item, i) => (
           <AudienceCard title={item.title} description={item.description} icon={item.icon} href={item.href} index={i} />
         ))}
@@ -397,9 +425,9 @@ const faqSchema = {
         />
         <Button href="/tr/hizmetler/" variant="ghost" class="services-section__all">Tüm hizmetleri görün</Button>
       </div>
-      <div class="services-section__grid">
-        {services.map((item, i) => (
-          <ServiceCard title={item.title} summary={item.summary} icon={item.icon} href={item.href} index={i} linkLabel="Daha fazla bilgi" />
+      <div class="services-section__grid reveal">
+        {services.map((item) => (
+          <ServiceCard title={item.title} summary={item.summary} icon={item.icon} href={item.href} linkLabel="Daha fazla bilgi" />
         ))}
       </div>
     </div>
@@ -409,9 +437,9 @@ const faqSchema = {
   <section class="section why-us">
     <div class="container">
       <SectionHeader eyebrow="Neden Anatolian" heading="Müşteriler neden kalıyor" />
-      <div class="why-us__grid">
-        {whyPoints.map((point, i) => (
-          <div class="why-us__item reveal" style={`--reveal-delay:${(i % 3) * 90}ms`}>
+      <div class="why-us__grid reveal">
+        {whyPoints.map((point) => (
+          <div class="why-us__item">
             <span class="why-us__icon"><Icon name={point.icon} /></span>
             <h3>{point.title}</h3>
             <p>{point.desc}</p>
@@ -456,24 +484,21 @@ const faqSchema = {
   <section class="section process">
     <div class="container">
       <SectionHeader eyebrow="Başlarken" heading="Müşteri olmak basittir" tone="ink" />
-      <div class="process__grid">
+      <div class="process__grid reveal">
         <ProcessStep
           number="01"
           title="Bize kendinizden bahsedin"
           description="Ücretsiz bir görüşme ayarlayın ve ne tür bir desteğe ihtiyacınız olduğunu bize anlatın. Önce doldurulacak bir form yok."
-          index={0}
         />
         <ProcessStep
           number="02"
           title="İhtiyaçlarınızı değerlendiriyoruz"
           description="Durumunuza bakar ve sizin için gerçekten geçerli olan muhasebe ve vergi hizmetlerini öneririz."
-          index={1}
         />
         <ProcessStep
           number="03"
           title="Rakamlarla biz ilgileniriz"
           description="Siz işletmenizi yönetmeye devam edersiniz. Devam eden muhasebeyi biz yönetir, son tarihlerin önünde kalmanızı sağlarız."
-          index={2}
         />
       </div>
       <div class="process__cta reveal">
@@ -518,7 +543,14 @@ const faqSchema = {
   <section class="section faq">
     <div class="container faq__grid">
       <SectionHeader eyebrow="Sık sorulan sorular" heading="Sormadan önce cevaplar" class="faq__header" />
-      <Accordion items={faqItems} />
+      <div class="faq__groups">
+        {faqGroups.map((g) => (
+          <div class="faq__group">
+            <p class="eyebrow faq__group-label">{g.label}</p>
+            <Accordion items={g.items} />
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -1067,6 +1099,16 @@ const faqSchema = {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-10);
+  }
+
+  .faq__groups {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .faq__group-label {
+    margin-bottom: var(--space-2);
   }
 
   @media (min-width: 900px) {

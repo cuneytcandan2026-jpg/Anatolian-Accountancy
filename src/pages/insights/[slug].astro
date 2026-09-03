@@ -1,0 +1,270 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import { categoryLabels, categoryIcons } from '../../lib/blog';
+import { withBase } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (e) => e.id.startsWith('en/'));
+  return posts.map((post) => ({
+    params: { slug: post.id.replace('en/', '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const slug = post.id.replace('en/', '');
+const trSibling = await getEntry('blog', `tr/${slug}`);
+const altHref = trSibling ? `/tr/blog/${slug}/` : undefined;
+---
+
+<BaseLayout
+  title={`${post.data.metaTitle ?? post.data.title} | Anatolian Accountancy`}
+  description={post.data.description}
+  path={`/insights/${slug}/`}
+  altHref={altHref}
+>
+  <article>
+    <section class="post-hero">
+      <div class="post-hero__glow" aria-hidden="true"></div>
+      <div class="container post-hero__inner reveal">
+        <a href={withBase('/insights/')} class="post-hero__back"><Icon name="chevron-left" /> All articles</a>
+        <span class="post-hero__icon"><Icon name={categoryIcons[post.data.category]} /></span>
+        <p class="eyebrow eyebrow--on-ink">{categoryLabels[post.data.category].en}</p>
+        <h1 class="post-hero__heading">{post.data.title}</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container post-body-grid">
+        <div class="post-body">
+          <Content />
+          {post.data.lastReviewed && (
+            <p class="post-reviewed">
+              Last reviewed: {post.data.lastReviewed}. This is general guidance, not personalised advice —
+              rules and figures may have changed since publication, so please check with us before acting on it.
+            </p>
+          )}
+        </div>
+        <div class="post-cta">
+          <p class="post-cta__label">Have a question about this now?</p>
+          <p class="post-cta__desc">No need to wait for the full article — tell us what you need and we'll answer directly.</p>
+          <div class="post-cta__actions">
+            <Button href="/contact/" size="md">Book a Free Consultation</Button>
+            {post.data.relatedServiceHref && (
+              <Button href={post.data.relatedServiceHref} size="md" variant="outline">
+                See the related service
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-hero {
+    position: relative;
+    background: var(--bg-ink);
+    color: var(--text-on-ink);
+    overflow: hidden;
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem) clamp(3rem, 2rem + 4vw, 5rem);
+  }
+
+  .post-hero__glow {
+    position: absolute;
+    inset: -30% auto auto -10%;
+    width: 46rem;
+    height: 46rem;
+    z-index: 1;
+    background: radial-gradient(circle, var(--c-azure-glow), transparent 65%);
+    pointer-events: none;
+  }
+
+  .post-hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 42rem;
+  }
+
+  .post-hero__icon {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    margin-top: var(--space-6);
+    border-radius: var(--radius-md);
+    background: rgba(250, 246, 238, 0.08);
+    border: 1px solid var(--border-on-ink);
+    color: var(--text-accent-on-ink);
+  }
+
+  .post-hero__icon :global(svg) {
+    width: 24px;
+    height: 24px;
+  }
+
+  .post-hero__icon + .eyebrow--on-ink {
+    margin-top: var(--space-4);
+  }
+
+  .post-hero__back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-decoration: none;
+    color: var(--text-on-ink-muted);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .post-hero__back:hover {
+    color: var(--text-on-ink);
+  }
+
+  .post-hero__back :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+
+  .post-hero__heading {
+    margin-top: var(--space-5);
+    font-size: var(--fs-h1);
+    letter-spacing: var(--ls-tighter);
+    color: var(--text-on-ink);
+  }
+
+  .eyebrow--on-ink {
+    margin-top: var(--space-6);
+  }
+
+  .post-body-grid {
+    display: grid;
+    gap: var(--space-10);
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .post-body {
+    max-width: var(--container-narrow);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+    font-size: var(--fs-lead);
+  }
+
+  .post-body :global(p) {
+    margin: 0 0 var(--space-5);
+  }
+
+  .post-body :global(h2) {
+    margin: var(--space-10) 0 var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    font-weight: 560;
+    letter-spacing: var(--ls-tight);
+    color: var(--text-primary);
+  }
+
+  .post-body :global(h3) {
+    margin: var(--space-8) 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 560;
+    letter-spacing: var(--ls-tight);
+    color: var(--text-primary);
+  }
+
+  .post-body :global(ul),
+  .post-body :global(ol) {
+    margin: 0 0 var(--space-5);
+    padding-left: 1.3em;
+  }
+
+  .post-body :global(li) {
+    margin-bottom: var(--space-2);
+  }
+
+  .post-body :global(li > p) {
+    margin: 0;
+  }
+
+  .post-body :global(strong) {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .post-body :global(a) {
+    color: var(--text-accent);
+    text-decoration-color: var(--border-strong);
+  }
+
+  .post-body :global(table) {
+    width: 100%;
+    margin: 0 0 var(--space-6);
+    border-collapse: collapse;
+    font-size: var(--fs-small);
+  }
+
+  .post-body :global(th),
+  .post-body :global(td) {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .post-body :global(th) {
+    font-family: var(--font-body);
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .post-body :global(blockquote) {
+    margin: 0 0 var(--space-5);
+    padding-left: var(--space-5);
+    border-left: 2px solid var(--accent);
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .post-reviewed {
+    margin-top: var(--space-8);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--border-subtle);
+    font-size: var(--fs-eyebrow);
+    line-height: var(--lh-relaxed);
+    color: var(--text-tertiary);
+  }
+
+  .post-cta {
+    padding: var(--space-8);
+    background: var(--bg-muted);
+    border-radius: var(--radius-xl);
+    max-width: var(--container-narrow);
+  }
+
+  .post-cta__label {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 560;
+    color: var(--text-primary);
+  }
+
+  .post-cta__desc {
+    margin-top: var(--space-2);
+    color: var(--text-secondary);
+    font-size: var(--fs-small);
+    line-height: var(--lh-relaxed);
+  }
+
+  .post-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+</style>

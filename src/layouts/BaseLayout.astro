@@ -18,6 +18,7 @@ interface Props {
   includeLocalBusinessSchema?: boolean;
   noIndex?: boolean;
   lang?: 'en' | 'tr';
+  altHref?: string;
 }
 
 const {
@@ -27,6 +28,7 @@ const {
   includeLocalBusinessSchema = false,
   noIndex = false,
   lang = 'en',
+  altHref,
 } = Astro.props;
 
 const canonicalURL = new URL(withBase(path), site.url).toString();
@@ -68,9 +70,11 @@ const localBusinessSchema = {
   },
 };
 
-// hreflang: only emitted for the 5 real EN<->TR page pairs (langAlternates
-// in site.ts) — pages with no translated twin (legal, 404) get none.
-const altPath = langAlternates[path] ?? langAlternatesReverse[path];
+// hreflang: emitted for the static EN<->TR page pairs (langAlternates in
+// site.ts), or for the explicit altHref override on pages whose pairing
+// isn't a fixed 1:1 path map (e.g. individual blog posts) — pages with no
+// translated twin (legal, 404) get neither.
+const altPath = altHref ?? langAlternates[path] ?? langAlternatesReverse[path];
 const enPath = lang === 'tr' ? altPath : path;
 const trPath = lang === 'tr' ? path : altPath;
 
@@ -124,7 +128,7 @@ const interPreload = lang === 'tr' ? interLatinExt : interLatin;
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to main content</a>
-    <Header />
+    <Header altHref={altHref} />
     <main id="main">
       <slot />
     </main>
@@ -145,7 +149,7 @@ const interPreload = lang === 'tr' ? interLatinExt : interLatin;
               }
             }
           },
-          { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+          { threshold: 0.2, rootMargin: '0px 0px -40px 0px' }
         );
         revealEls.forEach((el) => observer.observe(el));
       }

@@ -7,14 +7,13 @@ interface Props {
   summary: string;
   icon: string;
   href: string;
-  index: number;
   linkLabel?: string;
 }
 
-const { title, summary, icon, href, index, linkLabel = 'Learn more' } = Astro.props;
+const { title, summary, icon, href, linkLabel = 'Learn more' } = Astro.props;
 ---
 
-<a href={withBase(href)} class="service-card reveal" style={`--reveal-delay:${(index % 3) * 80}ms`}>
+<a href={withBase(href)} class="service-card">
   <span class="service-card__icon"><Icon name={icon} /></span>
   <span class="service-card__title">{title}</span>
   <span class="service-card__summary">{summary}</span>
@@ -47,13 +46,23 @@ const { title, summary, icon, href, index, linkLabel = 'Learn more' } = Astro.pr
     transition: opacity var(--duration-base) var(--ease-out);
   }
 
-  .service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+  .service-card:active {
+    transform: scale(0.985);
   }
 
-  .service-card:hover::before {
-    opacity: 1;
+  @media (hover: hover) and (pointer: fine) {
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-card:hover .service-card__link :global(svg) {
+      transform: translateX(3px);
+    }
   }
 
   .service-card__icon {
@@ -101,9 +110,5 @@ const { title, summary, icon, href, index, linkLabel = 'Learn more' } = Astro.pr
     width: 15px;
     height: 15px;
     transition: transform var(--duration-fast) var(--ease-out);
-  }
-
-  .service-card:hover .service-card__link :global(svg) {
-    transform: translateX(3px);
   }
 </style>

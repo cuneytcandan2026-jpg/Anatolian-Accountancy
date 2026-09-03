@@ -118,9 +118,9 @@ const howIWork = [
   <section class="section about-credentials">
     <div class="container">
       <SectionHeader eyebrow="Yeterlilikler" heading="İddia değil, tescilli yeterlilik" />
-      <div class="about-credentials__grid">
-        {credentials.map((c, i) => (
-          <div class="about-credentials__card reveal" style={`--reveal-delay:${(i % 4) * 80}ms`}>
+      <div class="about-credentials__grid reveal">
+        {credentials.map((c) => (
+          <div class="about-credentials__card">
             <span class="about-credentials__icon"><Icon name={c.icon} /></span>
             <h3 class="about-credentials__title">{c.title}</h3>
             <p class="about-credentials__body">{c.body}</p>
@@ -134,9 +134,9 @@ const howIWork = [
   <section class="section about-how">
     <div class="container">
       <SectionHeader eyebrow="Nasıl Çalışıyorum" heading="Bektaş ile çalışmak gerçekte nasıl bir şey" tone="ink" />
-      <div class="about-how__grid">
-        {howIWork.map((item, i) => (
-          <div class="about-how__card reveal" style={`--reveal-delay:${i * 80}ms`}>
+      <div class="about-how__grid reveal">
+        {howIWork.map((item) => (
+          <div class="about-how__card">
             <span class="about-how__icon"><Icon name={item.icon} /></span>
             <h3 class="about-how__title">{item.title}</h3>
             <p class="about-how__body">{item.body}</p>
