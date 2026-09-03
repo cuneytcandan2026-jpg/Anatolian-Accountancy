@@ -1,7 +1,7 @@
 ---
 title: "Allowable Expenses for the Self-Employed: A Quick Reference"
 metaTitle: "Allowable Expenses for the Self-Employed: 2026/27 Guide"
-description: "What you can and can't claim as a self-employed UK sole trader in 2026/27 — including the mileage rate rise most guides haven't updated yet."
+description: "What you can and can't claim as a self-employed UK sole trader in 2026/27, including the mileage rate rise most guides haven't updated yet."
 category: tax
 order: 8
 status: placeholder
@@ -14,7 +14,7 @@ Most sole traders either under-claim, out of caution, or claim something they sh
 
 ## The rule behind every allowable expense
 
-HMRC's test is that a cost must be incurred "wholly and exclusively" for your trade. In practice: if there's any personal benefit mixed into the purpose of the spending, the whole expense technically fails the test, unless you can identify a specific, genuine business proportion of it, in which case that proportion is claimable. A phone bill is the classic example — if £70 of a £200 monthly bill is business use, you claim £70, not the full amount and not nothing.
+HMRC's test is that a cost must be incurred "wholly and exclusively" for your trade. In practice: if there's any personal benefit mixed into the purpose of the spending, the whole expense technically fails the test, unless you can identify a specific, genuine business proportion of it, in which case that proportion is claimable. A phone bill is the classic example: if £70 of a £200 monthly bill is business use, you claim £70, not the full amount and not nothing.
 
 Some costs don't get this apportionment treatment at all, because HMRC treats them as having an unavoidable personal element no matter how you use them. Ordinary clothing and everyday food are the two that catch people out most often (more on both below).
 
@@ -22,11 +22,11 @@ Some costs don't get this apportionment treatment at all, because HMRC treats th
 
 HMRC's main categories run wide: office costs (stationery, the business proportion of phone and broadband bills, software with a working life under two years, postage, printing); travel costs (fuel, parking, train and bus fares, and vehicle costs generally); staff costs (salaries, subcontractor payments, employer pension contributions); and stock and materials, meaning anything bought to make or resell.
 
-A few more worth knowing individually. **Financial costs** cover insurance, bank charges, interest on business loans and hire purchase, and most professional fees — accountants, solicitors, surveyors — where they relate to the business. **Business premises costs** cover rent, business rates, heating, lighting and security. **Advertising and marketing** covers website costs, print advertising, mailshots, and relevant trade or professional subscriptions.
+A few more worth knowing individually. **Financial costs** cover insurance, bank charges, interest on business loans and hire purchase, and most professional fees (accountants, solicitors, surveyors) where they relate to the business. **Business premises costs** cover rent, business rates, heating, lighting and security. **Advertising and marketing** covers website costs, print advertising, mailshots, and relevant trade or professional subscriptions.
 
 **Training courses** are genuinely broader than they used to be: training to keep your existing skills current, or to learn new skills that still relate to your existing trade, is allowable. Training to start an entirely different business isn't.
 
-**Clothing** is the narrow one — only uniforms, protective clothing, or costumes qualify; see below for why.
+**Clothing** is the narrow one: only uniforms, protective clothing, or costumes qualify; see below for why.
 
 ## Simplified expenses: flat rates instead of tracking everything
 
@@ -52,13 +52,13 @@ If your actual expenses are modest, you can claim a flat £1,000 trading allowan
 
 ## Where people trip up
 
-A few things HMRC is consistently clear aren't allowable, however reasonable they might feel. Client entertaining — meals, hospitality, or most gifts for clients, suppliers or customers — isn't deductible, even though it's genuinely spent for business purposes. Everyday clothing doesn't qualify either: a suit you only wear to client meetings still fails the test, because it has ordinary everyday use outside work; only uniforms, genuine protective clothing, or costumes for actors and performers make the cut. Fines and penalties for breaking the law are never allowable, in any circumstance. Money drawn from the business for personal use isn't an expense at all — drawings are a distribution of profit you've already been taxed on, not a cost of running the business.
+A few things HMRC is consistently clear aren't allowable, however reasonable they might feel. Client entertaining (meals, hospitality, or most gifts for clients, suppliers or customers) isn't deductible, even though it's genuinely spent for business purposes. Everyday clothing doesn't qualify either: a suit you only wear to client meetings still fails the test, because it has ordinary everyday use outside work; only uniforms, genuine protective clothing, or costumes for actors and performers make the cut. Fines and penalties for breaking the law are never allowable, in any circumstance. Money drawn from the business for personal use isn't an expense at all. Drawings are a distribution of profit you've already been taxed on, not a cost of running the business.
 
 One nuance catches people out more than the rest: fees for preparing your business accounts and the self-employment pages of your return are allowable, but the fee for preparing your personal Self Assessment return as a whole isn't treated as a business cost.
 
 ## A change on the horizon: not here yet
 
-The government has announced an intention to raise the trading income reporting threshold from £1,000 to £3,000, so that more people with small amounts of side income won't need to file a full tax return at all. Don't confuse this with the £1,000 trading allowance itself, which isn't changing — income above £1,000 will still be taxable, just reported through a simpler route once this comes in. No firm date has been confirmed yet, so don't plan around it until it's actually in force.
+The government has announced an intention to raise the trading income reporting threshold from £1,000 to £3,000, so that more people with small amounts of side income won't need to file a full tax return at all. Don't confuse this with the £1,000 trading allowance itself, which isn't changing. Income above £1,000 will still be taxable, just reported through a simpler route once this comes in. No firm date has been confirmed yet, so don't plan around it until it's actually in force.
 
 ## Getting the claim right, not just the receipt kept
 

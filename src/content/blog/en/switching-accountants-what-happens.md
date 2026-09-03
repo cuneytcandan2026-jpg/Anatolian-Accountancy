@@ -16,7 +16,7 @@ Here's what actually happens, in order.
 
 ## 1. You tell your current accountant you're moving on
 
-You don't need their permission, and you don't need to give an elaborate explanation. "I've decided to move to a different accountant" is enough — a short email or letter is fine. What this step does is put them on notice that a professional clearance request will be coming, so it doesn't land out of the blue.
+You don't need their permission, and you don't need to give an elaborate explanation. "I've decided to move to a different accountant" is enough. A short email or letter is fine. What this step does is put them on notice that a professional clearance request will be coming, so it doesn't land out of the blue.
 
 If you're mid-engagement (say, they're partway through your annual accounts), it's worth flagging that too, so both firms know where things stand.
 
@@ -24,11 +24,11 @@ If you're mid-engagement (say, they're partway through your annual accounts), it
 
 Despite how it sounds, this isn't your old accountant granting permission for you to leave. It's a standard courtesy, and for accountants who belong to a body like ICAEW or AAT, an ethical obligation, where your new accountant writes to your old one asking two things: is there any professional reason they shouldn't take you on (unresolved fee disputes or concerns they're required to flag, for example), and can they have the information needed for a clean handover.
 
-A professional old accountant replies promptly, honestly, and cooperatively. Most do. Occasionally a firm is slow to respond, usually because of outstanding fees rather than anything more serious — more on that below.
+A professional old accountant replies promptly, honestly, and cooperatively. Most do. Occasionally a firm is slow to respond, usually because of outstanding fees rather than anything more serious (more on that below).
 
 ## 3. You authorise your new accountant with HMRC
 
-For your new accountant to actually speak to HMRC on your behalf — file returns, query your account, deal with correspondence — they need to be formally authorised. This is normally done through HMRC's agent authorisation process (the well-known "64-8" form, or its online equivalent), which your new accountant will usually prepare and send you to approve digitally. Once it's processed, HMRC treats them as your agent of record, which automatically supersedes the old authorisation.
+For your new accountant to actually speak to HMRC on your behalf (file returns, query your account, deal with correspondence), they need to be formally authorised. This is normally done through HMRC's agent authorisation process (the well-known "64-8" form, or its online equivalent), which your new accountant will usually prepare and send you to approve digitally. Once it's processed, HMRC treats them as your agent of record, which automatically supersedes the old authorisation.
 
 Online authorisations are typically actioned within a few working days. One recent wrinkle worth knowing about: since March 2026, HMRC no longer accepts the 64-8 form itself for certain limited/NI-related authorisations, which now have to be requested separately in writing. Not something you need to manage yourself, but a sign that the mechanics of this step do shift occasionally, so it's worth using an accountant who keeps up with the current process rather than an old template.
 
@@ -40,7 +40,7 @@ If you're on cloud accounting software (Xero, QuickBooks, or similar), the hando
 
 ## Timing: when to switch, and when to wait
 
-There's no rule that says you can only switch at a particular point in the year, but some windows are smoother than others. Right after your accounts have just been filed, or early in a new accounting period, tends to be the easiest — there's a natural break point and nothing mid-flight.
+There's no rule that says you can only switch at a particular point in the year, but some windows are smoother than others. Right after your accounts have just been filed, or early in a new accounting period, tends to be the easiest: there's a natural break point and nothing mid-flight.
 
 Switching in the final weeks before a filing deadline (the run-up to 31 January for Self Assessment, for example) is the one time it's worth pausing to think it through. It's not impossible, but a new accountant picking up your affairs a week before a deadline has less room to ask questions, spot issues, or query anything unusual before submission. If your current relationship isn't causing urgent problems, it's often more comfortable to file the current return with your existing accountant and switch straight afterwards.
 

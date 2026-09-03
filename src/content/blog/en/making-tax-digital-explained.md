@@ -10,21 +10,21 @@ lastReviewed: "19 August 2026"
 reviewBy: "2026-11-19"
 ---
 
-Making Tax Digital has been rolling out in stages for several years, which means a lot of what people think they know about it is either out of date or was never quite right to begin with. Here's where it stands right now, and — if you're a sole trader or landlord — whether it already applies to you.
+Making Tax Digital has been rolling out in stages for several years, which means a lot of what people think they know about it is either out of date or was never quite right to begin with. Here's where it stands right now, and whether it already applies to you if you're a sole trader or landlord.
 
 ## MTD for VAT: already old news
 
-If you're VAT-registered, this part isn't new to you. Making Tax Digital for VAT has applied to every VAT-registered business, regardless of turnover, since April 2022. It didn't change how often you file — still your normal VAT return cycle — it changed how: digital records, kept in compatible software, submitted via a direct link to HMRC rather than typed into a web form by hand.
+If you're VAT-registered, this part isn't new to you. Making Tax Digital for VAT has applied to every VAT-registered business, regardless of turnover, since April 2022. It didn't change how often you file (still your normal VAT return cycle). It changed how: digital records, kept in compatible software, submitted via a direct link to HMRC rather than typed into a web form by hand.
 
 ## MTD for Income Tax: it's live, and the next threshold is already scheduled
 
-This is the part that's new, and it's arrived faster than a lot of people realise. Making Tax Digital for Income Tax Self Assessment (MTD ITSA) became mandatory on **6 April 2026** for self-employed people and landlords with qualifying income over £50,000. By the time this is being read, that's not a future date — it's already happened. The first quarterly deadline under the new system, 7 August 2026, has passed, and well over half a million people are already inside the system.
+This is the part that's new, and it's arrived faster than a lot of people realise. Making Tax Digital for Income Tax Self Assessment (MTD ITSA) became mandatory on **6 April 2026** for self-employed people and landlords with qualifying income over £50,000. By the time this is being read, that's not a future date. It's already happened. The first quarterly deadline under the new system, 7 August 2026, has passed, and well over half a million people are already inside the system.
 
 More thresholds are coming:
 
 | Qualifying income | Mandatory from |
 |---|---|
-| Over £50,000 | 6 April 2026 — already in force |
+| Over £50,000 | 6 April 2026 (already in force) |
 | Over £30,000 | 6 April 2027 |
 | Over £20,000 | 6 April 2028 |
 
@@ -32,21 +32,21 @@ If you're currently below £50,000, check where your income actually sits rather
 
 ## What "qualifying income" means
 
-Get this one right, because it isn't the same as profit. Qualifying income is your **gross income** — turnover, before you deduct any expenses — from self-employment and property, added together if you have both. It's based on the Self Assessment return you filed for the previous tax year, so whether you're caught by the £50,000 or £30,000 threshold is effectively decided a year in advance.
+Get this one right, because it isn't the same as profit. Qualifying income is your **gross income**, turnover before you deduct any expenses, from self-employment and property, added together if you have both. It's based on the Self Assessment return you filed for the previous tax year, so whether you're caught by the £50,000 or £30,000 threshold is effectively decided a year in advance.
 
 A few things don't count toward qualifying income: PAYE employment income, your share of partnership profits, dividends, and pension income. If your only income is a salaried job plus some dividends, MTD for Income Tax doesn't touch you at all. It's specifically about self-employment and property income.
 
 ## What it requires, in practice
 
-Three things, on an ongoing basis rather than once a year. Digital record-keeping, using software that's compatible with HMRC's system — a spreadsheet on its own generally isn't enough unless it's properly bridged with connecting software. Four quarterly updates a year, broadly falling in early August, November, February and May, giving HMRC a running cumulative total of income and expenses for each income source rather than one annual snapshot. And an end-of-period statement and final declaration after the fourth update, which is what replaces your traditional Self Assessment return for the income sources inside MTD.
+Three things, on an ongoing basis rather than once a year. Digital record-keeping, using software that's compatible with HMRC's system. A spreadsheet on its own generally isn't enough unless it's properly bridged with connecting software. Four quarterly updates a year, broadly falling in early August, November, February and May, giving HMRC a running cumulative total of income and expenses for each income source rather than one annual snapshot. And an end-of-period statement and final declaration after the fourth update, which is what replaces your traditional Self Assessment return for the income sources inside MTD.
 
 One thing worth being clear on: the 31 January deadline itself hasn't moved. You're not filing earlier overall, you're now filing more often through the year, with the same year-end cut-off as before.
 
 ## Who's exempt
 
-Some exemptions apply automatically, with nothing to apply for: your qualifying income is £20,000 or less, you don't yet have a National Insurance number, you file as a partnership rather than an individual, or you're a trust, a non-resident company, or a Lloyd's underwriting member, among a few other specific categories. A handful of other groups — people claiming farmers' averaging relief, qualifying care relief for foster carers, or filing certain trust or non-residence pages — are automatically exempt for now, though that's currently only guaranteed until April 2027.
+Some exemptions apply automatically, with nothing to apply for: your qualifying income is £20,000 or less, you don't yet have a National Insurance number, you file as a partnership rather than an individual, or you're a trust, a non-resident company, or a Lloyd's underwriting member, among a few other specific categories. A handful of other groups (people claiming farmers' averaging relief, qualifying care relief for foster carers, or filing certain trust or non-residence pages) are automatically exempt for now, though that's currently only guaranteed until April 2027.
 
-If none of those apply but digital tools genuinely aren't workable for you — because of age, disability, where you live, or a religious objection to using digital devices — you can apply for a digital exclusion exemption. HMRC is explicit that it won't accept "I've always filed on paper" or "I don't want the extra software cost" as a reason on their own. The exemption exists for people who genuinely can't use digital tools, not people who'd simply rather not.
+If none of those apply but digital tools genuinely aren't workable for you, because of age, disability, where you live, or a religious objection to using digital devices, you can apply for a digital exclusion exemption. HMRC is explicit that it won't accept "I've always filed on paper" or "I don't want the extra software cost" as a reason on their own. The exemption exists for people who genuinely can't use digital tools, not people who'd simply rather not.
 
 ## Penalties work differently now
 
@@ -56,7 +56,7 @@ There's also a first-year grace period: no penalty points for missed quarterly u
 
 ## If you're not a sole trader or landlord
 
-Limited companies aren't affected by any of this — MTD for Income Tax only applies to unincorporated sole traders and landlords filing Self Assessment. A parallel scheme for Corporation Tax was floated for several years, but HMRC's most recent published plans indicate it isn't going ahead in the form originally proposed; the focus for companies now is modernising the existing Corporation Tax filing system rather than a new MTD-style mandate. Worth keeping an eye on if you run a company, but not something to act on today.
+Limited companies aren't affected by any of this. MTD for Income Tax only applies to unincorporated sole traders and landlords filing Self Assessment. A parallel scheme for Corporation Tax was floated for several years, but HMRC's most recent published plans indicate it isn't going ahead in the form originally proposed; the focus for companies now is modernising the existing Corporation Tax filing system rather than a new MTD-style mandate. Worth keeping an eye on if you run a company, but not something to act on today.
 
 ## Getting set up properly, not just compliantly
 
