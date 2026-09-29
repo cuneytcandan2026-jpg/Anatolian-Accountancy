@@ -1,13 +1,18 @@
 ---
+import Icon from './Icon.astro';
 import { withBase } from '../lib/site';
 
 interface Props {
   src: string;
   poster: string;
   class?: string;
+  lang?: 'en' | 'tr';
 }
 
-const { src, poster, class: className = '' } = Astro.props;
+const { src, poster, class: className = '', lang = 'en' } = Astro.props;
+
+const copy =
+  lang === 'tr' ? { play: 'Videoyu oynat', pause: 'Videoyu duraklat' } : { play: 'Play video', pause: 'Pause video' };
 ---
 
 <div class={`video-showcase reveal ${className}`}>
@@ -19,8 +24,21 @@ const { src, poster, class: className = '' } = Astro.props;
     loop
     playsinline
     preload="none"
+    aria-hidden="true"
   >
   </video>
+  <!-- WCAG 2.2.2: a looping video that starts on its own needs a pause control. -->
+  <button
+    type="button"
+    class="video-showcase__toggle"
+    data-state="paused"
+    aria-label={copy.play}
+    data-label-play={copy.play}
+    data-label-pause={copy.pause}
+  >
+    <Icon name="play" class="video-showcase__icon video-showcase__icon--play" />
+    <Icon name="pause" class="video-showcase__icon video-showcase__icon--pause" />
+  </button>
 </div>
 
 <style>
@@ -50,29 +68,84 @@ const { src, poster, class: className = '' } = Astro.props;
     object-fit: cover;
     object-position: 50% 62%;
   }
+
+  .video-showcase__toggle {
+    position: absolute;
+    right: var(--space-4);
+    bottom: var(--space-4);
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: none;
+    border-radius: 999px;
+    background: var(--cta-on-ink);
+    color: var(--cta-on-ink-text);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .video-showcase__toggle:hover {
+    background: var(--cta-on-ink-hover);
+  }
+
+  .video-showcase__toggle :global(.video-showcase__icon) {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .video-showcase__toggle[data-state='paused'] :global(.video-showcase__icon--pause),
+  .video-showcase__toggle[data-state='playing'] :global(.video-showcase__icon--play) {
+    display: none;
+  }
 </style>
 
 <script>
-  // Defer the (multi-MB) video fetch until it's about to scroll into view,
-  // instead of letting `autoplay` fetch it eagerly on page load.
-  const videos = document.querySelectorAll<HTMLVideoElement>('.video-showcase__video[data-src]');
-  if (videos.length) {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Defer the video fetch until it's about to scroll into view, instead of
+  // letting `autoplay` fetch it eagerly on page load. Under reduced motion,
+  // or on Save-Data / 2G-3G connections, nothing downloads until the visitor
+  // presses play (the Network Information API is Chromium-only, so elsewhere
+  // that check is simply skipped).
+  type NetworkInfo = { saveData?: boolean; effectiveType?: string };
+  const connection = (navigator as Navigator & { connection?: NetworkInfo }).connection;
+  const constrained = !!connection && (connection.saveData === true || /2g|3g/.test(connection.effectiveType ?? ''));
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('.video-showcase').forEach((show) => {
+    const video = show.querySelector<HTMLVideoElement>('.video-showcase__video');
+    const toggle = show.querySelector<HTMLButtonElement>('.video-showcase__toggle');
+    if (!video || !toggle) return;
+
+    const load = () => {
+      if (!video.getAttribute('src') && video.dataset.src) video.src = video.dataset.src;
+    };
+    const setPlaying = (playing: boolean) => {
+      toggle.dataset.state = playing ? 'playing' : 'paused';
+      toggle.setAttribute('aria-label', (playing ? toggle.dataset.labelPause : toggle.dataset.labelPlay) ?? '');
+    };
+    video.addEventListener('play', () => setPlaying(true));
+    video.addEventListener('pause', () => setPlaying(false));
+    toggle.addEventListener('click', () => {
+      if (video.paused) {
+        load();
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+
+    if (prefersReducedMotion || constrained) return;
     const observer = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const video = entry.target as HTMLVideoElement;
-          const dataSrc = video.dataset.src;
-          if (dataSrc) {
-            video.src = dataSrc;
-            if (!prefersReducedMotion) video.play().catch(() => {});
-          }
-          observer.unobserve(video);
-        }
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        load();
+        video.play().catch(() => {});
+        observer.disconnect();
       },
       { rootMargin: '200px 0px' }
     );
-    videos.forEach((video) => observer.observe(video));
-  }
+    observer.observe(video);
+  });
 </script>
