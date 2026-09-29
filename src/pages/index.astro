@@ -99,8 +99,8 @@ const whyPoints = [
           individuals across London and the UK, in English or Turkish.
         </p>
         <div class="hero__actions">
-          <Button href="/contact/" size="lg">Book a Free Consultation</Button>
-          <Button href="/services/" size="lg" variant="outline-on-ink" icon="arrow-right">Explore Our Services</Button>
+          <Button href="/contact/" size="lg" variant="primary-on-ink">Book a Free Consultation</Button>
+          <Button href="/services/" size="lg" variant="primary-on-ink" icon="arrow-right">Explore Our Services</Button>
         </div>
       </div>
 
@@ -329,7 +329,7 @@ const whyPoints = [
         />
       </div>
       <div class="process__cta reveal">
-        <Button href="/contact/" size="lg" variant="outline-on-ink">Book a Free Consultation</Button>
+        <Button href="/contact/" size="lg" variant="primary-on-ink">Book a Free Consultation</Button>
       </div>
     </div>
   </section>
@@ -393,13 +393,8 @@ const whyPoints = [
   /* ---- Hero ---- */
   .hero {
     position: relative;
-    background: var(--c-azure-vivid);
+    background: var(--bg-ink);
     color: var(--text-on-ink);
-    /* Re-point the on-ink text tokens for this brighter background — the
-       default muted/azure-300 values are tuned for navy and wash out on
-       #007FFF. Cascades into the eyebrow and StatCounter too. */
-    --text-on-ink-muted: rgba(250, 246, 238, 0.92);
-    --text-accent-on-ink: var(--text-on-ink);
     overflow: hidden;
     padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(4rem, 3rem + 4vw, 7rem);
   }
@@ -588,7 +583,7 @@ const whyPoints = [
     height: 48%;
     z-index: 5;
     border-radius: var(--radius-lg);
-    border: 4px solid var(--c-azure-vivid);
+    border: 4px solid var(--bg-ink);
     --rot: -3deg;
     display: none;
   }
@@ -617,7 +612,7 @@ const whyPoints = [
     top: -7%;
     right: 6%;
     width: 19%;
-    background: var(--c-ink-900);
+    background: var(--c-azure-700);
     border-radius: 62% 38% 55% 45% / 48% 55% 45% 52%;
   }
 
@@ -625,7 +620,7 @@ const whyPoints = [
     bottom: 6%;
     left: 2%;
     width: 15%;
-    background: var(--cta);
+    background: var(--c-azure-300);
     border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%;
     display: none;
   }
@@ -879,7 +874,7 @@ const whyPoints = [
 
   /* ---- Testimonials ---- */
   .testimonials {
-    background: var(--c-ink-800);
+    background: var(--c-azure-600);
     color: var(--text-on-ink);
   }
 

@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroBoxes from '../components/HeroBoxes.astro';
 import Button from '../components/Button.astro';
 ---
 
 <BaseLayout title="Page Not Found | Anatolian Accountancy" description="This page could not be found." path="/404/" noIndex>
   <section class="notfound">
+    <HeroBoxes />
     <div class="notfound__glow" aria-hidden="true"></div>
     <div class="container notfound__inner">
       <div class="notfound__lang">
@@ -15,8 +17,8 @@ import Button from '../components/Button.astro';
           point you in the right direction.
         </p>
         <div class="notfound__actions">
-          <Button href="/contact/" size="lg">Book a Free Consultation</Button>
-          <Button href="/" size="lg" variant="outline-on-ink">Back to Home</Button>
+          <Button href="/contact/" size="lg" variant="primary-on-ink">Book a Free Consultation</Button>
+          <Button href="/" size="lg" variant="primary-on-ink">Back to Home</Button>
         </div>
       </div>
 
@@ -30,8 +32,8 @@ import Button from '../components/Button.astro';
           geçebilirsiniz, size doğru yönü gösterelim.
         </p>
         <div class="notfound__actions">
-          <Button href="/tr/iletisim/" size="lg">Ücretsiz Görüşme Ayarlayın</Button>
-          <Button href="/tr/" size="lg" variant="outline-on-ink">Ana Sayfaya Dön</Button>
+          <Button href="/tr/iletisim/" size="lg" variant="primary-on-ink">Ücretsiz Görüşme Ayarlayın</Button>
+          <Button href="/tr/" size="lg" variant="primary-on-ink">Ana Sayfaya Dön</Button>
         </div>
       </div>
     </div>
@@ -58,6 +60,7 @@ import Button from '../components/Button.astro';
 
   .notfound__inner {
     position: relative;
+    z-index: 1;
     max-width: 42rem;
   }
 

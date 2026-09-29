@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroBoxes from '../../components/HeroBoxes.astro';
 import BlogCard from '../../components/BlogCard.astro';
 import { categoryLabels, categoryIcons } from '../../lib/blog';
 
@@ -17,6 +18,7 @@ const posts = (await getCollection('blog', (e) => e.id.startsWith('en/'))).sort(
 >
   <!-- ============ HERO ============ -->
   <section class="insights-hero">
+    <HeroBoxes />
     <div class="insights-hero__glow" aria-hidden="true"></div>
     <div class="container insights-hero__inner reveal">
       <p class="eyebrow eyebrow--on-ink">Insights</p>

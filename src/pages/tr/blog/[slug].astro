@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import HeroBoxes from '../../../components/HeroBoxes.astro';
 import Button from '../../../components/Button.astro';
 import Icon from '../../../components/Icon.astro';
 import { categoryLabels, categoryIcons } from '../../../lib/blog';
@@ -30,6 +31,7 @@ const altHref = enSibling ? `/insights/${slug}/` : undefined;
 >
   <article>
     <section class="post-hero">
+      <HeroBoxes />
       <div class="post-hero__glow" aria-hidden="true"></div>
       <div class="container post-hero__inner reveal">
         <a href={withBase('/tr/blog/')} class="post-hero__back"><Icon name="chevron-left" /> Tüm yazılar</a>
@@ -46,14 +48,14 @@ const altHref = enSibling ? `/insights/${slug}/` : undefined;
           {post.data.lastReviewed && (
             <p class="post-reviewed">
               Son güncelleme: {post.data.lastReviewed}. Bu genel bir bilgilendirmedir, kişiye özel tavsiye
-              değildir — yayımlandığından bu yana kurallar ve rakamlar değişmiş olabilir, harekete geçmeden
+              değildir. Yayımlandığından bu yana kurallar ve rakamlar değişmiş olabilir; harekete geçmeden
               önce bizimle görüşün.
             </p>
           )}
         </div>
         <div class="post-cta">
           <p class="post-cta__label">Bu konuda şimdi bir sorunuz mu var?</p>
-          <p class="post-cta__desc">Yazının tamamlanmasını beklemenize gerek yok — ihtiyacınızı bize anlatın, doğrudan cevaplayalım.</p>
+          <p class="post-cta__desc">Her durum biraz farklıdır. İhtiyacınızı bize anlatın, size doğrudan yanıt verelim.</p>
           <div class="post-cta__actions">
             <Button href="/tr/iletisim/" size="md">Ücretsiz Görüşme Talep Edin</Button>
             {post.data.relatedServiceHref && (

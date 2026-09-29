@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroBoxes from '../../components/HeroBoxes.astro';
 import Button from '../../components/Button.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import CTASection from '../../components/CTASection.astro';
@@ -46,6 +47,7 @@ const howIWork = [
 >
   <!-- ============ HERO ============ -->
   <section class="section about-hero">
+    <HeroBoxes tone="light" />
     <div class="container about-hero__grid">
       <div class="about-hero__image-wrap reveal">
         <Image src={founderPhoto} alt="Bektaş Ünal, Anatolian Accountancy kurucusu ve muhasebecisi" width={367} height={661} class="about-hero__image" />
@@ -157,11 +159,15 @@ const howIWork = [
 <style>
   /* ---- Hero ---- */
   .about-hero {
+    position: relative;
+    overflow: hidden;
     background: var(--bg-surface);
     padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(4rem, 3rem + 4vw, 7rem);
   }
 
   .about-hero__grid {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-10);

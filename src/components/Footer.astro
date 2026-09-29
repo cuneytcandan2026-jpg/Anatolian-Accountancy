@@ -17,7 +17,7 @@ const socialLinks = [
   <div class="container footer__top">
     <div class="footer__brand">
       <a href={withBase(homeHref)} class="footer__logo" aria-label={`${site.name} home`}>
-        <img src={withBase('/logo.svg')} alt="" width="163" height="61" />
+        <img src={withBase('/logo-horizontal-white.svg')} alt="" width="219" height="54" />
         <span class="sr-only">{site.name}</span>
       </a>
       <p class="footer__desc">
@@ -87,15 +87,14 @@ const socialLinks = [
     grid-template-columns: minmax(0, 1fr);
   }
 
+  /* White (reversed) horizontal lockup straight on the azure — no badge box. */
   .footer__logo {
     display: inline-flex;
-    background: var(--bg-surface-raised);
-    padding: 0.6rem 0.85rem;
     border-radius: var(--radius-sm);
   }
 
   .footer__brand img {
-    height: 48px;
+    height: 54px;
     width: auto;
   }
 
@@ -118,9 +117,9 @@ const socialLinks = [
     width: 2.5rem;
     height: 2.5rem;
     border-radius: var(--radius-full);
-    border: 1px solid var(--border-on-ink);
-    color: var(--text-on-ink-muted);
-    transition: border-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+    background: var(--cta-on-ink);
+    color: var(--cta-on-ink-text);
+    transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
   }
 
   .footer__social a :global(svg) {
@@ -129,8 +128,8 @@ const socialLinks = [
   }
 
   .footer__social a:hover {
-    color: var(--text-accent-on-ink);
-    border-color: var(--text-accent-on-ink);
+    background: var(--cta-on-ink-hover);
+    color: var(--c-azure-600);
   }
 
   .footer__col-title {
