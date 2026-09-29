@@ -271,6 +271,14 @@ const homeHref = isTurkish ? '/tr/' : '/';
 
   .header__actions :global(.header__cta) {
     display: none;
+    background: var(--c-azure-vivid);
+    color: var(--c-white);
+    box-shadow: 0 16px 32px -14px var(--c-azure-vivid-glow);
+  }
+
+  .header__actions :global(.header__cta:hover) {
+    background: var(--c-azure-vivid-hover);
+    box-shadow: 0 20px 40px -14px var(--c-azure-vivid-glow);
   }
 
   .header__trigger {

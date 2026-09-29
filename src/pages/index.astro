@@ -393,8 +393,13 @@ const whyPoints = [
   /* ---- Hero ---- */
   .hero {
     position: relative;
-    background: var(--bg-ink);
+    background: var(--c-azure-vivid);
     color: var(--text-on-ink);
+    /* Re-point the on-ink text tokens for this brighter background — the
+       default muted/azure-300 values are tuned for navy and wash out on
+       #007FFF. Cascades into the eyebrow and StatCounter too. */
+    --text-on-ink-muted: rgba(250, 246, 238, 0.92);
+    --text-accent-on-ink: var(--text-on-ink);
     overflow: hidden;
     padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(4rem, 3rem + 4vw, 7rem);
   }
@@ -583,7 +588,7 @@ const whyPoints = [
     height: 48%;
     z-index: 5;
     border-radius: var(--radius-lg);
-    border: 4px solid var(--bg-ink);
+    border: 4px solid var(--c-azure-vivid);
     --rot: -3deg;
     display: none;
   }
@@ -612,7 +617,7 @@ const whyPoints = [
     top: -7%;
     right: 6%;
     width: 19%;
-    background: var(--c-ink-600);
+    background: var(--c-ink-900);
     border-radius: 62% 38% 55% 45% / 48% 55% 45% 52%;
   }
 
