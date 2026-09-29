@@ -35,7 +35,8 @@ const { number, title, description } = Astro.props;
     font-family: var(--font-display);
     font-size: 3rem;
     color: var(--text-on-ink);
-    opacity: 0.35;
+    /* 0.8 keeps the large numerals at >= 3:1 on the azure section */
+    opacity: 0.8;
     line-height: 1;
   }
 
