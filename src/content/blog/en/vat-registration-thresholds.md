@@ -4,7 +4,7 @@ metaTitle: "UK VAT Registration Threshold 2026: When You Must Register"
 description: "The UK VAT registration threshold, how the 12-month rolling test works, what happens if you register late, and when voluntary registration makes sense."
 category: vat
 order: 3
-status: placeholder
+status: published
 relatedServiceHref: /services/#vat-payroll
 lastReviewed: "19 August 2026"
 reviewBy: "2027-02-19"
@@ -22,7 +22,7 @@ There's a separate, lower **deregistration threshold of £88,000**. If your turn
 
 This is the part that catches people out. The £90,000 threshold isn't measured from April to April. It's a **rolling 12-month look-back**. At the end of every month, you look at your total taxable turnover for the trailing 12 months, and if it's gone over £90,000, you're required to register.
 
-Worked example: say your rolling turnover passes £90,000 on 15 July. You have until 30 August, the end of the month following the month you went over, to register, and your registration takes effect from 1 September, the first day of the second month after you crossed the threshold.
+Worked example: say your rolling turnover passes £90,000 on 15 July. You have 30 days from the end of the month you went over to register, so by 30 August. Your registration then takes effect from 1 September, the first day of the second month after you crossed the threshold.
 
 There's also a second, separate test worth knowing about. If you can see turnover is about to exceed £90,000 in the **next 30 days alone** (a single large contract landing, for instance), you have to register immediately, with your effective date being the date you realised, not the date turnover actually crosses the line. This forward-look test exists specifically so a business can't argue it didn't need to register yet because the rolling 12-month figure hadn't technically caught up.
 

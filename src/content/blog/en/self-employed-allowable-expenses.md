@@ -4,7 +4,7 @@ metaTitle: "Allowable Expenses for the Self-Employed: 2026/27 Guide"
 description: "What you can and can't claim as a self-employed UK sole trader in 2026/27, including the mileage rate rise most guides haven't updated yet."
 category: tax
 order: 8
-status: placeholder
+status: published
 relatedServiceHref: /services/#tax
 lastReviewed: "19 August 2026"
 reviewBy: "2026-12-01"

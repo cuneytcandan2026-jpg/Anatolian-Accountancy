@@ -4,7 +4,7 @@ metaTitle: "CIS Explained 2026: Guide for Contractors & Subcontractors"
 description: "How the Construction Industry Scheme works in 2026: deduction rates, what counts as materials, verification, deadlines and Gross Payment Status."
 category: cis
 order: 1
-status: placeholder
+status: published
 relatedServiceHref: /services/#specialist
 lastReviewed: "19 August 2026"
 reviewBy: "2027-02-19"
