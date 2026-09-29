@@ -150,7 +150,7 @@ const interPreload = lang === 'tr' ? interLatinExt : interLatin;
     </script>
   </head>
   <body>
-    <a href="#main" class="skip-link">Skip to main content</a>
+    <a href="#main" class="skip-link">{lang === 'tr' ? 'Ana içeriğe geç' : 'Skip to main content'}</a>
     <Header altHref={altHref} />
     <main id="main">
       <slot />
