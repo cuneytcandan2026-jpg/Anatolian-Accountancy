@@ -20,6 +20,12 @@
   --c-azure-600: #1450b8;
   --c-azure-glow: rgba(41, 110, 231, 0.18);
 
+  /* Brighter client-chosen azure (#007FFF) — homepage hero background and
+     header CTA. Hover is a step darker so the button still reads as pressed. */
+  --c-azure-vivid: #007fff;
+  --c-azure-vivid-hover: #006ee0;
+  --c-azure-vivid-glow: rgba(0, 127, 255, 0.35);
+
   --c-ivory-50: #fdfbf7;
   --c-ivory-100: #faf6ee;
   --c-ivory-200: #f2ebdd;
