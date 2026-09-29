@@ -127,23 +127,23 @@ const whyPoints = [
           </div>
         </div>
 
-        <dl class="hero__trust">
-          <div class="hero__trust-item">
+        <ul class="hero__trust" role="list">
+          <li class="hero__trust-item">
             <StatCounter value={20} suffix="+" label="Years' accounting experience" />
-          </div>
-          <div class="hero__trust-item hero__trust-item--text">
-            <dt>AAT Member</dt>
-            <dd>Full membership</dd>
-          </div>
-          <div class="hero__trust-item hero__trust-item--text">
-            <dt>English &amp; Turkish</dt>
-            <dd>Bilingual service</dd>
-          </div>
-          <div class="hero__trust-item hero__trust-item--text">
-            <dt>London &amp; UK-Wide</dt>
-            <dd>Enfield-based office</dd>
-          </div>
-        </dl>
+          </li>
+          <li class="hero__trust-item hero__trust-item--text">
+            <strong class="hero__trust-title">AAT Member</strong>
+            <span class="hero__trust-desc">Full membership</span>
+          </li>
+          <li class="hero__trust-item hero__trust-item--text">
+            <strong class="hero__trust-title">English &amp; Turkish</strong>
+            <span class="hero__trust-desc">Bilingual service</span>
+          </li>
+          <li class="hero__trust-item hero__trust-item--text">
+            <strong class="hero__trust-title">London &amp; UK-Wide</strong>
+            <span class="hero__trust-desc">Enfield-based office</span>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
@@ -453,6 +453,9 @@ const whyPoints = [
 
   .hero__trust {
     order: -1;
+    list-style: none;
+    margin-top: 0;
+    padding-left: 0;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6);
@@ -461,13 +464,15 @@ const whyPoints = [
     border-bottom: 1px solid var(--border-on-ink);
   }
 
-  .hero__trust-item--text dt {
+  .hero__trust-title {
+    display: block;
     font-weight: 700;
     font-size: var(--fs-small);
     color: var(--text-on-ink);
   }
 
-  .hero__trust-item--text dd {
+  .hero__trust-desc {
+    display: block;
     margin: 0.2rem 0 0;
     font-size: 0.8125rem;
     color: var(--text-on-ink-muted);

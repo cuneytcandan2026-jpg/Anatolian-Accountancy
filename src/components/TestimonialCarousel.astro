@@ -26,6 +26,7 @@ const copy =
         next: 'Sonraki yorum',
         goTo: (i: number) => `${i}. yoruma git`,
         dotsGroup: 'Yorumlar arasında geçiş yap',
+        track: 'Müşteri yorumları',
         sourceLabel: { google: 'Google Yorumu', direct: 'Doğrudan geri bildirim', placeholder: 'Yer tutucu' } as Record<TestimonialItem['source'], string>,
       }
     : {
@@ -34,6 +35,7 @@ const copy =
         next: 'Next testimonial',
         goTo: (i: number) => `Go to testimonial ${i}`,
         dotsGroup: 'Choose a testimonial',
+        track: 'Client testimonials',
         sourceLabel: { google: 'Google Review', direct: 'Direct feedback', placeholder: 'Placeholder' } as Record<TestimonialItem['source'], string>,
       };
 
@@ -63,7 +65,7 @@ const stars = Array.from({ length: 5 });
       </button>
     )}
 
-    <div class="testimonial-carousel__track" aria-roledescription="carousel" aria-label="Testimonials">
+    <div class="testimonial-carousel__track" role="region" aria-roledescription="carousel" aria-label={copy.track} tabindex="0">
       {testimonials.map((t) => (
         <article class="testimonial-carousel__slide" aria-roledescription="slide">
           <div class="testimonial-carousel__card">

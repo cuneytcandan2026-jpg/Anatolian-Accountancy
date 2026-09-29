@@ -315,23 +315,23 @@ const faqSchema = {
           </div>
         </div>
 
-        <dl class="hero__trust">
-          <div class="hero__trust-item">
+        <ul class="hero__trust" role="list">
+          <li class="hero__trust-item">
             <StatCounter value={20} suffix="+" label="Yıllık muhasebe deneyimi" />
-          </div>
-          <div class="hero__trust-item hero__trust-item--text">
-            <dt>AAT Üyesi</dt>
-            <dd>Tam üyelik</dd>
-          </div>
-          <div class="hero__trust-item hero__trust-item--text">
-            <dt>İngilizce &amp; Türkçe</dt>
-            <dd>İki dilli hizmet</dd>
-          </div>
-          <div class="hero__trust-item hero__trust-item--text">
-            <dt>Londra ve İngiltere Geneli</dt>
-            <dd>Enfield merkezli ofis</dd>
-          </div>
-        </dl>
+          </li>
+          <li class="hero__trust-item hero__trust-item--text">
+            <strong class="hero__trust-title">AAT Üyesi</strong>
+            <span class="hero__trust-desc">Tam üyelik</span>
+          </li>
+          <li class="hero__trust-item hero__trust-item--text">
+            <strong class="hero__trust-title">İngilizce &amp; Türkçe</strong>
+            <span class="hero__trust-desc">İki dilli hizmet</span>
+          </li>
+          <li class="hero__trust-item hero__trust-item--text">
+            <strong class="hero__trust-title">Londra ve İngiltere Geneli</strong>
+            <span class="hero__trust-desc">Enfield merkezli ofis</span>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
@@ -553,7 +553,7 @@ const faqSchema = {
         {faqGroups.map((g) => (
           <div class="faq__group">
             <p class="eyebrow faq__group-label">{g.label}</p>
-            <Accordion items={g.items} />
+            <Accordion items={g.items} group={g.key} />
           </div>
         ))}
       </div>
@@ -633,6 +633,9 @@ const faqSchema = {
 
   .hero__trust {
     order: -1;
+    list-style: none;
+    margin-top: 0;
+    padding-left: 0;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6);
@@ -641,13 +644,15 @@ const faqSchema = {
     border-bottom: 1px solid var(--border-on-ink);
   }
 
-  .hero__trust-item--text dt {
+  .hero__trust-title {
+    display: block;
     font-weight: 700;
     font-size: var(--fs-small);
     color: var(--text-on-ink);
   }
 
-  .hero__trust-item--text dd {
+  .hero__trust-desc {
+    display: block;
     margin: 0.2rem 0 0;
     font-size: 0.8125rem;
     color: var(--text-on-ink-muted);

@@ -156,9 +156,13 @@ const interPreload = lang === 'tr' ? interLatinExt : interLatin;
       <slot />
     </main>
     <Footer />
-    <MobileActionBar />
-    <ScrollToTop />
-    <WhatsAppButton />
+    <!-- The floating contact controls are position: fixed, so this wrapper
+         only groups them under a landmark for screen readers. -->
+    <aside aria-label={lang === 'tr' ? 'Hızlı iletişim' : 'Quick contact'}>
+      <MobileActionBar />
+      <ScrollToTop />
+      <WhatsAppButton />
+    </aside>
 
     <script>
       const revealEls = document.querySelectorAll<HTMLElement>('.reveal');

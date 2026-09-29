@@ -14,7 +14,7 @@ type Row = { id: string; question: string; Content?: any; answer?: string };
 let rows: Row[];
 
 if (items) {
-  rows = items.map((item, i) => ({ id: `faq-tr-${i}`, question: item.question, answer: item.answer }));
+  rows = items.map((item, i) => ({ id: `faq-tr-${group ?? "faq"}-${i}`, question: item.question, answer: item.answer }));
 } else {
   const faqEntries = (await getCollection('faq', (e) => !group || e.data.group === group)).sort(
     (a, b) => a.data.order - b.data.order
