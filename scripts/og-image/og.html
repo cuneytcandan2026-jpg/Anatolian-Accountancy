@@ -1,0 +1,120 @@
+<!doctype html>
+<!--
+  Source for public/og-image.jpg and public/og-image-tr.jpg (1200x630), built
+  from the site's own fonts, reversed logo and hero copy/palette. Rendered by
+  scripts/og-image/render.mjs, which loads this file with ?lang=en|tr.
+-->
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face {
+    font-family: 'Fraunces';
+    src: url('../../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-ext-full-normal.woff2') format('woff2');
+    font-weight: 100 900;
+  }
+  @font-face {
+    font-family: 'Inter';
+    src: url('../../node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2') format('woff2');
+    font-weight: 100 900;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative;
+    background: #007fff;
+    color: #faf6ee;
+    font-family: 'Inter', sans-serif;
+  }
+  /* Same skewed 64x32 grid + tinted tiles as the hero's HeroBoxes. */
+  .grid {
+    position: absolute;
+    inset: -20%;
+    transform: skewX(-18deg) skewY(9deg);
+    background-image: linear-gradient(to right, rgba(250, 246, 238, 0.16) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(250, 246, 238, 0.16) 1px, transparent 1px);
+    background-size: 64px 32px;
+    mask-image: radial-gradient(ellipse 75% 80% at 72% 50%, white 35%, transparent 90%);
+  }
+  .tile { position: absolute; width: 64px; height: 32px; }
+  .content {
+    position: relative;
+    height: 100%;
+    padding: 64px 80px 60px;
+    display: flex;
+    flex-direction: column;
+  }
+  .logo { height: 60px; width: auto; align-self: flex-start; }
+  .eyebrow {
+    margin-top: 64px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+  }
+  .eyebrow::before { content: ''; width: 28px; height: 2px; background: currentColor; }
+  h1 {
+    margin-top: 22px;
+    font-family: 'Fraunces', serif;
+    font-weight: 560;
+    font-size: 84px;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    max-width: 900px;
+    text-wrap: balance;
+  }
+  .foot {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .pill {
+    padding: 10px 22px;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #0059b3;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <span class="tile" style="left: 64%; top: 30%; background: #99ccff; opacity: .55"></span>
+    <span class="tile" style="left: 70%; top: 42%; background: #4da6ff; opacity: .7"></span>
+    <span class="tile" style="left: 58%; top: 55%; background: #006ee0; opacity: .8"></span>
+    <span class="tile" style="left: 76%; top: 62%; background: #99ccff; opacity: .4"></span>
+    <span class="tile" style="left: 82%; top: 36%; background: #006ee0; opacity: .7"></span>
+  </div>
+  <div class="content">
+    <img class="logo" src="../../public/logo-horizontal-white.svg" alt="" />
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1 id="heading"></h1>
+    <div class="foot">
+      <span class="pill" id="langs"></span>
+      <span>anatolianaccountancy.com</span>
+    </div>
+  </div>
+  <script>
+    const lang = new URLSearchParams(location.search).get('lang') === 'tr' ? 'tr' : 'en';
+    const copy = {
+      en: {
+        eyebrow: 'LONDON & UK-WIDE ACCOUNTANCY',
+        heading: 'Accountancy that makes business simpler.',
+        langs: 'English · Türkçe',
+      },
+      tr: {
+        eyebrow: 'LONDRA VE İNGİLTERE GENELİNDE MUHASEBE',
+        heading: 'İşinizi kolaylaştıran muhasebe.',
+        langs: 'Türkçe · English',
+      },
+    }[lang];
+    document.documentElement.lang = lang;
+    for (const key of Object.keys(copy)) document.getElementById(key).textContent = copy[key];
+  </script>
+</body>
+</html>

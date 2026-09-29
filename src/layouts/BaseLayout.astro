@@ -32,7 +32,12 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(withBase(path), site.url).toString();
-const ogImageURL = new URL(withBase('/og-image.jpg'), site.url).toString();
+// Share cards are rendered from scripts/og-image/ (EN + TR variants).
+const ogImageURL = new URL(withBase(lang === 'tr' ? '/og-image-tr.jpg' : '/og-image.jpg'), site.url).toString();
+const ogImageAlt =
+  lang === 'tr'
+    ? `${site.name}: İşinizi kolaylaştıran muhasebe. Türkçe ve İngilizce.`
+    : `${site.name}: Accountancy that makes business simpler. In English and Turkish.`;
 
 // No aggregateRating here: Google treats review stars a business publishes
 // about itself as self-serving (not eligible for rich results, and invented
@@ -44,7 +49,7 @@ const localBusinessSchema = {
   name: site.name,
   legalName: site.legalName,
   url: site.url,
-  image: ogImageURL,
+  image: new URL(withBase('/og-image.jpg'), site.url).toString(),
   logo: new URL(withBase('/apple-touch-icon.png'), site.url).toString(),
   telephone: site.phoneDisplay,
   email: site.email,
@@ -123,12 +128,18 @@ const interPreload = lang === 'tr' ? interLatinExt : interLatin;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : 'en_GB'} />
+    {altPath && <meta property="og:locale:alternate" content={lang === 'tr' ? 'en_GB' : 'tr_TR'} />}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     {includeLocalBusinessSchema && (
       <script type="application/ld+json" is:inline set:html={JSON.stringify(localBusinessSchema)} />
