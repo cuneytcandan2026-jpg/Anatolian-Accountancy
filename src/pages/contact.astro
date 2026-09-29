@@ -4,7 +4,7 @@ import HeroBoxes from '../components/HeroBoxes.astro';
 import Icon from '../components/Icon.astro';
 import ContactForm from '../components/ContactForm.astro';
 import TrustStrip from '../components/TrustStrip.astro';
-import { site, whatsappHref } from '../lib/site';
+import { site, whatsappHref, directionsHref } from '../lib/site';
 
 const mapQuery = encodeURIComponent(
   `${site.address.line1}, ${site.address.line2}, ${site.address.city} ${site.address.postcode}`
@@ -57,6 +57,7 @@ const mapQuery = encodeURIComponent(
             <div>
               <p class="contact-details__label">Office</p>
               <p>{site.address.line1}, {site.address.line2}<br />{site.address.city} {site.address.postcode}</p>
+              <a href={directionsHref} target="_blank" rel="noopener noreferrer">Get directions</a>
             </div>
           </li>
           <li>

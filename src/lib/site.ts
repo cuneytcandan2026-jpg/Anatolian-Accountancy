@@ -62,6 +62,12 @@ export function titleWithBrand(title: string): string {
   return branded.length <= 60 ? branded : title;
 }
 
+// Google Maps "directions" URL (documented Maps URLs format), which opens the
+// Maps app on phones, unlike tapping the embedded map on the Contact page.
+export const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+  `${site.name}, ${site.address.line1}, ${site.address.line2}, ${site.address.city} ${site.address.postcode}`
+)}`;
+
 export function whatsappHref(message: string): string {
   return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
