@@ -1,7 +1,7 @@
 ---
 title: "Serbest Çalışanlar İçin İndirilebilir Giderler: Hızlı Referans"
 metaTitle: "Serbest Çalışanlar İçin İndirilebilir Giderler 2026/27"
-description: "İngiltere'de şahıs şirketi olarak 2026/27'de neleri gider yazabilir, neleri yazamazsınız; çoğu rehberin henüz güncellemediği mil başına araç gideri artışı dahil."
+description: "İngiltere'de şahıs şirketi olarak 2026/27'de neleri gider yazabilir, neleri yazamazsınız; çoğu rehberin atladığı mil başına araç gideri artışı dahil."
 category: tax
 order: 8
 status: published

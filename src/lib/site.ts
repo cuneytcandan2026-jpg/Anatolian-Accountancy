@@ -54,6 +54,14 @@ export function stripBase(pathname: string): string {
   return '/' + pathname.slice(base.length);
 }
 
+// Search results cut <title> off at roughly 60 characters, so the brand
+// suffix is only appended where it still fits; longer article titles stand
+// alone rather than being truncated mid-phrase.
+export function titleWithBrand(title: string): string {
+  const branded = `${title} | ${site.name}`;
+  return branded.length <= 60 ? branded : title;
+}
+
 export function whatsappHref(message: string): string {
   return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }

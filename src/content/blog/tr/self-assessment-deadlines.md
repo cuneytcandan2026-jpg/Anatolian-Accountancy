@@ -1,7 +1,7 @@
 ---
 title: "Kaçırmamanız Gereken Self Assessment Son Tarihleri"
 metaTitle: "Self Assessment Son Tarihleri 2025/26: Takvim ve Cezalar"
-description: "2025/26 vergi yılı için tüm Self Assessment son tarihleri: kayıt, beyanname, ödeme ve ön ödemeler (payments on account), ayrıca bir tarihi kaçırırsanız ne olacağı."
+description: "2025/26 vergi yılının tüm Self Assessment son tarihleri: kayıt, beyanname, ödeme ve ön ödemeler (payments on account) ve bir tarihi kaçırırsanız ne olur."
 category: tax
 order: 4
 status: published

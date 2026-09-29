@@ -1,7 +1,7 @@
 ---
 title: "Muhasebeci Değiştirmek: Gerçekte Neler Oluyor?"
 metaTitle: "İngiltere'de Muhasebeci Değiştirmek: Gerçekte Neler Oluyor?"
-description: "İngiltere'de muhasebeci değiştirdiğinizde neler olduğuna adım adım bakış: mesleki devir yazısı (professional clearance), HMRC yetkilendirmesi, kayıtların devri ve zamanlama."
+description: "Muhasebeci değiştirdiğinizde neler olur, adım adım: mesleki devir yazısı (professional clearance), HMRC yetkilendirmesi, kayıtların devri ve zamanlama."
 category: general
 order: 6
 status: published

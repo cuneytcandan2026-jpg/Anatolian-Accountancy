@@ -1,7 +1,7 @@
 ---
 title: "Making Tax Digital (Dijital Vergi Beyanı): İşletmeniz İçin Ne Anlama Geliyor?"
 metaTitle: "Making Tax Digital 2026: Şimdi Sizin İçin Ne Anlama Geliyor?"
-description: "Gelir Vergisi için Making Tax Digital, 50.000 sterlinin üzerinde kazanan herkes için yürürlükte: neler gerekiyor, kimler muaf ve sonraki eşikler ne zaman geliyor."
+description: "Gelir Vergisi için Making Tax Digital, 50.000 sterlin üzeri kazananlar için yürürlükte: neler gerekiyor, kimler muaf ve sonraki eşikler ne zaman geliyor."
 category: mtd
 order: 7
 status: published

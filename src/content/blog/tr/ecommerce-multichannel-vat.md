@@ -1,7 +1,7 @@
 ---
 title: "E-Ticaret ve Çok Kanallı KDV: Online Satıcıların Bilmesi Gerekenler"
 metaTitle: "Online Satıcılar İçin Çok Kanallı KDV: 2026 Kuralları"
-description: "Kendi web siteniz ile Amazon, eBay veya Etsy'de KDV nasıl işler: eşik kuralları, pazaryeri KDV'si ve İngiltere'deki satıcıları etkileyebilecek bir danışma süreci."
+description: "Kendi sitenizde ve Amazon, eBay, Etsy'de KDV nasıl işler: eşik kuralları, pazaryeri KDV'si ve İngiltere'deki satıcıları etkileyebilecek bir danışma süreci."
 category: vat
 order: 5
 status: published

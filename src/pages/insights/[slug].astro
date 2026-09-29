@@ -5,7 +5,7 @@ import HeroBoxes from '../../components/HeroBoxes.astro';
 import Button from '../../components/Button.astro';
 import Icon from '../../components/Icon.astro';
 import { categoryLabels, categoryIcons } from '../../lib/blog';
-import { withBase } from '../../lib/site';
+import { withBase, titleWithBrand } from '../../lib/site';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', (e) => e.id.startsWith('en/'));
@@ -23,7 +23,7 @@ const altHref = trSibling ? `/tr/blog/${slug}/` : undefined;
 ---
 
 <BaseLayout
-  title={`${post.data.metaTitle ?? post.data.title} | Anatolian Accountancy`}
+  title={titleWithBrand(post.data.metaTitle ?? post.data.title)}
   description={post.data.description}
   path={`/insights/${slug}/`}
   altHref={altHref}
