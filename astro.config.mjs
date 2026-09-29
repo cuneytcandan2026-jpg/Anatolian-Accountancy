@@ -33,6 +33,12 @@ export default defineConfig({
   site: isGithubPages ? 'https://cuneytcandan2026-jpg.github.io' : 'https://anatolianaccountancy.com',
   base,
   output: 'static',
+  build: {
+    // Each page's CSS is only ~10 KB gzipped, so inlining it beats making
+    // mobile visitors wait on 2-3 render-blocking stylesheet requests
+    // before the hero headline (the LCP element) can paint.
+    inlineStylesheets: 'always',
+  },
   integrations: [
     sitemap({
       filter: (page) => !noIndexPaths.some((p) => new URL(page).pathname.endsWith(p)),

@@ -211,7 +211,13 @@ const POOL_SIZE = 32;
       frame = 0;
     };
 
-    new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop())).observe(host);
+    // Hold the ambient flashes until the page has finished loading, so their
+    // per-frame work never competes with the first render (the hero heading
+    // is the LCP element on every page with this banner).
+    const observe = () =>
+      new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop())).observe(host);
+    if (document.readyState === 'complete') observe();
+    else window.addEventListener('load', observe, { once: true });
   });
 </script>
 

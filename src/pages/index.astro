@@ -23,6 +23,12 @@ import heroPhonebus from '../assets/hero-collage-busbigben.jpg';
 import heroCharts from '../assets/hero-collage-charts.jpg';
 import { site } from '../lib/site';
 
+// Rendered widths of the hero collage (measured: supporting pieces top out
+// at ~220px, the focal image at ~322px; on phones three pieces are hidden,
+// which is why they lazy-load rather than downloading unseen).
+const heroPieceSizes = '(min-width: 980px) 220px, (min-width: 700px) 195px, 150px';
+const heroFocalSizes = '(min-width: 980px) 322px, (min-width: 700px) 285px, 215px';
+
 const audiences = (await getCollection('audiences')).sort((a, b) => a.data.order - b.data.order);
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
 const testimonials = (await getCollection('testimonials'))
@@ -111,19 +117,19 @@ const whyPoints = [
           <span class="hero__blob hero__blob--b reveal" style="--reveal-delay:80ms" data-depth="0.15"></span>
 
           <div class="hero__piece hero__piece--bigben reveal" style="--reveal-delay:100ms" data-depth="0.35">
-            <Image src={heroPhonebus} alt="" width={480} height={700} class="hero__piece-img" loading="eager" />
+            <Image src={heroPhonebus} alt="" width={480} height={700} widths={[240, 320, 480]} sizes={heroPieceSizes} class="hero__piece-img" loading="lazy" />
           </div>
           <div class="hero__piece hero__piece--bridge reveal" style="--reveal-delay:160ms" data-depth="0.3">
-            <Image src={heroPhonebox} alt="" width={480} height={640} class="hero__piece-img" loading="eager" />
+            <Image src={heroPhonebox} alt="" width={480} height={640} widths={[240, 320, 480]} sizes={heroPieceSizes} class="hero__piece-img" loading="lazy" />
           </div>
           <div class="hero__piece hero__piece--focal reveal" style="--reveal-delay:220ms" data-depth="0.45">
-            <Image src={heroWork} alt="" width={640} height={780} class="hero__piece-img" priority />
+            <Image src={heroWork} alt="" width={640} height={780} widths={[320, 400, 480, 640]} sizes={heroFocalSizes} class="hero__piece-img" priority />
           </div>
           <div class="hero__piece hero__piece--charts reveal" style="--reveal-delay:300ms" data-depth="0.6">
-            <Image src={heroCharts} alt="" width={520} height={480} class="hero__piece-img" loading="eager" />
+            <Image src={heroCharts} alt="" width={520} height={480} widths={[240, 320, 520]} sizes={heroPieceSizes} class="hero__piece-img" loading="lazy" />
           </div>
           <div class="hero__piece hero__piece--desk reveal" style="--reveal-delay:360ms" data-depth="0.4">
-            <Image src={heroDesk} alt="" width={520} height={450} class="hero__piece-img" loading="eager" />
+            <Image src={heroDesk} alt="" width={520} height={450} widths={[240, 320, 520]} sizes={heroPieceSizes} class="hero__piece-img" loading="lazy" />
           </div>
         </div>
 
