@@ -4,7 +4,7 @@ import { withBase } from '../lib/site';
 
 interface Props {
   href: string;
-  variant?: 'primary' | 'dark' | 'outline' | 'outline-on-ink' | 'ghost';
+  variant?: 'primary' | 'primary-on-ink' | 'dark' | 'outline' | 'ghost';
   size?: 'md' | 'lg';
   icon?: string;
   class?: string;
@@ -72,13 +72,27 @@ const resolvedHref = isExternal || href.startsWith('#') ? href : withBase(href);
 
   .btn--primary {
     background: var(--cta);
-    color: var(--c-ink-950);
+    color: var(--cta-text);
     box-shadow: var(--shadow-cta);
   }
 
   .btn--primary:hover {
     background: var(--cta-hover);
-    box-shadow: 0 20px 40px -14px var(--c-bronze-glow);
+    box-shadow: 0 20px 40px -14px var(--c-azure-glow-strong);
+  }
+
+  /* Every button on the azure sections — an Azure or see-through button
+     washes out there (client feedback), so they're all solid white with
+     deep-azure text, secondary actions included. */
+  .btn--primary-on-ink {
+    background: var(--cta-on-ink);
+    color: var(--cta-on-ink-text);
+    box-shadow: var(--shadow-cta-on-ink);
+  }
+
+  .btn--primary-on-ink:hover {
+    background: var(--cta-on-ink-hover);
+    box-shadow: 0 20px 40px -14px rgba(0, 26, 51, 0.55);
   }
 
   .btn--dark {
@@ -87,7 +101,7 @@ const resolvedHref = isExternal || href.startsWith('#') ? href : withBase(href);
   }
 
   .btn--dark:hover {
-    background: var(--c-ink-800);
+    background: var(--c-azure-600);
   }
 
   .btn--outline {
@@ -97,19 +111,8 @@ const resolvedHref = isExternal || href.startsWith('#') ? href : withBase(href);
   }
 
   .btn--outline:hover {
-    border-color: var(--c-ink-900);
-    background: rgba(20, 72, 103, 0.04);
-  }
-
-  .btn--outline-on-ink {
-    background: transparent;
-    color: var(--text-on-ink);
-    border-color: var(--border-on-ink);
-  }
-
-  .btn--outline-on-ink:hover {
-    border-color: rgba(250, 246, 238, 0.4);
-    background: rgba(250, 246, 238, 0.06);
+    border-color: var(--text-primary);
+    background: rgba(0, 127, 255, 0.06);
   }
 
   .btn--ghost {

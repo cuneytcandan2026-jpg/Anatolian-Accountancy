@@ -22,10 +22,10 @@ const contactHref = isTurkish ? '/tr/iletisim/' : '/contact/';
 const homeHref = isTurkish ? '/tr/' : '/';
 ---
 
-<header class="header" id="site-header">
+<header class:list={['header', { 'header--tr': isTurkish }]} id="site-header">
   <div class="header__bar container">
     <a href={withBase(homeHref)} class="header__logo" aria-label={`${site.name} home`}>
-      <img src={withBase('/logo.svg')} alt="" width="163" height="61" class="header__logo-img" />
+      <img src={withBase('/logo-horizontal.svg')} alt="" width="211" height="52" class="header__logo-img" />
       <span class="sr-only">{site.name}</span>
     </a>
 
@@ -79,7 +79,7 @@ const homeHref = isTurkish ? '/tr/' : '/';
       <Icon name="phone" />
       <span>{site.phoneDisplay}</span>
     </a>
-    <Button href={contactHref} size="lg" class="drawer__book">{ctaLabel}</Button>
+    <Button href={contactHref} size="lg" variant="primary-on-ink" class="drawer__book">{ctaLabel}</Button>
   </div>
 </div>
 
@@ -161,14 +161,27 @@ const homeHref = isTurkish ? '/tr/' : '/';
     flex-shrink: 0;
   }
 
+  /* Horizontal lockup (logo-horizontal.svg): the stacked master logo.svg
+     squeezed the name to ~11px tall at header height; side by side it
+     reads at ~17-18px. */
   .header__logo-img {
-    height: 56px;
+    height: 44px;
     width: auto;
     transition: height var(--duration-base) var(--ease-out);
   }
 
   .header--scrolled .header__logo-img {
-    height: 44px;
+    height: 38px;
+  }
+
+  @media (min-width: 600px) {
+    .header__logo-img {
+      height: 52px;
+    }
+
+    .header--scrolled .header__logo-img {
+      height: 42px;
+    }
   }
 
   .header__nav {
@@ -265,20 +278,12 @@ const homeHref = isTurkish ? '/tr/' : '/';
 
   .header__call:hover {
     border-color: var(--accent);
-    background: rgba(19, 118, 174, 0.08);
+    background: rgba(0, 127, 255, 0.08);
     color: var(--text-accent);
   }
 
   .header__actions :global(.header__cta) {
     display: none;
-    background: var(--c-azure-vivid);
-    color: var(--c-white);
-    box-shadow: 0 16px 32px -14px var(--c-azure-vivid-glow);
-  }
-
-  .header__actions :global(.header__cta:hover) {
-    background: var(--c-azure-vivid-hover);
-    box-shadow: 0 20px 40px -14px var(--c-azure-vivid-glow);
   }
 
   .header__trigger {
@@ -345,6 +350,21 @@ const homeHref = isTurkish ? '/tr/' : '/';
     .header__trigger {
       display: none;
     }
+
+    /* Turkish labels (nav + "Ücretsiz Görüşme Talep Edin") are much longer
+       than English, and the container gets no wider above 1320px (its
+       padding grows instead), so tighten the gaps for TR at every width. */
+    .header--tr .header__bar {
+      gap: var(--space-5);
+    }
+
+    .header--tr .header__nav ul {
+      gap: var(--space-5);
+    }
+
+    .header--tr .header__actions {
+      gap: var(--space-4);
+    }
   }
 
   /* ---- Mobile drawer ---- */
@@ -401,7 +421,7 @@ const homeHref = isTurkish ? '/tr/' : '/';
 
   .drawer__lang-link.is-active {
     color: var(--text-on-ink);
-    border-bottom: 1.5px solid var(--accent);
+    border-bottom: 1.5px solid var(--text-on-ink);
   }
 
   .drawer__actions {
@@ -416,9 +436,10 @@ const homeHref = isTurkish ? '/tr/' : '/';
     justify-content: center;
     gap: var(--space-2);
     padding: 1rem;
-    border: 1px solid var(--border-on-ink);
     border-radius: var(--radius-full);
-    color: var(--text-on-ink);
+    background: var(--cta-on-ink);
+    color: var(--cta-on-ink-text);
+    box-shadow: var(--shadow-cta-on-ink);
     text-decoration: none;
     font-weight: 600;
     min-height: 44px;

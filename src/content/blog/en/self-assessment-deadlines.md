@@ -4,7 +4,7 @@ metaTitle: "UK Self Assessment Deadlines 2025/26: Calendar & Penalties"
 description: "Every Self Assessment deadline for the 2025/26 tax year: registration, filing, payment and payments on account, plus what happens if you miss one."
 category: tax
 order: 4
-status: placeholder
+status: published
 relatedServiceHref: /services/#tax
 lastReviewed: "19 August 2026"
 reviewBy: "2027-01-10"

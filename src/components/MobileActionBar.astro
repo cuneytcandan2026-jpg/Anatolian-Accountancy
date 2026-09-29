@@ -51,12 +51,12 @@ const contactHref = isTurkish ? '/tr/iletisim/' : '/contact/';
     z-index: 90;
     display: flex;
     gap: 1px;
-    background: var(--border-on-ink);
+    background: var(--border-strong);
     padding-bottom: env(safe-area-inset-bottom);
     transform: translateY(100%);
     opacity: 0;
     transition: transform var(--duration-base) var(--ease-out), opacity var(--duration-base) var(--ease-out);
-    box-shadow: 0 -8px 24px -8px rgba(20, 72, 103, 0.22);
+    box-shadow: 0 -8px 24px -8px rgba(0, 64, 128, 0.22);
   }
 
   .action-bar.is-visible {
@@ -87,15 +87,17 @@ const contactHref = isTurkish ? '/tr/iletisim/' : '/contact/';
     flex-shrink: 0;
   }
 
+  /* White "Call" beside the Azure "Book", so the two halves stay distinct
+     now that the CTA itself is Azure. */
   .action-bar__link--call {
     flex: 0 0 30%;
-    background: var(--bg-ink);
-    color: var(--text-on-ink);
+    background: var(--bg-surface-raised);
+    color: var(--text-primary);
   }
 
   .action-bar__link--book {
     background: var(--cta);
-    color: var(--c-ink-950);
+    color: var(--cta-text);
   }
 
   @media (min-width: 900px) {

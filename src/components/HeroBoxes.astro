@@ -1,93 +1,269 @@
 ---
 /*
-  Vanilla recreation of the Aceternity "Background Boxes" effect — a skewed
-  grid of bordered cells that light up on hover. The original ships as a
-  React/framer-motion component rendering 150x100 (15,000) divs with
-  rainbow hover colours; this project is a static Astro site with no
-  client framework (see CLAUDE.md), so this version:
-  - builds the grid at build time (zero client JS — hover is plain CSS)
-  - uses a ~1,900-cell grid (87% fewer nodes) sized to still cover a
-    full-bleed hero at typical desktop widths/heights
-  - cycles hover colours through the site's own azure/bronze/ink tokens
-    instead of the original's rainbow palette
-  Decorative only — aria-hidden, hidden on small screens (no hover there,
-  and it's unnecessary DOM weight on mobile).
+  Vanilla take on the Aceternity "Background Boxes" effect — a skewed grid
+  of cells that light up under the cursor. The original ships as a
+  React/framer-motion component rendering 15,000 divs; this project is a
+  static Astro site with no client framework (see CLAUDE.md), so:
+  - the grid lines and "+" marks are CSS background images on one skewed
+    plane, not one element per cell (an earlier version shipped ~1,900
+    cell divs, too heavy to put on every page's banner)
+  - highlights come from a small pool of spans that the script moves onto
+    whichever cell is under the pointer, found by inverting the plane's
+    skew transform, so hover works across the whole banner, under the text
+    too, not only in the gaps between content
+  - "ghost cursors" drift across the banner and light cells by themselves,
+    so it stays animated on touch screens and without a mouse. They run only
+    while the banner is on screen, pause briefly after real pointer
+    activity, and are off entirely under prefers-reduced-motion
+  - highlight colours cycle through the site's azure tokens per diagonal,
+    skipping azure-500 itself on the ink tone (it's the banner background)
+  Decorative only: aria-hidden and pointer-events: none (the listeners sit
+  on the banner section, the plane's offsetParent). Without JS the grid
+  still renders, just without highlights.
+
+  Usage: first child of a `position: relative; overflow: hidden` banner
+  section, with the banner's content stacked above it (z-index >= 1).
+  tone="light" is for the ivory banners (About, Contact).
 */
-const COLS = 40;
-const CELLS_PER_COL = 48;
-const columns = Array.from({ length: COLS });
-const cells = Array.from({ length: CELLS_PER_COL });
+interface Props {
+  tone?: 'ink' | 'light';
+}
+
+const { tone = 'ink' } = Astro.props;
+const POOL_SIZE = 32;
 ---
 
-<div class="hero-boxes" aria-hidden="true">
-  {columns.map((_, i) => (
-    <div class="hero-boxes__col">
-      {cells.map((_, j) => (
-        <div class:list={["hero-boxes__cell", `hero-boxes__cell--c${(i + j) % 5}`]}>
-          {i % 3 === 0 && j % 4 === 0 && (
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              class="hero-boxes__plus"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
-            </svg>
-          )}
-        </div>
-      ))}
-    </div>
-  ))}
+<div class:list={['hero-boxes', `hero-boxes--${tone}`]} aria-hidden="true" data-hero-boxes>
+  {Array.from({ length: POOL_SIZE }).map(() => <span class="hero-boxes__lit"></span>)}
 </div>
+
+<script>
+  // Keep in sync with the 64px x 32px background-size tiles in the styles below.
+  const CELL_W = 64;
+  const CELL_H = 32;
+  const GHOST_STEP_MS = 55;
+  const USER_PAUSE_MS = 3000;
+  const FLASH_MS = 1400;
+  const HOVER_FADE_MS = 650;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-hero-boxes]').forEach((plane) => {
+    const host = plane.offsetParent as HTMLElement | null;
+    const pool = Array.from(plane.querySelectorAll<HTMLElement>('.hero-boxes__lit'));
+    if (!host || !pool.length) return;
+
+    const styles = getComputedStyle(plane);
+    const palette = [0, 1, 2, 3, 4].map((i) => styles.getPropertyValue(`--hb-c${i}`).trim());
+    const peak = parseFloat(styles.getPropertyValue('--hb-peak')) || 1;
+    // Automatic flashes stay softer than real hover, so text over a lit
+    // cell stays readable while the banner idles.
+    const autoPeak = parseFloat(styles.getPropertyValue('--hb-peak-auto')) || peak;
+
+    // Plane geometry (untransformed box + inverse skew), refreshed on resize.
+    let inverse = new DOMMatrix(styles.transform).inverse();
+    let width = 0;
+    let height = 0;
+    let offsetX = 0;
+    let offsetY = 0;
+    const measure = () => {
+      inverse = new DOMMatrix(getComputedStyle(plane).transform).inverse();
+      width = plane.offsetWidth;
+      height = plane.offsetHeight;
+      offsetX = host.clientLeft + plane.offsetLeft;
+      offsetY = host.clientTop + plane.offsetTop;
+    };
+    measure();
+    new ResizeObserver(measure).observe(host);
+
+    // Viewport point -> grid cell, or null when it falls outside the plane.
+    const cellAt = (clientX: number, clientY: number) => {
+      const rect = host.getBoundingClientRect();
+      const originX = rect.left + offsetX + width / 2;
+      const originY = rect.top + offsetY + height / 2;
+      const p = inverse.transformPoint(new DOMPoint(clientX - originX, clientY - originY));
+      const x = p.x + width / 2;
+      const y = p.y + height / 2;
+      if (x < 0 || y < 0 || x >= width || y >= height) return null;
+      const col = Math.floor(x / CELL_W);
+      const row = Math.floor(y / CELL_H);
+      return { col, row, key: `${col},${row}` };
+    };
+
+    let hoverEl: HTMLElement | null = null;
+    let hoverKey = '';
+    let next = 0;
+
+    // Round-robin through the pool, never stealing the cell under the mouse.
+    const take = (col: number, row: number) => {
+      let el = pool[next];
+      if (el === hoverEl) {
+        next = (next + 1) % pool.length;
+        el = pool[next];
+      }
+      next = (next + 1) % pool.length;
+      el.getAnimations().forEach((a) => a.cancel());
+      el.style.transform = `translate(${col * CELL_W + 1}px, ${row * CELL_H + 1}px)`;
+      el.style.backgroundColor = palette[(col + row) % palette.length];
+      return el;
+    };
+
+    const flash = (col: number, row: number, to = autoPeak) => {
+      take(col, row).animate(
+        [{ opacity: 0 }, { opacity: to, offset: 0.08 }, { opacity: to, offset: 0.3 }, { opacity: 0 }],
+        { duration: FLASH_MS, easing: 'ease-out' }
+      );
+    };
+
+    const releaseHover = () => {
+      if (!hoverEl) return;
+      const el = hoverEl;
+      hoverEl = null;
+      hoverKey = '';
+      el.getAnimations().forEach((a) => a.cancel());
+      el.animate([{ opacity: peak }, { opacity: 0 }], { duration: HOVER_FADE_MS, easing: 'ease-out' });
+    };
+
+    // ---- Real pointer: hover trail (mouse/pen), tap flash (touch) ----
+    let lastUserAt = -Infinity;
+    let pointerX = 0;
+    let pointerY = 0;
+    let pointerQueued = false;
+
+    const applyPointer = () => {
+      pointerQueued = false;
+      const cell = cellAt(pointerX, pointerY);
+      if (cell?.key === hoverKey) return;
+      releaseHover();
+      if (!cell) return;
+      const el = take(cell.col, cell.row);
+      el.animate([{ opacity: 0 }, { opacity: peak }], { duration: 90, fill: 'forwards' });
+      hoverEl = el;
+      hoverKey = cell.key;
+    };
+
+    host.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch') return;
+      lastUserAt = performance.now();
+      pointerX = e.clientX;
+      pointerY = e.clientY;
+      if (!pointerQueued) {
+        pointerQueued = true;
+        requestAnimationFrame(applyPointer);
+      }
+    });
+
+    host.addEventListener('pointerleave', releaseHover);
+
+    host.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'touch') return;
+      lastUserAt = performance.now();
+      const cell = cellAt(e.clientX, e.clientY);
+      if (cell) flash(cell.col, cell.row, peak);
+    });
+
+    // ---- Ghost cursors: the same trail, drawn automatically ----
+    if (reduceMotion) return;
+
+    const ghosts = [
+      { phase: 0, key: '' },
+      { phase: 2.6, key: '' },
+    ];
+    let frame = 0;
+    let lastStep = 0;
+    let nextTwinkle = 0;
+
+    const tick = (now: number) => {
+      frame = requestAnimationFrame(tick);
+      if (now - lastStep < GHOST_STEP_MS || now - lastUserAt < USER_PAUSE_MS) return;
+      lastStep = now;
+
+      // Only draw within the part of the banner that's actually on screen.
+      const rect = host.getBoundingClientRect();
+      const top = Math.max(rect.top, 0);
+      const bottom = Math.min(rect.bottom, window.innerHeight);
+      if (bottom - top < CELL_H * 2) return;
+      const spanY = bottom - top;
+      const t = now / 1000;
+
+      for (const g of ghosts) {
+        const fx = 0.5 + 0.42 * Math.sin(t * 0.31 + g.phase) + 0.06 * Math.sin(t * 0.97 + g.phase * 2);
+        const fy = 0.5 + 0.38 * Math.sin(t * 0.23 + g.phase * 1.7) + 0.08 * Math.cos(t * 0.71 + g.phase);
+        const cell = cellAt(rect.left + fx * rect.width, top + fy * spanY);
+        if (cell && cell.key !== g.key) {
+          g.key = cell.key;
+          flash(cell.col, cell.row);
+        }
+      }
+
+      if (now >= nextTwinkle) {
+        nextTwinkle = now + 350 + Math.random() * 650;
+        const cell = cellAt(rect.left + Math.random() * rect.width, top + Math.random() * spanY);
+        if (cell) flash(cell.col, cell.row);
+      }
+    };
+
+    const start = () => {
+      if (!frame) frame = requestAnimationFrame(tick);
+    };
+    const stop = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+    };
+
+    new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop())).observe(host);
+  });
+</script>
 
 <style>
   .hero-boxes {
     position: absolute;
     inset: -20%;
     z-index: 0;
-    display: flex;
+    pointer-events: none;
     transform: skewX(-18deg) skewY(9deg);
     mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, white 45%, transparent 92%);
     -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, white 45%, transparent 92%);
+    /* "+" every 3 columns x 4 rows, centred just off each grid intersection,
+       then the 64x32 grid itself (a 1px line on each tile's top and left). */
+    background-image: var(--hb-plus), linear-gradient(to right, var(--hb-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--hb-line) 1px, transparent 1px);
+    background-size: 192px 128px, 64px 32px, 64px 32px;
+    background-position: -98px -66px, 0 0, 0 0;
   }
 
-  .hero-boxes__col {
-    position: relative;
-    width: 64px;
-    height: 32px;
-    flex-shrink: 0;
-    border-left: 1px solid var(--border-on-ink);
+  .hero-boxes--ink {
+    --hb-line: var(--border-on-ink);
+    --hb-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128'%3E%3Cpath d='M96 58v12M102 64H90' fill='none' stroke='rgba(250,246,238,0.16)' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    --hb-c0: var(--c-azure-300);
+    --hb-c1: var(--c-azure-400);
+    --hb-c2: var(--c-azure-600);
+    --hb-c3: rgba(250, 246, 238, 0.35);
+    --hb-c4: var(--c-azure-700);
+    --hb-peak: 1;
+    --hb-peak-auto: 0.6;
   }
 
-  .hero-boxes__cell {
-    position: relative;
-    width: 64px;
-    height: 32px;
-    border-right: 1px solid var(--border-on-ink);
-    border-top: 1px solid var(--border-on-ink);
-    transition: background-color var(--duration-fast) var(--ease-out);
+  /* Ivory banners: faint deep-azure lines and softer tints, so the dark
+     heading/body text on top stays easy to read while cells light up. */
+  .hero-boxes--light {
+    --hb-line: rgba(0, 89, 179, 0.08);
+    --hb-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128'%3E%3Cpath d='M96 58v12M102 64H90' fill='none' stroke='rgba(0,89,179,0.16)' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    --hb-c0: var(--c-azure-300);
+    --hb-c1: var(--c-azure-400);
+    --hb-c2: var(--c-azure-300);
+    --hb-c3: var(--c-azure-500);
+    --hb-c4: var(--c-azure-400);
+    --hb-peak: 0.4;
+    --hb-peak-auto: 0.28;
   }
 
-  .hero-boxes__cell--c0:hover { background-color: var(--c-azure-300); }
-  .hero-boxes__cell--c1:hover { background-color: var(--c-azure-400); }
-  .hero-boxes__cell--c2:hover { background-color: var(--c-azure-500); }
-  .hero-boxes__cell--c3:hover { background-color: var(--c-bronze-400); }
-  .hero-boxes__cell--c4:hover { background-color: var(--c-ink-500); }
-
-  .hero-boxes__plus {
+  .hero-boxes__lit {
     position: absolute;
-    top: -14px;
-    left: -22px;
-    width: 40px;
-    height: 24px;
-    color: var(--border-on-ink);
-    pointer-events: none;
-  }
-
-  @media (max-width: 767px) {
-    .hero-boxes {
-      display: none;
-    }
+    top: 0;
+    left: 0;
+    width: 63px;
+    height: 31px;
+    opacity: 0;
   }
 </style>

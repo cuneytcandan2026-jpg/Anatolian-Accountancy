@@ -37,10 +37,12 @@ const label = isTurkish ? 'Yukarı çık' : 'Back to top';
     place-items: center;
     width: 50px;
     height: 50px;
-    border: none;
+    /* White, not Azure: it floats over the azure sections too, where an
+       Azure button would disappear into the background. */
+    border: 1px solid var(--border-subtle);
     border-radius: var(--radius-full);
-    background: var(--bg-ink);
-    color: var(--text-on-ink);
+    background: var(--cta-on-ink);
+    color: var(--cta-on-ink-text);
     cursor: pointer;
     box-shadow: var(--shadow-lg);
     opacity: 0;
@@ -58,7 +60,8 @@ const label = isTurkish ? 'Yukarı çık' : 'Back to top';
 
   .scroll-top:hover,
   .scroll-top:focus-visible {
-    background: var(--accent);
+    background: var(--cta-on-ink-hover);
+    color: var(--c-azure-600);
     transform: translateY(-3px) scale(1.06);
   }
 

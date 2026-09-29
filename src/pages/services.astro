@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroBoxes from '../components/HeroBoxes.astro';
 import Button from '../components/Button.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import CTASection from '../components/CTASection.astro';
@@ -98,6 +99,7 @@ const ecommerceRelated = relatedLinks(['ecommerce-multichannel-vat']);
 >
   <!-- ============ HERO ============ -->
   <section class="services-hero">
+    <HeroBoxes />
     <div class="services-hero__glow" aria-hidden="true"></div>
     <div class="container services-hero__inner reveal">
       <p class="eyebrow eyebrow--on-ink">Services</p>
@@ -107,8 +109,8 @@ const ecommerceRelated = relatedLinks(['ecommerce-multichannel-vat']);
         companies, contractors, landlords and individuals across London and the UK, in English or Turkish.
       </p>
       <div class="services-hero__actions">
-        <Button href="/contact/" size="lg">Book a Free Consultation</Button>
-        <Button href={site.phoneHref} size="lg" variant="outline-on-ink" icon="phone">Call Bektaş directly</Button>
+        <Button href="/contact/" size="lg" variant="primary-on-ink">Book a Free Consultation</Button>
+        <Button href={site.phoneHref} size="lg" variant="primary-on-ink" icon="phone">Call Bektaş directly</Button>
       </div>
       <nav class="services-hero__jump" aria-label="Jump to a service category">
         <a href="#business-accounting">Business Accounting</a>
@@ -291,22 +293,22 @@ const ecommerceRelated = relatedLinks(['ecommerce-multichannel-vat']);
     border-top: 1px solid var(--border-on-ink);
   }
 
+  /* Solid white like every other button on the azure banner. */
   .services-hero__jump a {
     padding: 0.55rem 1rem;
     border-radius: var(--radius-full);
-    border: 1px solid var(--border-on-ink);
-    color: var(--text-on-ink-muted);
+    background: var(--cta-on-ink);
+    color: var(--cta-on-ink-text);
     text-decoration: none;
     font-size: var(--fs-small);
     font-weight: 600;
-    transition: border-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out),
-      background-color var(--duration-fast) var(--ease-out);
+    box-shadow: 0 8px 18px -10px rgba(0, 26, 51, 0.45);
+    transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
   }
 
   .services-hero__jump a:hover {
-    color: var(--text-on-ink);
-    border-color: rgba(250, 246, 238, 0.4);
-    background: rgba(250, 246, 238, 0.06);
+    background: var(--cta-on-ink-hover);
+    color: var(--c-azure-600);
   }
 
   /* ---- Service blocks ---- */

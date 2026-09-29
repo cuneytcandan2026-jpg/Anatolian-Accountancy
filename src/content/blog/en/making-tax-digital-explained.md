@@ -4,7 +4,7 @@ metaTitle: "Making Tax Digital 2026: What It Means for You Now"
 description: "Making Tax Digital for Income Tax is live for anyone earning over £50,000: what's required, who's exempt, and when the next thresholds land."
 category: mtd
 order: 7
-status: placeholder
+status: published
 relatedServiceHref: /services/#mtd
 lastReviewed: "19 August 2026"
 reviewBy: "2026-11-19"

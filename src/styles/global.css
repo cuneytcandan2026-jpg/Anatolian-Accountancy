@@ -202,5 +202,5 @@ html.js .reveal.is-visible {
 /* ---- Selection ---- */
 ::selection {
   background: var(--accent-soft);
-  color: var(--c-ink-900);
+  color: var(--c-azure-950);
 }

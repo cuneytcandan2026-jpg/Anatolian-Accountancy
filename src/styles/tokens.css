@@ -1,30 +1,23 @@
 /*
   Design tokens — Anatolian Accountancy
-  Deep financial navy + warm ivory, with bronze narrowed to a CTA-only
-  action colour and a new azure scale carrying every decorative/informational
-  accent (links, icons, borders, focus rings).
+  Client-chosen Azure (#007FFF) + warm ivory. Every blue on the site is a
+  step of the one azure hue (hsl 210 100%): the dark "ink" sections, buttons
+  and decorative accents use #007FFF itself; darker steps of the same hue
+  carry text, where #007FFF is too light to read comfortably at body sizes
+  on ivory. The primary CTA is Azure on light backgrounds and flips to white
+  on the azure sections (see --cta-on-ink), so it never blends in.
 */
 
 :root {
   /* ---- Colour: core palette ---- */
-  --c-ink-950: #081c33;
-  --c-ink-900: #0e3c8b;
-  --c-ink-800: #1651b6;
-  --c-ink-700: #2066df;
-  --c-ink-600: #5085e2;
-  --c-ink-500: #77a3ee;
-
-  --c-azure-300: #acc7f6;
-  --c-azure-400: #709deb;
-  --c-azure-500: #296ee7;
-  --c-azure-600: #1450b8;
-  --c-azure-glow: rgba(41, 110, 231, 0.18);
-
-  /* Brighter client-chosen azure (#007FFF) — homepage hero background and
-     header CTA. Hover is a step darker so the button still reads as pressed. */
-  --c-azure-vivid: #007fff;
-  --c-azure-vivid-hover: #006ee0;
-  --c-azure-vivid-glow: rgba(0, 127, 255, 0.35);
+  --c-azure-950: #001a33; /* 10% — near-black ink, e.g. selection text */
+  --c-azure-700: #0059b3; /* 35% — headings, nav, primary text */
+  --c-azure-600: #006ee0; /* 44% — hover/pressed, small accent text, alt dark section */
+  --c-azure-500: #007fff; /* 50% — the brand Azure */
+  --c-azure-400: #4da6ff; /* 65% */
+  --c-azure-300: #99ccff; /* 80% — soft tints */
+  --c-azure-glow: rgba(0, 127, 255, 0.18);
+  --c-azure-glow-strong: rgba(0, 127, 255, 0.35);
 
   --c-ivory-50: #fdfbf7;
   --c-ivory-100: #faf6ee;
@@ -36,13 +29,10 @@
   --c-stone-600: #726a5c;
   --c-stone-700: #574f45;
 
-  --c-bronze-300: #d9b378;
-  --c-bronze-400: #c69a55;
-  --c-bronze-500: #ab7d3a;
-  --c-bronze-600: #8c632c;
-  --c-bronze-glow: rgba(171, 125, 58, 0.35);
-
   --c-white: #ffffff;
+
+  /* Review stars only — the conventional (Google) rating gold */
+  --c-star: #fbbc04;
 
   /* status (used sparingly — form states) */
   --c-success: #3f6b4f;
@@ -53,32 +43,40 @@
   --bg-surface: var(--c-ivory-50);
   --bg-surface-raised: var(--c-white);
   --bg-muted: var(--c-ivory-200);
-  --bg-ink: var(--c-ink-900);
-  --bg-ink-elevated: var(--c-ink-800);
-  --bg-ink-soft: var(--c-ink-700);
+  --bg-ink: var(--c-azure-500);
+  --bg-ink-elevated: var(--c-azure-600);
+  --bg-ink-soft: var(--c-azure-400);
 
-  --text-primary: var(--c-ink-900);
+  --text-primary: var(--c-azure-700);
   --text-secondary: var(--c-stone-600);
   --text-tertiary: var(--c-stone-500);
   --text-on-ink: var(--c-ivory-100);
-  --text-on-ink-muted: rgba(250, 246, 238, 0.66);
-  --text-accent: var(--c-azure-500);
-  --text-accent-on-ink: var(--c-azure-300);
+  /* Muted/accent text on the azure sections stays near-full ivory — lower
+     opacities or pale-blue tints wash out on #007FFF. */
+  --text-on-ink-muted: rgba(250, 246, 238, 0.92);
+  --text-accent: var(--c-azure-600);
+  --text-accent-on-ink: var(--text-on-ink);
 
-  --border-subtle: rgba(14, 60, 139, 0.1);
-  --border-strong: rgba(14, 60, 139, 0.18);
+  --border-subtle: rgba(0, 89, 179, 0.1);
+  --border-strong: rgba(0, 89, 179, 0.18);
   --border-on-ink: rgba(250, 246, 238, 0.16);
 
   --accent: var(--c-azure-500);
   --accent-strong: var(--c-azure-600);
   --accent-soft: var(--c-azure-300);
 
-  /* CTA is the one place bronze survives — deliberately distinct from
-     the azure accent used everywhere else, so the action colour pops. */
-  --cta: var(--c-bronze-500);
-  --cta-hover: var(--c-bronze-400);
+  /* Primary CTA: Azure on ivory/white; on the azure sections it inverts to
+     a white pill with deep-azure text (Button variant "primary-on-ink"). */
+  --cta: var(--c-azure-500);
+  --cta-hover: var(--c-azure-600);
+  --cta-text: var(--c-white);
+  --cta-on-ink: var(--c-white);
+  --cta-on-ink-hover: var(--c-ivory-100);
+  --cta-on-ink-text: var(--c-azure-700);
 
-  --focus-ring: 0 0 0 3px rgba(41, 110, 231, 0.45);
+  /* Ivory inner ring + deep-azure outer ring, so focus stays visible on both
+     the ivory page and the #007FFF sections (a plain azure ring vanishes there). */
+  --focus-ring: 0 0 0 2px var(--c-ivory-50), 0 0 0 4px var(--c-azure-700);
 
   /* ---- Typography ---- */
   --font-display: 'Fraunces Variable', 'Fraunces', 'Iowan Old Style', Georgia, serif;
@@ -144,11 +142,12 @@
   --radius-xl: 32px;
   --radius-full: 999px;
 
-  /* ---- Shadow (navy-tinted, low opacity) ---- */
-  --shadow-sm: 0 1px 2px rgba(14, 60, 139, 0.07);
-  --shadow-md: 0 12px 28px -12px rgba(14, 60, 139, 0.22);
-  --shadow-lg: 0 28px 56px -20px rgba(14, 60, 139, 0.28);
-  --shadow-cta: 0 16px 32px -14px var(--c-bronze-glow);
+  /* ---- Shadow (deep-azure-tinted, low opacity) ---- */
+  --shadow-sm: 0 1px 2px rgba(0, 64, 128, 0.07);
+  --shadow-md: 0 12px 28px -12px rgba(0, 64, 128, 0.22);
+  --shadow-lg: 0 28px 56px -20px rgba(0, 64, 128, 0.28);
+  --shadow-cta: 0 16px 32px -14px var(--c-azure-glow-strong);
+  --shadow-cta-on-ink: 0 16px 32px -14px rgba(0, 26, 51, 0.45);
 
   /* ---- Motion ---- */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

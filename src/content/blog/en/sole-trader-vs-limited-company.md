@@ -4,7 +4,7 @@ metaTitle: "Sole Trader vs Limited Company UK: 2026/27 Tax Comparison"
 description: "How sole trader and limited company tax, NI and admin compare for 2026/27, including the dividend rate rise most guides haven't caught up with."
 category: business-structure
 order: 2
-status: placeholder
+status: published
 relatedServiceHref: /services/#business-support
 lastReviewed: "19 August 2026"
 reviewBy: "2027-02-19"

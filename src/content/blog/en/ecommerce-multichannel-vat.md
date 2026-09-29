@@ -4,7 +4,7 @@ metaTitle: "Multi-Channel VAT for Online Sellers: UK Rules for 2026"
 description: "How VAT works across your own website plus Amazon, eBay or Etsy: threshold rules, marketplace VAT, and a consultation that could affect UK sellers."
 category: vat
 order: 5
-status: placeholder
+status: published
 relatedServiceHref: /services/#specialist
 lastReviewed: "19 August 2026"
 reviewBy: "2026-12-19"
