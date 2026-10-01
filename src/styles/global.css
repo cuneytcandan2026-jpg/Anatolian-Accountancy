@@ -26,11 +26,13 @@ html {
   }
 }
 
-/* Anchor-jump targets (in-page nav on Services/Who-We-Help, both languages)
-   would otherwise land with their heading hidden under the sticky Header. */
+/* Anchor-jump targets (in-page nav on Services/Who-We-Help, both languages,
+   plus the homepage FAQ that the old site's /faq/ redirects to) would
+   otherwise land with their heading hidden under the sticky Header. */
 .service-block,
 .whwh-block,
-#specialist {
+#specialist,
+#faq {
   scroll-margin-top: calc(var(--header-h) + var(--space-4));
 }
 
