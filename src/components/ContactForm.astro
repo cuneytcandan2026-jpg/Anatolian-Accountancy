@@ -132,6 +132,8 @@ const businessTypeOptions = isTurkish
 </div>
 
 <script>
+  import { trackLead } from '../lib/analytics';
+
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const status = form?.querySelector<HTMLParagraphElement>('.contact-form__status');
   const submitBtn = form?.querySelector<HTMLButtonElement>('.contact-form__submit');
@@ -159,6 +161,7 @@ const businessTypeOptions = isTurkish
       const result = await response.json();
 
       if (result.success) {
+        trackLead();
         form.reset();
         form.hidden = true;
         if (success) {

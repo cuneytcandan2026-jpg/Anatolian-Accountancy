@@ -6,6 +6,9 @@ export const site = {
   legalName: 'Anatolian Accountancy Ltd',
   companyNumber: '13439641',
   url: 'https://anatolianaccountancy.com',
+  // GA4 web stream for the live domain. Only loaded after cookie consent
+  // (see src/lib/analytics.ts).
+  gaMeasurementId: 'G-2LPVWTYMC3',
   phoneDisplay: '+44 7541 173722',
   phoneHref: 'tel:+447541173722',
   whatsappNumber: '447541173722',

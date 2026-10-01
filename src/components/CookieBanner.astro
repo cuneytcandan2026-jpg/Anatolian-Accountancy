@@ -1,0 +1,137 @@
+---
+import { withBase, stripBase } from '../lib/site';
+
+const isTurkish = stripBase(Astro.url.pathname).startsWith('/tr/');
+const privacyHref = withBase(isTurkish ? '/tr/gizlilik-politikasi/' : '/privacy-policy/');
+---
+
+<!-- Shown until the visitor makes a choice, and reopened by the footer's
+     "Cookie settings" button. Stays hidden without JS, when analytics can't
+     load anyway. Accept and Reject look the same on purpose: the ICO expects
+     refusing to be as easy as accepting. -->
+<section
+  class="cookie-banner"
+  id="cookie-banner"
+  aria-label={isTurkish ? 'Çerez tercihi' : 'Cookie preferences'}
+  tabindex="-1"
+  hidden
+>
+  <p class="cookie-banner__text">
+    {isTurkish ? (
+      <>
+        Ziyaretçilerin sitemizi nasıl kullandığını görüp siteyi geliştirebilmek için Google Analytics
+        çerezlerini kullanmak istiyoruz. Bu çerezler yalnızca kabul ederseniz kullanılır.
+        <a href={privacyHref}>Gizlilik Politikası</a>
+      </>
+    ) : (
+      <>
+        We'd like to use Google Analytics cookies to see how visitors use our site, so we can improve it.
+        They're only set if you accept. <a href={privacyHref}>Privacy Policy</a>
+      </>
+    )}
+  </p>
+  <div class="cookie-banner__actions">
+    <button type="button" class="cookie-banner__btn" data-consent="denied">{isTurkish ? 'Reddet' : 'Reject'}</button>
+    <button type="button" class="cookie-banner__btn" data-consent="granted">{isTurkish ? 'Kabul et' : 'Accept'}</button>
+  </div>
+</section>
+
+<script>
+  import { getConsent, setConsent, startAnalytics } from '../lib/analytics';
+
+  const banner = document.getElementById('cookie-banner');
+  let opener: HTMLElement | null = null;
+
+  startAnalytics();
+
+  if (banner) {
+    if (getConsent() === null) banner.hidden = false;
+
+    banner.addEventListener('click', (e) => {
+      const button = (e.target as Element).closest<HTMLButtonElement>('[data-consent]');
+      if (!button) return;
+      setConsent(button.dataset.consent === 'granted' ? 'granted' : 'denied');
+      banner.hidden = true;
+      // Return focus to "Cookie settings" if that's what reopened the banner.
+      opener?.focus();
+      opener = null;
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-cookie-settings]').forEach((button) => {
+      button.addEventListener('click', () => {
+        opener = button;
+        banner.hidden = false;
+        banner.focus();
+      });
+    });
+  }
+</script>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    /* Above the floating contact buttons (95) and the mobile action bar
+       (90), below the header (100) and its mobile nav drawer (99). */
+    z-index: 98;
+    left: var(--fab-edge-gap);
+    right: var(--fab-edge-gap);
+    bottom: calc(env(safe-area-inset-bottom) + var(--space-3));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--bg-surface-raised);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    font-size: var(--fs-small);
+    line-height: var(--lh-normal);
+  }
+
+  .cookie-banner[hidden] {
+    display: none;
+  }
+
+  .cookie-banner:focus-visible {
+    box-shadow: var(--shadow-lg), var(--focus-ring);
+  }
+
+  .cookie-banner__text {
+    margin: 0;
+  }
+
+  .cookie-banner__text a {
+    color: var(--text-accent);
+  }
+
+  .cookie-banner__actions {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .cookie-banner__btn {
+    flex: 1;
+    padding: 0.75rem 1.25rem;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--cta-text);
+    background: var(--cta);
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .cookie-banner__btn:hover {
+    background: var(--cta-hover);
+  }
+
+  @media (min-width: 600px) {
+    .cookie-banner {
+      right: auto;
+      max-width: 26rem;
+      bottom: calc(env(safe-area-inset-bottom) + 1.25rem);
+    }
+  }
+</style>
