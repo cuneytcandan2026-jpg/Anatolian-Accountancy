@@ -27,6 +27,14 @@ ErrorDocument 410 /404.html
   RewriteRule ^faq/?$ /#faq [R=301,NE,L]
   RewriteRule ^(sitemap_index|sitemap|wp-sitemap|page-sitemap|post-sitemap)\.xml$ /sitemap-index.xml [R=301,L]
 
+  # During the DNS switch (2026-10-01) the old IONOS server answered "/" with a
+  # parking page that meta-refreshes to "/defaultsite". It had no
+  # Cache-Control and a 2024 Last-Modified, so browsers that saw it may keep
+  # replaying it from cache for weeks. Send them to a homepage URL their stale
+  # "/" entry doesn't match (so this can't loop), and ask the browser to drop
+  # its cached copies of the site.
+  RewriteRule ^defaultsite/?$ /?refresh=1 [R=302,L,E=CLEAR_STALE_CACHE:1]
+
   # The old site's sample blog posts and its "404-2" page have no equivalent
   # here, so tell search engines they're gone for good.
   RewriteRule ^(understanding-credit-scores-your-key-to-financial-freedom|mastering-the-art-of-budgeting-practical-strategies-for-financial-success|the-rise-of-cryptocurrencies-should-you-invest|navigating-market-volatility-tips-for-investors|404-2)/?$ - [G]
@@ -40,4 +48,14 @@ ErrorDocument 410 /404.html
   <FilesMatch "\.[A-Za-z0-9_-]{8,}\.(css|js|mjs|svg|png|jpe?g|webp|avif|gif|woff2?)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
+
+  # Pages and other unhashed text files keep the same URL across deploys.
+  # Without this, browsers cache them heuristically off Last-Modified and can
+  # show an outdated page for hours after an update. no-cache still allows
+  # caching, but every visit revalidates (a cheap 304 when nothing changed).
+  <FilesMatch "\.(html|xml|txt|webmanifest)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  Header always set Clear-Site-Data "\"cache\"" env=CLEAR_STALE_CACHE
 </IfModule>
