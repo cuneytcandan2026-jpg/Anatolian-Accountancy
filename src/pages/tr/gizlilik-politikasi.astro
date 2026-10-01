@@ -1,0 +1,184 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site, withBase } from '../../lib/site';
+
+const lastUpdated = 'Ekim 2026';
+---
+
+<BaseLayout
+  title="Gizlilik Politikası | Anatolian Accountancy"
+  description="Anatolian Accountancy'nin kişisel verilerinizi nasıl topladığı, kullandığı ve koruduğu."
+  path="/tr/gizlilik-politikasi/"
+  lang="tr"
+  noIndex
+>
+  <section class="section legal">
+    <div class="container container--narrow reveal">
+      <p class="eyebrow">Yasal</p>
+      <h1>Gizlilik Politikası</h1>
+      <p class="legal__meta">Son güncelleme: {lastUpdated}</p>
+
+      <p class="legal__note">
+        Bu sayfa, <a href={withBase('/privacy-policy/')} hreflang="en">İngilizce Gizlilik Politikamızın</a>
+        Türkçe çevirisidir. İki metin arasında bir farklılık olması durumunda İngilizce sürüm geçerlidir.
+      </p>
+
+      <p>
+        {site.legalName} olarak gizliliğinizi korumaya önem veriyoruz. Bu politika; hangi kişisel
+        verileri topladığımızı, bunları neden topladığımızı, nasıl kullandığımızı ve koruduğumuzu, ayrıca
+        Birleşik Krallık Genel Veri Koruma Tüzüğü (UK GDPR) ve 2018 Veri Koruma Yasası (Data Protection
+        Act 2018) kapsamında hangi haklara sahip olduğunuzu açıklar.
+      </p>
+
+      <h2>Biz kimiz</h2>
+      <p>
+        Bu politikada açıklanan kişisel verilerin veri sorumlusu biziz.
+        <br />{site.legalName}, İngiltere ve Galler'de kayıtlıdır (şirket no. {site.companyNumber})
+        <br />{site.address.line1}, {site.address.line2}
+        <br />{site.address.city} {site.address.postcode}, Birleşik Krallık
+        <br />E-posta: <a href={site.emailHref}>{site.email}</a> · Telefon: <a href={site.phoneHref}>{site.phoneDisplay}</a>
+      </p>
+
+      <h2>Topladığımız kişisel veriler</h2>
+      <p><strong>Web sitesi ziyaretçileri ve talepler.</strong> Bu sitedeki iletişim formunu kullandığınızda gönderdiğiniz bilgileri topluyoruz: adınız, e-posta adresiniz, telefon numaranız, seçtiğiniz konu, işletme türünüz ve yazdığınız mesaj. Bu bilgiler, form hizmeti sağlayıcımız Web3Forms aracılığıyla doğrudan iş e-postamıza iletilir. Gönderilen formları ayrı bir veri tabanında saklamayız.</p>
+      <p><strong>Müşteriler.</strong> Muhasebe, vergi veya ön muhasebe hizmetlerimizden yararlandığınızda, bu hizmetleri sunmak için gereken ek kişisel ve mali verileri de topluyoruz. Bunlar şunları içerebilir: adınız, doğum tarihiniz, National Insurance numaranız, Unique Taxpayer Reference (UTR) numaranız, iletişim ve adres bilgileriniz, banka bilgileriniz, gelir ve giderleriniz, bordro ve emeklilik bilgileriniz, işletme kayıtlarınız ve HMRC, Companies House veya diğer ilgili kurumlarla yazışmalarınız. Bu veriler genellikle doğrudan sizin tarafınızdan ya da muhasebecinizi değiştirdiğinizde, sizin yetkinizle önceki muhasebeciniz tarafından sağlanır.</p>
+      <p><strong>Verileri nasıl topluyoruz.</strong> Doğrudan sizden: web sitemizdeki iletişim formu, telefon, e-posta veya yüz yüze görüşme yoluyla ya da hizmetlerimizi sunarken kullandığımız bulut tabanlı muhasebe ve ofis yazılımları (Xero veya Capium gibi) aracılığıyla.</p>
+
+      <h2>Verilerinizi nasıl kullanıyoruz</h2>
+      <ul>
+        <li>Talebinize yanıt vermek ve istediğiniz bilgiyi ya da fiyat teklifini sunmak için.</li>
+        <li>Bizi görevlendirdiğiniz hesapları, vergi beyannamelerini, bordroyu ve diğer hizmetleri hazırlamak için.</li>
+        <li>Kara para aklamanın önlenmesine yönelik kontroller, HMRC'ye bildirim yükümlülükleri ve meslek kuruluşumuzun öngördüğü kayıt tutma yükümlülükleri dahil olmak üzere yasal ve düzenleyici yükümlülüklerimizi yerine getirmek için.</li>
+        <li>Hesabınız veya devam eden işlerinizle ilgili sizinle iletişim kurmak için.</li>
+        <li>Pazarlama iletişimi göndermek için; ancak yalnızca onay vermişseniz. Bu iletişimleri almayı dilediğiniz zaman bırakabilirsiniz.</li>
+      </ul>
+
+      <h2>Verileri işlemenin hukuki dayanağı</h2>
+      <p>
+        Aşağıdaki hukuki dayanaklardan bir veya birkaçına dayanırız: sizinle yapılan sözleşmenin ifası
+        (bizi görevlendirdiğiniz hizmetlerin sunulması), yasal bir yükümlülüğe uyum (kara para aklamanın
+        önlenmesine ilişkin düzenlemeler ve HMRC gereklilikleri gibi), işimizi yürütme ve geliştirmeye
+        yönelik meşru menfaatlerimiz (taleplere yanıt vermek gibi) ve isteğe bağlı pazarlama iletişimi
+        için onayınız.
+      </p>
+
+      <h2>Verilerinizi kimlerle paylaşıyoruz</h2>
+      <p>Kişisel verilerinizi satmayız. Verilerinizi şu taraflarla paylaşabiliriz:</p>
+      <ul>
+        <li>Hizmetinizi sunmak veya yasalara uymak için gerektiğinde HMRC, Companies House ve diğer düzenleyici ya da resmi kurumlar.</li>
+        <li>Verileri bizim adımıza ve kendi veri koruma sözleşmeleri kapsamında işleyen bulut tabanlı muhasebe ve ofis yönetimi yazılımı sağlayıcılarımız (Xero ve Capium gibi).</li>
+        <li>Yalnızca iletişim formu gönderimlerini e-posta kutumuza iletmek amacıyla form hizmeti sağlayıcımız Web3Forms.</li>
+        <li>Uyum gereklilikleri veya bir tazminat talebi söz konusu olduğunda, gerektiği ölçüde mesleki sorumluluk sigortacılarımız ve meslek kuruluşumuz.</li>
+        <li>Sizin adınıza çalışmaya başlamak için mesleki devir onayı (professional clearance) istediğimizde, sizin yetkinizle önceki muhasebeciniz.</li>
+      </ul>
+
+      <h2>Verilerin saklanma süresi</h2>
+      <p>
+        Müşteri kayıtları, HMRC ve yasal kayıt tutma gerekliliklerine uygun olarak ilgili vergi veya
+        hesap döneminin bitiminden itibaren en az altı yıl saklanır; meslek kuruluşumuzun veya
+        sigortacımızın gerektirmesi halinde daha uzun süre saklanabilir. Süregelen bir müşteri ilişkisine
+        dönüşmeyen iletişim formu talepleri ise yalnızca talebinizle ilgilenmek için makul ölçüde gerekli
+        olduğu sürece saklanır.
+      </p>
+
+      <h2>Çerezler ve izleme</h2>
+      <p>
+        Bu web sitesi kendine ait hiçbir çerez kullanmaz; analiz, reklam veya izleme araçları da
+        kullanmaz. İletişim sayfamızdaki harita Google Haritalar'dan yerleştirilmiştir. Bu nedenle harita
+        yüklendiğinde Google,
+        <a href="https://policies.google.com/privacy?hl=tr" target="_blank" rel="noopener">kendi gizlilik politikası</a>
+        kapsamında çerez yerleştirebilir veya IP adresiniz gibi teknik verileri alabilir. İleride analiz
+        aracı veya başka çerezler eklersek, önce bu politikayı güncelleyeceğiz.
+      </p>
+
+      <h2>Güvenlik</h2>
+      <p>
+        Kişisel verilerinizi yetkisiz erişime, kayba veya kötüye kullanıma karşı korumak için, ofis
+        yazılımlarımızdaki erişim kontrolleri ve müşteri belgelerinin güvenli şekilde işlenmesi dahil
+        olmak üzere uygun teknik ve idari önlemleri alıyoruz.
+      </p>
+
+      <h2>Haklarınız</h2>
+      <p>UK GDPR kapsamında şu haklara sahipsiniz:</p>
+      <ul>
+        <li>Hakkınızda tuttuğumuz kişisel verilere erişmek.</li>
+        <li>Yanlış verilerin düzeltilmesini istemek.</li>
+        <li>Yasal veya düzenleyici nedenlerle saklamak zorunda olmadığımız durumlarda verilerinizin silinmesini istemek.</li>
+        <li>Belirli veri işleme faaliyetlerini kısıtlamak veya bunlara itiraz etmek.</li>
+        <li>Verilerinizin bir kopyasını taşınabilir bir biçimde istemek.</li>
+        <li>Veri işlemenin onaya dayandığı durumlarda onayınızı dilediğiniz zaman geri çekmek.</li>
+      </ul>
+      <p>
+        Bu haklardan herhangi birini kullanmak için <a href={site.emailHref}>{site.email}</a> adresinden
+        bize ulaşın. Verilerinizi işleme biçimimizden memnun değilseniz, Birleşik Krallık'ın veri koruma
+        otoritesi Information Commissioner's Office'e (ICO)
+        <a href="https://ico.org.uk" target="_blank" rel="noopener">ico.org.uk</a> üzerinden şikâyette
+        bulunma hakkınız da vardır.
+      </p>
+
+      <h2>Bu politikadaki değişiklikler</h2>
+      <p>
+        Bu politikayı zaman zaman güncelleyebiliriz. Sayfanın üst kısmındaki "son güncelleme" tarihi en son
+        değişiklikleri gösterir.
+      </p>
+
+      <h2>Bize ulaşın</h2>
+      <p>
+        Bu politika veya verilerinizi nasıl işlediğimiz hakkında sorularınız varsa
+        <a href={site.emailHref}>{site.email}</a> adresinden ya da <a href={site.phoneHref}>{site.phoneDisplay}</a>
+        numarasından bize ulaşabilirsiniz.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-block: clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .legal h1 {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h1);
+  }
+
+  .legal__meta {
+    margin-top: var(--space-3);
+    font-size: var(--fs-small);
+    color: var(--text-tertiary);
+  }
+
+  .legal h2 {
+    margin-top: var(--space-8);
+    font-size: var(--fs-h4);
+    color: var(--text-primary);
+  }
+
+  .legal p {
+    margin-top: var(--space-5);
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .legal .legal__note {
+    padding: var(--space-4) var(--space-5);
+    border-left: 3px solid var(--accent);
+    background: var(--bg-muted);
+    font-size: var(--fs-small);
+  }
+
+  .legal ul {
+    margin-top: var(--space-5);
+    padding-left: 1.25em;
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .legal ul li + li {
+    margin-top: var(--space-2);
+  }
+
+  .legal a {
+    color: var(--text-accent);
+  }
+</style>

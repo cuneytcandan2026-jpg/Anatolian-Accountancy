@@ -78,8 +78,8 @@ const socialLinks = [
       </p>
     </div>
     <div class="footer__legal">
-      <a href={withBase('/privacy-policy/')}>{isTurkish ? 'Gizlilik Politikası' : 'Privacy Policy'}</a>
-      <a href={withBase('/terms/')}>{isTurkish ? 'Şartlar ve Koşullar' : 'Terms & Conditions'}</a>
+      <a href={withBase(isTurkish ? '/tr/gizlilik-politikasi/' : '/privacy-policy/')}>{isTurkish ? 'Gizlilik Politikası' : 'Privacy Policy'}</a>
+      <a href={withBase(isTurkish ? '/tr/sartlar-ve-kosullar/' : '/terms/')}>{isTurkish ? 'Şartlar ve Koşullar' : 'Terms & Conditions'}</a>
     </div>
   </div>
 </footer>

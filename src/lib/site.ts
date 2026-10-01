@@ -113,6 +113,8 @@ export const langAlternates: Record<string, string> = {
   '/insights/': '/tr/blog/',
   '/about/': '/tr/hakkimizda/',
   '/contact/': '/tr/iletisim/',
+  '/privacy-policy/': '/tr/gizlilik-politikasi/',
+  '/terms/': '/tr/sartlar-ve-kosullar/',
 };
 
 export const langAlternatesReverse: Record<string, string> = Object.fromEntries(

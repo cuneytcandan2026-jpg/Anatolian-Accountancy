@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site, withBase } from '../../lib/site';
+
+const lastUpdated = 'Ekim 2026';
+---
+
+<BaseLayout
+  title="Şartlar ve Koşullar | Anatolian Accountancy"
+  description="Anatolian Accountancy web sitesinin kullanımına ve hizmetlerimizden yararlanmaya ilişkin şartlar ve koşullar."
+  path="/tr/sartlar-ve-kosullar/"
+  lang="tr"
+  noIndex
+>
+  <section class="section legal">
+    <div class="container container--narrow reveal">
+      <p class="eyebrow">Yasal</p>
+      <h1>Şartlar ve Koşullar</h1>
+      <p class="legal__meta">Son güncelleme: {lastUpdated}</p>
+
+      <p class="legal__note">
+        Bu sayfa, <a href={withBase('/terms/')} hreflang="en">İngilizce Şartlar ve Koşullarımızın</a>
+        Türkçe çevirisidir. İki metin arasında bir farklılık olması durumunda İngilizce sürüm geçerlidir.
+      </p>
+
+      <p>
+        Bu şartlar iki konuyu kapsar: bu web sitesinin kullanımı ve {site.legalName} olarak müşteri
+        işlerini hangi genel esaslarla üstlendiğimiz. Bu şartlar, ücretli bir işe başlamadan önce bizimle
+        imzalayacağınız resmi görevlendirme mektubunun (letter of engagement) yerine geçmez. İkisi arasında
+        bir farklılık olması durumunda imzaladığınız görevlendirme mektubu geçerlidir.
+      </p>
+
+      <h2>Bu web sitesinin kullanımı</h2>
+      <ul>
+        <li>Bu sitedeki içerik yalnızca genel bilgilendirme amaçlıdır; vergi, muhasebe veya mali tavsiye niteliği taşımaz. Burada okuduğunuz herhangi bir bilgiye dayanarak harekete geçmeden önce mutlaka doğrudan bizimle görüşün.</li>
+        <li>Bu sitenin doğru ve güncel olması için özen gösteriyoruz; ancak vergi kuralları ve eşik değerleri değişir ve içeriğin, okuduğunuz anda en son durumu yansıttığını garanti etmeyiz.</li>
+        <li>Bu sitedeki içerik, tasarım veya marka unsurlarını yazılı iznimiz olmadan kopyalayamaz, çoğaltamaz veya yeniden kullanamazsınız.</li>
+        <li>Bu siteyi erişilebilir ve güvenli tutmayı amaçlıyoruz; ancak kesintisiz erişimi garanti etmeyiz ve sitenin erişilemez olmasından kaynaklanan kayıplardan sorumlu değiliz.</li>
+        <li>Harici web sitelerine verilen bağlantılar kolaylık sağlamak amacıyla sunulmaktadır; kontrolümüzde olmayan sitelerin içeriğinden veya uygulamalarından sorumlu değiliz.</li>
+      </ul>
+
+      <h2>Bu site üzerinden gönderilen talepler</h2>
+      <p>
+        İletişim formunu göndermek bir taleptir, işe başlama talimatı değildir. Standart müşteri kabul
+        kontrollerimiz (kara para aklamanın önlenmesine yönelik kimlik doğrulama dahil) tamamlanmadan ve
+        işin kapsamını, ücretlerini ve koşullarını belirleyen bir görevlendirme mektubu tarafınızca
+        imzalanmadan aramızda herhangi bir müşteri ilişkisi veya görevlendirme oluşmaz.
+      </p>
+
+      <h2>Hizmetlerimizden yararlanma</h2>
+      <ul>
+        <li>Bizi görevlendirdiğinizde işin kapsamı, ücretler, sorumluluklar ve zaman çizelgesi, aramızdaki sözleşmeyi oluşturan kişiye özel görevlendirme mektubunuzda belirtilir.</li>
+        <li>Ücretler, görevlendirme mektubunuzda kararlaştırıldığı şekilde (sabit ücret, saatlik ücret veya başka bir esasla) faturalandırılır ve yazılı olarak aksi kararlaştırılmadıkça faturalarımızda belirtilen koşullara göre ödenir.</li>
+        <li>Doğru ve eksiksiz bilgi ve kayıtları zamanında sağlamaktan siz sorumlusunuz. Verdiğiniz bilgilerdeki gecikmeler veya hatalar, yasal bildirim süreleri dahil olmak üzere çalışmalarımızın doğruluğunu veya zamanlamasını etkileyebilir.</li>
+        <li>Mesleki sorumluluk sigortamız bulunmaktadır ve meslek kuruluşumuzun standartlarına ve etik ilkelerine uyarız.</li>
+        <li>Taraflardan her biri, görevlendirme mektubunuzda belirtilen bildirim koşullarına uygun olarak görevlendirmeyi sona erdirebilir.</li>
+      </ul>
+
+      <h2>Sorumluluk</h2>
+      <p>
+        Sunduğumuz hizmetlerle ilgili sorumluluğumuz, görevlendirme mektubunuzda belirtildiği şekildedir.
+        Yasaların izin verdiği ölçüde; tarafınızca sağlanan eksik, hatalı veya geç bilgilerden ya da
+        görevlendirmemizin kararlaştırılan kapsamı dışındaki konulardan kaynaklanan kayıplardan sorumlu
+        değiliz.
+      </p>
+
+      <h2>Uygulanacak hukuk</h2>
+      <p>
+        Bu şartlar ve bizimle yapılan her türlü görevlendirme İngiltere ve Galler hukukuna tabidir ve
+        münhasıran İngiltere ve Galler mahkemelerinin yetkisine girer.
+      </p>
+
+      <h2>Bu şartlardaki değişiklikler</h2>
+      <p>
+        Bu şartları zaman zaman güncelleyebiliriz; sayfanın üst kısmındaki "son güncelleme" tarihi en son
+        değişiklikleri gösterir. İmzalanmış bir görevlendirme mektubunda kararlaştırılmış koşullar, bu
+        sayfada daha sonra yapılan güncellemelerden etkilenmez.
+      </p>
+
+      <h2>Bize ulaşın</h2>
+      <p>
+        Bu şartlar hakkında sorularınız varsa <a href={site.emailHref}>{site.email}</a> adresinden ya da
+        <a href={site.phoneHref}>{site.phoneDisplay}</a> numarasından bize ulaşabilirsiniz.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-block: clamp(4rem, 3rem + 4vw, 7rem);
+  }
+
+  .legal h1 {
+    margin-top: var(--space-4);
+    font-size: var(--fs-h1);
+  }
+
+  .legal__meta {
+    margin-top: var(--space-3);
+    font-size: var(--fs-small);
+    color: var(--text-tertiary);
+  }
+
+  .legal h2 {
+    margin-top: var(--space-8);
+    font-size: var(--fs-h4);
+    color: var(--text-primary);
+  }
+
+  .legal p {
+    margin-top: var(--space-5);
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .legal .legal__note {
+    padding: var(--space-4) var(--space-5);
+    border-left: 3px solid var(--accent);
+    background: var(--bg-muted);
+    font-size: var(--fs-small);
+  }
+
+  .legal ul {
+    margin-top: var(--space-5);
+    padding-left: 1.25em;
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .legal ul li + li {
+    margin-top: var(--space-2);
+  }
+
+  .legal a {
+    color: var(--text-accent);
+  }
+</style>

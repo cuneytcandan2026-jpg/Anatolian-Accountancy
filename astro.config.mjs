@@ -27,7 +27,7 @@ function rehypeBaseLinks() {
 // Pages rendered with BaseLayout's `noIndex` must stay out of the sitemap as
 // well, or search engines get contradictory signals (404 is already left out
 // by the integration). Keep in sync when adding or removing a noIndex page.
-const noIndexPaths = ['/privacy-policy/', '/terms/'];
+const noIndexPaths = ['/privacy-policy/', '/terms/', '/tr/gizlilik-politikasi/', '/tr/sartlar-ve-kosullar/'];
 
 export default defineConfig({
   site: isGithubPages ? 'https://cuneytcandan2026-jpg.github.io' : 'https://anatolianaccountancy.com',
