@@ -59,7 +59,7 @@ const socialLinks = [
           <span class="footer__contact-row"><Icon name="map-pin" /><span>{site.address.line1}, {site.address.city} {site.address.postcode}</span></span>
         </li>
         <li>
-          <span class="footer__contact-row"><Icon name="clock" /><span>{isTurkish ? site.hoursTr : site.hours}</span></span>
+          <span class="footer__contact-row"><Icon name="clock" /><span>{(isTurkish ? site.hoursTr : site.hours).map((line, i) => <>{i > 0 && <br />}{line}</>)}</span></span>
         </li>
       </ul>
     </div>

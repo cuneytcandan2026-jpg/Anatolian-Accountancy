@@ -64,7 +64,7 @@ const mapQuery = encodeURIComponent(
             <span class="contact-details__icon"><Icon name="clock" /></span>
             <div>
               <p class="contact-details__label">Opening hours</p>
-              <p>{site.hours}</p>
+              <p>{site.hours.map((line, i) => <>{i > 0 && <br />}{line}</>)}</p>
             </div>
           </li>
           <li>
@@ -80,7 +80,7 @@ const mapQuery = encodeURIComponent(
       <div class="contact-hero__form reveal">
         <div class="contact-card">
           <h2 class="contact-card__heading">Request my consultation</h2>
-          <p class="contact-card__intro">We usually reply within 2 hours during office hours ({site.hours}).</p>
+          <p class="contact-card__intro">We usually reply within 2 hours during office hours.</p>
           <ContactForm />
         </div>
       </div>
