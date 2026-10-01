@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { withBase } from '../lib/site';
 
 // NOTE: form submissions post to Web3Forms (https://web3forms.com) — a
@@ -118,10 +119,23 @@ const businessTypeOptions = isTurkish
   <p class="contact-form__status" role="status" aria-live="polite"></p>
 </form>
 
+<!-- Replaces the form once Web3Forms confirms the submission. It sits outside
+     the form so hiding the form doesn't hide it too. -->
+<div id="contact-form-success" class="contact-form__success" tabindex="-1" hidden>
+  <span class="contact-form__success-icon"><Icon name="check" /></span>
+  <p class="contact-form__success-title">{isTurkish ? 'Teşekkürler!' : 'Thank you!'}</p>
+  <p class="contact-form__success-text">
+    {isTurkish
+      ? 'Talebiniz elimize ulaştı, en kısa sürede size dönüş yapacağız.'
+      : "We've received your enquiry and will be in touch shortly."}
+  </p>
+</div>
+
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const status = form?.querySelector<HTMLParagraphElement>('.contact-form__status');
   const submitBtn = form?.querySelector<HTMLButtonElement>('.contact-form__submit');
+  const success = document.getElementById('contact-form-success');
   const isTurkish = form?.dataset.lang === 'tr';
 
   form?.addEventListener('submit', async (e) => {
@@ -147,12 +161,13 @@ const businessTypeOptions = isTurkish
       if (result.success) {
         form.reset();
         form.hidden = true;
-        if (status) {
-          status.textContent = isTurkish
-            ? 'Teşekkürler! Talebiniz elimize ulaştı, en kısa sürede size dönüş yapacağız.'
-            : "Thank you! We've received your enquiry and will be in touch shortly.";
-          status.className = 'contact-form__status contact-form__status--success';
-          status.hidden = false;
+        if (success) {
+          success.hidden = false;
+          // The form collapses, which can leave the message above the
+          // viewport. Centre it (clear of the sticky header), and move focus
+          // there so screen readers announce it.
+          success.scrollIntoView({ block: 'center' });
+          success.focus({ preventScroll: true });
         }
       } else {
         throw new Error(result.message || 'Submission failed');
@@ -310,12 +325,63 @@ const businessTypeOptions = isTurkish
     display: none;
   }
 
-  .contact-form__status--success {
-    color: var(--c-success);
-  }
-
   .contact-form__status--error {
     color: var(--c-error);
+  }
+
+  /* Both blocks set their own display, which would otherwise override the
+     `hidden` attribute the script toggles. */
+  .contact-form[hidden],
+  .contact-form__success[hidden] {
+    display: none;
+  }
+
+  .contact-form__success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-8) var(--space-6);
+    border-radius: var(--radius-lg);
+    background: rgba(63, 107, 79, 0.08);
+    text-align: center;
+  }
+
+  /* Focus is moved here by script only, to announce the message; it isn't
+     a control, so no focus ring. */
+  .contact-form__success:focus {
+    outline: none;
+  }
+
+  .contact-form__success-icon {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-full);
+    background: var(--c-success);
+    color: var(--c-white);
+  }
+
+  .contact-form__success-icon :global(svg) {
+    width: 28px;
+    height: 28px;
+    stroke-width: 2.4;
+  }
+
+  .contact-form__success-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: var(--lh-tight);
+    color: var(--text-primary);
+  }
+
+  .contact-form__success-text {
+    margin: 0;
+    max-width: 34ch;
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
   }
 
   @media (prefers-reduced-motion: reduce) {
