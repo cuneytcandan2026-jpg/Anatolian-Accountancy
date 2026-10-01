@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import MobileActionBar from '../components/MobileActionBar.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
+import CookieBanner from '../components/CookieBanner.astro';
 import { site, withBase, langAlternates, langAlternatesReverse } from '../lib/site';
 import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-standard-normal.woff2?url';
 import frauncesLatinExt from '@fontsource-variable/fraunces/files/fraunces-latin-ext-standard-normal.woff2?url';
@@ -164,6 +165,7 @@ const interPreload = lang === 'tr' ? interLatinExt : interLatin;
       <ScrollToTop />
       <WhatsAppButton />
     </aside>
+    <CookieBanner />
 
     <script>
       const revealEls = document.querySelectorAll<HTMLElement>('.reveal');

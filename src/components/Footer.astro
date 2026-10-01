@@ -80,6 +80,8 @@ const socialLinks = [
     <div class="footer__legal">
       <a href={withBase(isTurkish ? '/tr/gizlilik-politikasi/' : '/privacy-policy/')}>{isTurkish ? 'Gizlilik Politikası' : 'Privacy Policy'}</a>
       <a href={withBase(isTurkish ? '/tr/sartlar-ve-kosullar/' : '/terms/')}>{isTurkish ? 'Şartlar ve Koşullar' : 'Terms & Conditions'}</a>
+      <!-- Reopens CookieBanner.astro so visitors can change their choice. -->
+      <button type="button" class="footer__cookie-btn" data-cookie-settings>{isTurkish ? 'Çerez ayarları' : 'Cookie settings'}</button>
     </div>
   </div>
 </footer>
@@ -226,15 +228,32 @@ const socialLinks = [
 
   .footer__legal {
     display: flex;
-    gap: var(--space-5);
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
   }
 
-  .footer__legal a {
+  .footer__legal a,
+  .footer__cookie-btn {
     text-decoration: none;
     color: var(--text-on-ink-muted);
   }
 
-  .footer__legal a:hover {
+  .footer__cookie-btn {
+    padding: 0;
+    font-size: inherit;
+    line-height: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  /* The banner it reopens needs JS. */
+  :global(html:not(.js)) .footer__cookie-btn {
+    display: none;
+  }
+
+  .footer__legal a:hover,
+  .footer__cookie-btn:hover {
     color: var(--text-on-ink);
   }
 
