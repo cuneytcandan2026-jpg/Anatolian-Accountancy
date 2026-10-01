@@ -7,9 +7,11 @@ export const site = {
   whatsappNumber: '447541173722',
   email: 'info@anatolianaccountancy.com',
   emailHref: 'mailto:info@anatolianaccountancy.com',
+  // Matches the Google Business Profile and the Companies House registered
+  // office word for word, since Google cross-checks the two for local search.
   address: {
-    line1: 'Office 117B, 25 Innova Business Park',
-    line2: 'Electric Avenue Vision',
+    line1: 'Office 117B',
+    line2: '25 Electric Avenue',
     city: 'Enfield',
     postcode: 'EN3 7GD',
     country: 'GB',
