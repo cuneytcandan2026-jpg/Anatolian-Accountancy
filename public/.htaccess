@@ -57,5 +57,7 @@ ErrorDocument 410 /404.html
     Header set Cache-Control "no-cache"
   </FilesMatch>
 
-  Header always set Clear-Site-Data "\"cache\"" env=CLEAR_STALE_CACHE
+  # Single-quoted: Hostinger's LiteSpeed sends "\"cache\"" through with the
+  # backslashes intact, which browsers reject.
+  Header always set Clear-Site-Data '"cache"' env=CLEAR_STALE_CACHE
 </IfModule>
