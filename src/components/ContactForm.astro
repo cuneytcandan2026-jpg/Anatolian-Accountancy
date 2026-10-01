@@ -3,9 +3,15 @@ import { withBase } from '../lib/site';
 
 // NOTE: form submissions post to Web3Forms (https://web3forms.com) — a
 // free, no-backend form endpoint that suits static hosting on Hostinger.
-// TODO before launch: create a free Web3Forms account and replace the
-// placeholder access key below with the real one.
-const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+// Submissions are emailed to whichever address the access key was created
+// for. The key comes from PUBLIC_WEB3FORMS_ACCESS_KEY in .env (or the host's
+// build settings) and is baked into the HTML at build time; Web3Forms keys
+// are public by design, so the PUBLIC_ prefix is intended.
+const WEB3FORMS_ACCESS_KEY: string = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY ?? '';
+
+if (!WEB3FORMS_ACCESS_KEY) {
+  console.warn('[ContactForm] PUBLIC_WEB3FORMS_ACCESS_KEY is not set, so the contact form will not send emails.');
+}
 
 interface Props {
   lang?: 'en' | 'tr';
