@@ -14,6 +14,10 @@ const socialLinks = [
   { key: 'instagram', href: site.social.instagram, label: 'Instagram' },
   { key: 'linkedin', href: site.social.linkedin, label: 'LinkedIn' },
 ].filter((s) => s.href);
+// Web designer credit. The UTM tags let laaradigital.co.uk's own GA4 attribute
+// these clicks to this site's footer.
+const creditHref =
+  'https://laaradigital.co.uk/?utm_source=anatolianaccountancy.com&utm_medium=referral&utm_campaign=footer_credit';
 ---
 
 <footer class="footer">
@@ -75,6 +79,10 @@ const socialLinks = [
         {isTurkish
           ? `İngiltere ve Galler'de kayıtlıdır (şirket no. ${site.companyNumber}). Kayıtlı adres: ${registeredOffice}.`
           : `Registered in England and Wales, company no. ${site.companyNumber}. Registered office: ${registeredOffice}.`}
+      </p>
+      <p>
+        {isTurkish ? 'Tasarım ve geliştirme: ' : 'Designed & built by '}
+        <a href={creditHref} target="_blank" rel="noopener" class="footer__credit-link">Laara Digital</a>
       </p>
     </div>
     <div class="footer__legal">
@@ -224,6 +232,10 @@ const socialLinks = [
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
+  }
+
+  .footer__credit-link {
+    text-underline-offset: 0.2em;
   }
 
   .footer__legal {
