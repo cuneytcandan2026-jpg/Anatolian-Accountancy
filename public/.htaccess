@@ -1,0 +1,43 @@
+# Server rules for the live site on Hostinger (LiteSpeed reads Apache
+# .htaccess). Astro copies this file from public/ into the build unchanged.
+
+ErrorDocument 404 /404.html
+ErrorDocument 410 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Leave certificate checks alone, so the free SSL certificate can be issued
+  # and renewed over plain HTTP.
+  RewriteRule ^\.well-known/ - [L]
+
+  # One canonical address: HTTPS, without www. The host is otherwise kept as
+  # requested, so Hostinger's temporary preview domain still works before the
+  # DNS switch.
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # Addresses from the old WordPress site (its sitemap, checked 2026-10-01).
+  RewriteRule ^about-us/?$ /about/ [R=301,L]
+  RewriteRule ^contact-us/?$ /contact/ [R=301,L]
+  RewriteRule ^turkce/?$ /tr/ [R=301,L]
+  RewriteRule ^blog/?$ /insights/ [R=301,L]
+  RewriteRule ^faq/?$ /#faq [R=301,NE,L]
+  RewriteRule ^(sitemap_index|sitemap|wp-sitemap|page-sitemap|post-sitemap)\.xml$ /sitemap-index.xml [R=301,L]
+
+  # The old site's sample blog posts and its "404-2" page have no equivalent
+  # here, so tell search engines they're gone for good.
+  RewriteRule ^(understanding-credit-scores-your-key-to-financial-freedom|mastering-the-art-of-budgeting-practical-strategies-for-financial-success|the-rise-of-cryptocurrencies-should-you-invest|navigating-market-volatility-tips-for-investors|404-2)/?$ - [G]
+</IfModule>
+
+# Built CSS/JS/images/fonts carry a content hash in their file name (e.g.
+# xero-logo.EVLFwNsG.svg, or founder-photo.DI0ZpQ8C_ffM4E.webp for optimised
+# images), so a changed file always gets a new name and the old one can be
+# cached for a year.
+<IfModule mod_headers.c>
+  <FilesMatch "\.[A-Za-z0-9_-]{8,}\.(css|js|mjs|svg|png|jpe?g|webp|avif|gif|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>

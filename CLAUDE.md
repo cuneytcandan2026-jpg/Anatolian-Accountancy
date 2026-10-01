@@ -58,7 +58,13 @@ English pages live at the top of `src/pages/` (`/`, `/services/`, `/who-we-help/
 
 ### Forms
 
-`ContactForm.astro` posts client-side to Web3Forms (`api.web3forms.com/submit`) — a backend-less form endpoint suited to static hosting, with no server code in this repo. `WEB3FORMS_ACCESS_KEY` in that file is currently a placeholder (`YOUR_WEB3FORMS_ACCESS_KEY`) and needs a real key before launch.
+`ContactForm.astro` posts client-side to Web3Forms (`api.web3forms.com/submit`) — a backend-less form endpoint suited to static hosting, with no server code in this repo. Its access key (tied to info@anatolianaccountancy.com) is read at build time from `PUBLIC_WEB3FORMS_ACCESS_KEY`: the gitignored `.env` locally, and a same-named repository secret in the Hostinger workflow. Web3Forms keys are public by design, which is why the `PUBLIC_` prefix is fine. A build without it still succeeds but warns, and the form can't send. Web3Forms' free plan rejects server-side/`curl` submissions, so test the form from a real browser.
+
+### Deployment
+
+- **Live site (Hostinger):** `.github/workflows/deploy-hostinger.yml` runs on every push to `master`. It builds with `GITHUB_PAGES` unset (so `base` is `/` and `site` is the real domain), then commits `dist/` to the `hostinger` branch. Hostinger's hPanel Git integration (Advanced → Git) deploys that branch into `public_html`; it has no build step of its own, hence the workflow. The domain, DNS and email stay at IONOS, which only points the website A record at Hostinger.
+- **Server rules:** `public/.htaccess` is copied into the build root. It holds the 301s from the old WordPress site's URLs, HTTPS and non-www forcing, the 404/410 error pages, and long caching for hashed `/_astro/` files. Hostinger serves it with LiteSpeed, so it can't be tested locally. Check changes on Hostinger's temporary domain.
+- **Client preview (GitHub Pages):** built and pushed to `gh-pages` by hand with `GITHUB_PAGES=true npm run build`; there's no workflow for it.
 
 ### Images
 

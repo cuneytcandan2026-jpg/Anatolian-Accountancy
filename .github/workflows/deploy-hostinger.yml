@@ -1,0 +1,63 @@
+# Builds the production site and publishes the finished files to the
+# `hostinger` branch. Hostinger (hPanel → Advanced → Git) is connected to that
+# branch and copies it into public_html on every push. Its Git deploy has no
+# build step of its own, hence this workflow.
+name: Build for Hostinger
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hostinger
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.PUBLIC_WEB3FORMS_ACCESS_KEY }}
+
+      - name: Check the contact form has its Web3Forms key
+        run: |
+          if ! grep -q 'name="access_key" value="[^"]' dist/contact/index.html; then
+            echo "::error::The PUBLIC_WEB3FORMS_ACCESS_KEY repository secret is missing, so the contact form would not send."
+            exit 1
+          fi
+
+      - name: Publish to the hostinger branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git fetch --depth=1 origin hostinger; then
+            git worktree add --detach publish FETCH_HEAD
+          else
+            git worktree add --detach publish
+            git -C publish checkout --orphan hostinger
+          fi
+          find publish -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -r dist/. publish/
+          cd publish
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Build output unchanged; nothing to publish."
+            exit 0
+          fi
+          git commit -m "Build from ${GITHUB_SHA::7}"
+          git push origin HEAD:hostinger
