@@ -15,7 +15,10 @@ const nav = isTurkish ? primaryNavTr : primaryNav;
 // altHref overrides the static langAlternates lookup for pages whose
 // EN<->TR pairing isn't a fixed 1:1 path map (e.g. individual blog posts) —
 // see BaseLayout.astro's Props.
-const enHref = isTurkish ? (altHref ?? langAlternatesReverse[currentPath] ?? '/') : currentPath;
+// The 404 page is served at whatever URL was missing, so "stay on this
+// page" would just link back to a missing URL; send EN to the home page.
+const is404 = /^\/404\/?$/.test(currentPath);
+const enHref = isTurkish ? (altHref ?? langAlternatesReverse[currentPath] ?? '/') : is404 ? '/' : currentPath;
 const trHref = isTurkish ? currentPath : (altHref ?? langAlternates[currentPath] ?? '/tr/');
 const ctaLabel = isTurkish ? 'Ücretsiz Görüşme Talep Edin' : 'Book a Free Consultation';
 const contactHref = isTurkish ? '/tr/iletisim/' : '/contact/';
@@ -41,9 +44,9 @@ const homeHref = isTurkish ? '/tr/' : '/';
 
     <div class="header__actions">
       <div class="header__lang" role="group" aria-label={isTurkish ? 'Dil seçin' : 'Choose language'}>
-        <a href={withBase(enHref)} class={`header__lang-link ${!isTurkish ? 'is-active' : ''}`}>EN</a>
+        <a href={withBase(enHref)} hreflang="en" class={`header__lang-link ${!isTurkish ? 'is-active' : ''}`}>EN</a>
         <span aria-hidden="true">/</span>
-        <a href={withBase(trHref)} class={`header__lang-link ${isTurkish ? 'is-active' : ''}`}>TR</a>
+        <a href={withBase(trHref)} hreflang="tr" class={`header__lang-link ${isTurkish ? 'is-active' : ''}`}>TR</a>
       </div>
       <a href={site.phoneHref} class="header__call" aria-label={isTurkish ? `${site.phoneDisplay} numarasını arayın` : `Call ${site.phoneDisplay}`}>
         <Icon name="phone" />
@@ -70,8 +73,8 @@ const homeHref = isTurkish ? '/tr/' : '/';
   </nav>
 
   <div class="drawer__lang">
-    <a href={withBase(enHref)} class={`drawer__lang-link ${!isTurkish ? 'is-active' : ''}`}>English</a>
-    <a href={withBase(trHref)} class={`drawer__lang-link ${isTurkish ? 'is-active' : ''}`}>Türkçe</a>
+    <a href={withBase(enHref)} hreflang="en" lang="en" class={`drawer__lang-link ${!isTurkish ? 'is-active' : ''}`}>English</a>
+    <a href={withBase(trHref)} hreflang="tr" lang="tr" class={`drawer__lang-link ${isTurkish ? 'is-active' : ''}`}>Türkçe</a>
   </div>
 
   <div class="drawer__actions">

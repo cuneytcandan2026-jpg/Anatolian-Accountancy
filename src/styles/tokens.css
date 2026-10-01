@@ -1,18 +1,21 @@
 /*
   Design tokens — Anatolian Accountancy
   Client-chosen Azure (#007FFF) + warm ivory. Every blue on the site is a
-  step of the one azure hue (hsl 210 100%): the dark "ink" sections, buttons
-  and decorative accents use #007FFF itself; darker steps of the same hue
-  carry text, where #007FFF is too light to read comfortably at body sizes
-  on ivory. The primary CTA is Azure on light backgrounds and flips to white
-  on the azure sections (see --cta-on-ink), so it never blends in.
+  step of the one azure hue (hsl 210 100%). #007FFF itself only reaches
+  3.8:1 against white, below the WCAG AA 4.5:1 needed for body-size text, so
+  surfaces that carry text (the "ink" sections, the primary CTA) sit one step
+  deeper on azure-600 with pure white text (4.9:1), and #007FFF is kept for
+  decorative accents. Accent text on ivory/beige uses azure-650 and grey text
+  stone-600, both >= 4.5:1 on every light background. The primary CTA flips
+  to white on the azure sections (see --cta-on-ink), so it never blends in.
 */
 
 :root {
   /* ---- Colour: core palette ---- */
   --c-azure-950: #001a33; /* 10% — near-black ink, e.g. selection text */
   --c-azure-700: #0059b3; /* 35% — headings, nav, primary text */
-  --c-azure-600: #006ee0; /* 44% — hover/pressed, small accent text, alt dark section */
+  --c-azure-650: #0066cc; /* 40% — small accent text on ivory/beige (AA) */
+  --c-azure-600: #006ee0; /* 44% — ink sections + primary CTA (white text AA) */
   --c-azure-500: #007fff; /* 50% — the brand Azure */
   --c-azure-400: #4da6ff; /* 65% */
   --c-azure-300: #99ccff; /* 80% — soft tints */
@@ -26,7 +29,7 @@
 
   --c-stone-400: #b3a996;
   --c-stone-500: #8f8574;
-  --c-stone-600: #726a5c;
+  --c-stone-600: #6e6658;
   --c-stone-700: #574f45;
 
   --c-white: #ffffff;
@@ -43,18 +46,19 @@
   --bg-surface: var(--c-ivory-50);
   --bg-surface-raised: var(--c-white);
   --bg-muted: var(--c-ivory-200);
-  --bg-ink: var(--c-azure-500);
-  --bg-ink-elevated: var(--c-azure-600);
+  --bg-ink: var(--c-azure-600);
+  --bg-ink-elevated: var(--c-azure-700);
   --bg-ink-soft: var(--c-azure-400);
 
   --text-primary: var(--c-azure-700);
   --text-secondary: var(--c-stone-600);
-  --text-tertiary: var(--c-stone-500);
-  --text-on-ink: var(--c-ivory-100);
-  /* Muted/accent text on the azure sections stays near-full ivory — lower
-     opacities or pale-blue tints wash out on #007FFF. */
-  --text-on-ink-muted: rgba(250, 246, 238, 0.92);
-  --text-accent: var(--c-azure-600);
+  --text-tertiary: var(--c-stone-600);
+  --text-on-ink: var(--c-white);
+  /* No headroom for a dimmer "muted" tone on the azure sections: anything
+     below pure white drops under 4.5:1, so hierarchy there comes from size
+     and weight instead. */
+  --text-on-ink-muted: var(--c-white);
+  --text-accent: var(--c-azure-650);
   --text-accent-on-ink: var(--text-on-ink);
 
   --border-subtle: rgba(0, 89, 179, 0.1);
@@ -67,8 +71,8 @@
 
   /* Primary CTA: Azure on ivory/white; on the azure sections it inverts to
      a white pill with deep-azure text (Button variant "primary-on-ink"). */
-  --cta: var(--c-azure-500);
-  --cta-hover: var(--c-azure-600);
+  --cta: var(--c-azure-600);
+  --cta-hover: var(--c-azure-700);
   --cta-text: var(--c-white);
   --cta-on-ink: var(--c-white);
   --cta-on-ink-hover: var(--c-ivory-100);

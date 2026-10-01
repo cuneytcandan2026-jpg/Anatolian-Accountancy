@@ -4,7 +4,7 @@ import HeroBoxes from '../components/HeroBoxes.astro';
 import Icon from '../components/Icon.astro';
 import ContactForm from '../components/ContactForm.astro';
 import TrustStrip from '../components/TrustStrip.astro';
-import { site, whatsappHref } from '../lib/site';
+import { site, whatsappHref, directionsHref } from '../lib/site';
 
 const mapQuery = encodeURIComponent(
   `${site.address.line1}, ${site.address.line2}, ${site.address.city} ${site.address.postcode}`
@@ -12,8 +12,8 @@ const mapQuery = encodeURIComponent(
 ---
 
 <BaseLayout
-  title="Contact Us | Anatolian Accountancy | Book a Free Consultation"
-  description="Get in touch with Anatolian Accountancy in Enfield for a free consultation. Call, email or send an enquiry. We support clients across London and the UK in English or Turkish."
+  title="Contact Us for a Free Consultation | Anatolian Accountancy"
+  description="Book a free consultation with Anatolian Accountancy in Enfield. Call, email or send an enquiry. We help clients across the UK in English or Turkish."
   path="/contact/"
   includeLocalBusinessSchema
 >
@@ -57,13 +57,14 @@ const mapQuery = encodeURIComponent(
             <div>
               <p class="contact-details__label">Office</p>
               <p>{site.address.line1}, {site.address.line2}<br />{site.address.city} {site.address.postcode}</p>
+              <a href={directionsHref} target="_blank" rel="noopener noreferrer">Get directions</a>
             </div>
           </li>
           <li>
             <span class="contact-details__icon"><Icon name="clock" /></span>
             <div>
               <p class="contact-details__label">Opening hours</p>
-              <p>{site.hours}</p>
+              <p>{site.hours.map((line, i) => <>{i > 0 && <br />}{line}</>)}</p>
             </div>
           </li>
           <li>
@@ -79,7 +80,7 @@ const mapQuery = encodeURIComponent(
       <div class="contact-hero__form reveal">
         <div class="contact-card">
           <h2 class="contact-card__heading">Request my consultation</h2>
-          <p class="contact-card__intro">We usually reply within 2 hours during office hours ({site.hours}).</p>
+          <p class="contact-card__intro">We usually reply within 2 hours during office hours.</p>
           <ContactForm />
         </div>
       </div>

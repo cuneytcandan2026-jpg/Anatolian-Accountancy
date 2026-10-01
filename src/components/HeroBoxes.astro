@@ -16,7 +16,7 @@
     while the banner is on screen, pause briefly after real pointer
     activity, and are off entirely under prefers-reduced-motion
   - highlight colours cycle through the site's azure tokens per diagonal,
-    skipping azure-500 itself on the ink tone (it's the banner background)
+    skipping azure-600 on the ink tone (it's the banner background)
   Decorative only: aria-hidden and pointer-events: none (the listeners sit
   on the banner section, the plane's offsetParent). Without JS the grid
   still renders, just without highlights.
@@ -211,7 +211,13 @@ const POOL_SIZE = 32;
       frame = 0;
     };
 
-    new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop())).observe(host);
+    // Hold the ambient flashes until the page has finished loading, so their
+    // per-frame work never competes with the first render (the hero heading
+    // is the LCP element on every page with this banner).
+    const observe = () =>
+      new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop())).observe(host);
+    if (document.readyState === 'complete') observe();
+    else window.addEventListener('load', observe, { once: true });
   });
 </script>
 
@@ -237,7 +243,7 @@ const POOL_SIZE = 32;
     --hb-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128'%3E%3Cpath d='M96 58v12M102 64H90' fill='none' stroke='rgba(250,246,238,0.16)' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
     --hb-c0: var(--c-azure-300);
     --hb-c1: var(--c-azure-400);
-    --hb-c2: var(--c-azure-600);
+    --hb-c2: var(--c-azure-500);
     --hb-c3: rgba(250, 246, 238, 0.35);
     --hb-c4: var(--c-azure-700);
     --hb-peak: 1;

@@ -1,12 +1,12 @@
 ---
 title: "Muhasebeci Değiştirmek: Gerçekte Neler Oluyor?"
 metaTitle: "İngiltere'de Muhasebeci Değiştirmek: Gerçekte Neler Oluyor?"
-description: "İngiltere'de muhasebeci değiştirdiğinizde neler olduğuna adım adım bakış: mesleki devir yazısı (professional clearance), HMRC yetkilendirmesi, kayıtların devri ve zamanlama."
+description: "Muhasebeci değiştirdiğinizde neler olur, adım adım: mesleki devir yazısı (professional clearance), HMRC yetkilendirmesi, kayıtların devri ve zamanlama."
 category: general
 order: 6
 status: published
 relatedServiceHref: /contact/
-lastReviewed: "19 Ağustos 2026"
+lastReviewed: "29 Eylül 2026"
 reviewBy: "2027-08-19"
 ---
 
@@ -30,7 +30,7 @@ Profesyonel bir eski muhasebeci hızlı, dürüst ve iş birliği içinde yanıt
 
 Yeni muhasebecinizin sizin adınıza HMRC ile fiilen görüşebilmesi (beyanname vermesi, hesabınızı sorgulaması, yazışmaları yürütmesi) için resmi olarak yetkilendirilmesi gerekir. Bu genellikle HMRC'nin temsilci yetkilendirme süreciyle (bilinen "64-8" formu ya da çevrimiçi karşılığı) yapılır; yeni muhasebeciniz bunu genellikle hazırlar ve dijital olarak onaylamanız için size gönderir. İşleme alındığında HMRC onu kayıtlı temsilciniz olarak kabul eder ve bu, eski yetkilendirmenin yerini otomatik olarak alır.
 
-Çevrimiçi yetkilendirmeler genellikle birkaç iş günü içinde işleme alınır. Bilinmesi gereken yeni bir ayrıntı: Mart 2026'dan bu yana HMRC, National Insurance ile ilgili belirli sınırlı yetkilendirmeler için 64-8 formunun kendisini artık kabul etmiyor; bunların ayrıca yazılı olarak talep edilmesi gerekiyor. Bunu sizin yönetmeniz gerekmez, ancak bu adımın işleyişinin zaman zaman değiştiğini gösteriyor; bu yüzden eski bir şablon yerine güncel süreci takip eden bir muhasebeciyle çalışmakta fayda var.
+Çevrimiçi yetkilendirmeler genellikle birkaç iş günü içinde işleme alınır. Bilinmesi gereken yeni bir ayrıntı: Mart 2026'dan bu yana HMRC, sınırlı yetkilendirme (limited authorisation) talepleri için 64-8 formunu artık kabul etmiyor; bu talepler artık mektupla yapılıyor. Bunu sizin yönetmeniz gerekmez, ancak bu adımın işleyişinin zaman zaman değiştiğini gösteriyor; bu yüzden eski bir şablon yerine güncel süreci takip eden bir muhasebeciyle çalışmakta fayda var.
 
 ## 4. Kayıtlarınız devredilir
 

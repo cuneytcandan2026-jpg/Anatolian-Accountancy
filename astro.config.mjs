@@ -24,11 +24,26 @@ function rehypeBaseLinks() {
   };
 }
 
+// Pages rendered with BaseLayout's `noIndex` must stay out of the sitemap as
+// well, or search engines get contradictory signals (404 is already left out
+// by the integration). Keep in sync when adding or removing a noIndex page.
+const noIndexPaths = ['/privacy-policy/', '/terms/', '/tr/gizlilik-politikasi/', '/tr/sartlar-ve-kosullar/'];
+
 export default defineConfig({
   site: isGithubPages ? 'https://cuneytcandan2026-jpg.github.io' : 'https://anatolianaccountancy.com',
   base,
   output: 'static',
-  integrations: [sitemap()],
+  build: {
+    // Each page's CSS is only ~10 KB gzipped, so inlining it beats making
+    // mobile visitors wait on 2-3 render-blocking stylesheet requests
+    // before the hero headline (the LCP element) can paint.
+    inlineStylesheets: 'always',
+  },
+  integrations: [
+    sitemap({
+      filter: (page) => !noIndexPaths.some((p) => new URL(page).pathname.endsWith(p)),
+    }),
+  ],
   markdown: {
     rehypePlugins: isGithubPages ? [rehypeBaseLinks] : [],
   },

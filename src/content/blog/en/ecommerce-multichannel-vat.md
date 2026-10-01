@@ -6,11 +6,11 @@ category: vat
 order: 5
 status: published
 relatedServiceHref: /services/#specialist
-lastReviewed: "19 August 2026"
+lastReviewed: "29 September 2026"
 reviewBy: "2026-12-19"
 ---
 
-If you sell through your own website and one or more marketplaces (Amazon, eBay, Etsy, or all three), VAT gets more confusing than it needs to be, mostly because the rules genuinely do work differently depending on the channel. Some of your VAT might already be handled for you. Some of it isn't. And there's a live government consultation that could shift where that line sits for UK-based sellers specifically. Here's where things stand.
+If you sell through your own website and one or more marketplaces (Amazon, eBay, Etsy, or all three), VAT gets more confusing than it needs to be, mostly because the rules genuinely do work differently depending on the channel. Some of your VAT might already be handled for you. Some of it isn't. And a government consultation that closed in August 2026 could shift where that line sits for UK-based sellers specifically. Here's where things stand.
 
 ## Your VAT registration threshold is per business, not per channel
 
@@ -30,7 +30,7 @@ That gap is worth understanding properly, because it's about to become the most 
 
 ## A change that could directly affect UK sellers
 
-HMRC ran a consultation over summer 2026, "Extending online marketplace liability to combat non-compliance," proposing to close that gap and make marketplaces responsible for accounting for VAT on UK sellers' sales too, not just overseas sellers'. The stated reasoning is that HMRC believes a meaningful number of UK-based marketplace sellers currently aren't VAT-compliant, and shifting liability onto the platform is seen as a more effective way to fix that than chasing individual sellers.
+HMRC ran a consultation from 23 June to 18 August 2026, "Extending online marketplace liability to combat non-compliance," proposing to close that gap and make marketplaces responsible for accounting for VAT on UK sellers' sales too, not just overseas sellers'. The stated reasoning is that HMRC believes a meaningful number of UK-based marketplace sellers currently aren't VAT-compliant, and shifting liability onto the platform is seen as a more effective way to fix that than chasing individual sellers.
 
 Two protections for smaller businesses were floated as part of the same proposal. A "Minimum Platform Threshold," with the government's preferred option pegging it at the existing £90,000 VAT registration threshold, would leave sellers below it unaffected. Some form of VAT relief for UK sellers below that threshold was also floated. Nothing has been finalised, and no implementation date has been set. If you sell on marketplaces as a UK-established business, treat this as one to watch rather than one to act on yet; we'll update this article once an outcome is published.
 

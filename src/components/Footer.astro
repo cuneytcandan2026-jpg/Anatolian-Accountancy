@@ -6,6 +6,9 @@ const isTurkish = stripBase(Astro.url.pathname).startsWith('/tr/');
 const nav = isTurkish ? primaryNavTr : primaryNav;
 const homeHref = isTurkish ? '/tr/' : '/';
 const year = new Date().getFullYear();
+// Non-breaking space so the postcode never splits across two lines.
+const postcode = site.address.postcode.replace(' ', ' ');
+const registeredOffice = `${site.address.line1}, ${site.address.line2}, ${site.address.city} ${postcode}`;
 const socialLinks = [
   { key: 'facebook', href: site.social.facebook, label: 'Facebook' },
   { key: 'instagram', href: site.social.instagram, label: 'Instagram' },
@@ -56,20 +59,27 @@ const socialLinks = [
           <a href={site.emailHref} class="footer__contact-row"><Icon name="mail" /><span>{site.email}</span></a>
         </li>
         <li>
-          <span class="footer__contact-row"><Icon name="map-pin" /><span>{site.address.line1}, {site.address.city} {site.address.postcode}</span></span>
+          <span class="footer__contact-row"><Icon name="map-pin" /><span>{site.address.line1}, {site.address.line2}, {site.address.city} {postcode}</span></span>
         </li>
         <li>
-          <span class="footer__contact-row"><Icon name="clock" /><span>{isTurkish ? site.hoursTr : site.hours}</span></span>
+          <span class="footer__contact-row"><Icon name="clock" /><span>{(isTurkish ? site.hoursTr : site.hours).map((line, i) => <>{i > 0 && <br />}{line}</>)}</span></span>
         </li>
       </ul>
     </div>
   </div>
 
   <div class="container footer__bottom">
-    <p>&copy; {year} {site.name}. {isTurkish ? 'Tüm hakları saklıdır.' : 'All rights reserved.'}</p>
+    <div class="footer__company">
+      <p>&copy; {year} {site.legalName}. {isTurkish ? 'Tüm hakları saklıdır.' : 'All rights reserved.'}</p>
+      <p>
+        {isTurkish
+          ? `İngiltere ve Galler'de kayıtlıdır (şirket no. ${site.companyNumber}). Kayıtlı adres: ${registeredOffice}.`
+          : `Registered in England and Wales, company no. ${site.companyNumber}. Registered office: ${registeredOffice}.`}
+      </p>
+    </div>
     <div class="footer__legal">
-      <a href={withBase('/privacy-policy/')}>{isTurkish ? 'Gizlilik Politikası' : 'Privacy Policy'}</a>
-      <a href={withBase('/terms/')}>{isTurkish ? 'Şartlar ve Koşullar' : 'Terms & Conditions'}</a>
+      <a href={withBase(isTurkish ? '/tr/gizlilik-politikasi/' : '/privacy-policy/')}>{isTurkish ? 'Gizlilik Politikası' : 'Privacy Policy'}</a>
+      <a href={withBase(isTurkish ? '/tr/sartlar-ve-kosullar/' : '/terms/')}>{isTurkish ? 'Şartlar ve Koşullar' : 'Terms & Conditions'}</a>
     </div>
   </div>
 </footer>
@@ -206,6 +216,12 @@ const socialLinks = [
     padding-block: var(--space-6);
     border-top: 1px solid var(--border-on-ink);
     font-size: var(--fs-eyebrow);
+  }
+
+  .footer__company {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
   }
 
   .footer__legal {

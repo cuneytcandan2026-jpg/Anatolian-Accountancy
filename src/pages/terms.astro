@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../lib/site';
+
+const lastUpdated = 'October 2026';
 ---
 
 <BaseLayout
@@ -13,13 +15,66 @@ import { site } from '../lib/site';
     <div class="container container--narrow reveal">
       <p class="eyebrow">Legal</p>
       <h1>Terms &amp; Conditions</h1>
-      <p class="legal__todo">
-        TODO: this page needs proper legal drafting before launch, ideally alongside the firm's formal
-        letter of engagement wording used with clients, so the two are consistent.
-      </p>
+      <p class="legal__meta">Last updated: {lastUpdated}</p>
+
       <p>
-        In the meantime, if you have any questions, contact us at
-        <a href={site.emailHref}>{site.email}</a>.
+        These terms cover two things: the use of this website, and the general basis on which
+        {site.legalName} ("we", "us", "our") takes on client work. They don't
+        replace the formal letter of engagement you'll sign with us before we start any paid work. Where
+        the two differ, your signed letter of engagement takes precedence.
+      </p>
+
+      <h2>Using this website</h2>
+      <ul>
+        <li>The content on this site is for general information only and doesn't constitute tax, accounting or financial advice. Always speak to us directly before acting on anything you read here.</li>
+        <li>We've taken care to keep this site accurate and up to date, but tax rules and thresholds change, and we don't guarantee the content reflects the very latest position at the time you read it.</li>
+        <li>You may not copy, reproduce or reuse the content, design or branding on this site without our written permission.</li>
+        <li>We aim to keep this site available and secure, but we don't guarantee uninterrupted access and aren't liable for losses arising from the site being unavailable.</li>
+        <li>Links to external websites are provided for convenience; we're not responsible for the content or practices of sites we don't control.</li>
+      </ul>
+
+      <h2>Enquiries submitted through this site</h2>
+      <p>
+        Submitting the contact form is an enquiry, not an instruction to act. No client relationship or
+        engagement exists until we've carried out our standard onboarding checks (including
+        anti-money-laundering identity verification) and you've signed a letter of engagement setting out
+        the scope, fees and terms of the work.
+      </p>
+
+      <h2>Engaging our services</h2>
+      <ul>
+        <li>Once you engage us, the specific scope of work, fees, responsibilities and timelines are set out in your individual letter of engagement, which forms the contract between us.</li>
+        <li>Fees are billed as agreed in your letter of engagement (fixed fee, hourly rate, or another basis) and are due on the terms stated on our invoices, unless otherwise agreed in writing.</li>
+        <li>You're responsible for providing accurate, complete information and records in good time. Delays or inaccuracies in the information you give us may affect the accuracy or timeliness of our work, including statutory filing deadlines.</li>
+        <li>We carry professional indemnity insurance and follow the standards and ethical guidelines of our professional body.</li>
+        <li>Either party may end the engagement in line with the notice terms set out in your letter of engagement.</li>
+      </ul>
+
+      <h2>Liability</h2>
+      <p>
+        Our liability in connection with services we provide is as set out in your letter of engagement. To
+        the extent permitted by law, we're not liable for losses arising from information you provide that
+        is incomplete, inaccurate or provided late, or for matters outside the agreed scope of our
+        engagement.
+      </p>
+
+      <h2>Governing law</h2>
+      <p>
+        These terms, and any engagement with us, are governed by the law of England and Wales, and subject
+        to the exclusive jurisdiction of its courts.
+      </p>
+
+      <h2>Changes to these terms</h2>
+      <p>
+        We may update these terms from time to time; the "last updated" date at the top of this page
+        reflects the most recent changes. Terms already agreed in a signed letter of engagement aren't
+        affected by later updates to this page.
+      </p>
+
+      <h2>Contact us</h2>
+      <p>
+        If you have any questions about these terms, contact us at
+        <a href={site.emailHref}>{site.email}</a> or <a href={site.phoneHref}>{site.phoneDisplay}</a>.
       </p>
     </div>
   </section>
@@ -35,16 +90,36 @@ import { site } from '../lib/site';
     font-size: var(--fs-h1);
   }
 
+  .legal__meta {
+    margin-top: var(--space-3);
+    font-size: var(--fs-small);
+    color: var(--text-tertiary);
+  }
+
+  .legal h2 {
+    margin-top: var(--space-8);
+    font-size: var(--fs-h4);
+    color: var(--text-primary);
+  }
+
   .legal p {
     margin-top: var(--space-5);
     line-height: var(--lh-relaxed);
     color: var(--text-secondary);
   }
 
-  .legal__todo {
-    padding: var(--space-5);
-    border: 1px dashed var(--border-strong);
-    border-radius: var(--radius-md);
-    background: var(--bg-muted);
+  .legal ul {
+    margin-top: var(--space-5);
+    padding-left: 1.25em;
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .legal ul li + li {
+    margin-top: var(--space-2);
+  }
+
+  .legal a {
+    color: var(--text-accent);
   }
 </style>

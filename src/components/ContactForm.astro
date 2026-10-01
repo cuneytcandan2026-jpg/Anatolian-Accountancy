@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../lib/site';
+
 // NOTE: form submissions post to Web3Forms (https://web3forms.com) — a
 // free, no-backend form endpoint that suits static hosting on Hostinger.
 // TODO before launch: create a free Web3Forms account and replace the
@@ -45,7 +47,7 @@ const businessTypeOptions = isTurkish
 
 <form id="contact-form" class="contact-form" novalidate data-lang={lang}>
   <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
-  <input type="checkbox" name="botcheck" class="sr-only" tabindex="-1" autocomplete="off" />
+  <input type="checkbox" name="botcheck" hidden tabindex="-1" autocomplete="off" />
   <input
     type="hidden"
     name="subject"
@@ -97,6 +99,16 @@ const businessTypeOptions = isTurkish
     <span class="contact-form__spinner" aria-hidden="true"></span>
   </button>
 
+  <!-- Informs rather than asks for consent: enquiries are handled under
+       legitimate interests (see the Privacy Policy), not consent. -->
+  <p class="contact-form__privacy">
+    {isTurkish ? (
+      <>Bilgilerinizi yalnızca talebinize yanıt vermek için kullanırız. Ayrıntılar için <a href={withBase('/tr/gizlilik-politikasi/')}>Gizlilik Politikamıza</a> bakabilirsiniz.</>
+    ) : (
+      <>We'll only use your details to reply to your enquiry. See our <a href={withBase('/privacy-policy/')}>Privacy Policy</a> for details.</>
+    )}
+  </p>
+
   <p class="contact-form__status" role="status" aria-live="polite"></p>
 </form>
 
@@ -142,8 +154,8 @@ const businessTypeOptions = isTurkish
     } catch (err) {
       if (status) {
         status.textContent = isTurkish
-          ? 'Mesajınız gönderilirken bir sorun oluştu. Lütfen soldaki bilgileri kullanarak bizi doğrudan arayın veya e-posta gönderin.'
-          : 'Something went wrong sending your message. Please call or email us directly using the details on the left.';
+          ? 'Mesajınız gönderilirken bir sorun oluştu. Lütfen bu sayfadaki bilgileri kullanarak bizi doğrudan arayın veya e-posta gönderin.'
+          : 'Something went wrong sending your message. Please call or email us directly using the details on this page.';
         status.className = 'contact-form__status contact-form__status--error';
       }
     } finally {
@@ -270,6 +282,16 @@ const businessTypeOptions = isTurkish
     to {
       transform: rotate(360deg);
     }
+  }
+
+  .contact-form__privacy {
+    font-size: var(--fs-small);
+    line-height: var(--lh-relaxed);
+    color: var(--text-secondary);
+  }
+
+  .contact-form__privacy a {
+    color: var(--text-accent);
   }
 
   .contact-form__status {

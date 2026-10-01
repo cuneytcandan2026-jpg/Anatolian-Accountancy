@@ -23,6 +23,12 @@ import heroPhonebus from '../assets/hero-collage-busbigben.jpg';
 import heroCharts from '../assets/hero-collage-charts.jpg';
 import { site } from '../lib/site';
 
+// Rendered widths of the hero collage (measured: supporting pieces top out
+// at ~220px, the focal image at ~322px; on phones three pieces are hidden,
+// which is why they lazy-load rather than downloading unseen).
+const heroPieceSizes = '(min-width: 980px) 220px, (min-width: 700px) 195px, 150px';
+const heroFocalSizes = '(min-width: 980px) 322px, (min-width: 700px) 285px, 215px';
+
 const audiences = (await getCollection('audiences')).sort((a, b) => a.data.order - b.data.order);
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
 const testimonials = (await getCollection('testimonials'))
@@ -79,8 +85,8 @@ const whyPoints = [
 ---
 
 <BaseLayout
-  title="Anatolian Accountancy | Accountants in London & Enfield, English & Turkish"
-  description="Accounting, tax and business support for limited companies, sole traders, contractors and landlords across London and the UK, in English or Turkish. Book a free consultation."
+  title="Anatolian Accountancy | English & Turkish Accountants, London"
+  description="Accounting, tax and business support in English or Turkish for limited companies, sole traders and landlords in Enfield, London and across the UK."
   path="/"
   includeLocalBusinessSchema
 >
@@ -111,39 +117,39 @@ const whyPoints = [
           <span class="hero__blob hero__blob--b reveal" style="--reveal-delay:80ms" data-depth="0.15"></span>
 
           <div class="hero__piece hero__piece--bigben reveal" style="--reveal-delay:100ms" data-depth="0.35">
-            <Image src={heroPhonebus} alt="" width={480} height={700} class="hero__piece-img" loading="eager" />
+            <Image src={heroPhonebus} alt="" width={480} height={700} widths={[240, 320, 480]} sizes={heroPieceSizes} class="hero__piece-img" loading="lazy" />
           </div>
           <div class="hero__piece hero__piece--bridge reveal" style="--reveal-delay:160ms" data-depth="0.3">
-            <Image src={heroPhonebox} alt="" width={480} height={640} class="hero__piece-img" loading="eager" />
+            <Image src={heroPhonebox} alt="" width={480} height={640} widths={[240, 320, 480]} sizes={heroPieceSizes} class="hero__piece-img" loading="lazy" />
           </div>
           <div class="hero__piece hero__piece--focal reveal" style="--reveal-delay:220ms" data-depth="0.45">
-            <Image src={heroWork} alt="" width={640} height={780} class="hero__piece-img" priority />
+            <Image src={heroWork} alt="" width={640} height={780} widths={[320, 400, 480, 640]} sizes={heroFocalSizes} class="hero__piece-img" priority />
           </div>
           <div class="hero__piece hero__piece--charts reveal" style="--reveal-delay:300ms" data-depth="0.6">
-            <Image src={heroCharts} alt="" width={520} height={480} class="hero__piece-img" loading="eager" />
+            <Image src={heroCharts} alt="" width={520} height={480} widths={[240, 320, 520]} sizes={heroPieceSizes} class="hero__piece-img" loading="lazy" />
           </div>
           <div class="hero__piece hero__piece--desk reveal" style="--reveal-delay:360ms" data-depth="0.4">
-            <Image src={heroDesk} alt="" width={520} height={450} class="hero__piece-img" loading="eager" />
+            <Image src={heroDesk} alt="" width={520} height={450} widths={[240, 320, 520]} sizes={heroPieceSizes} class="hero__piece-img" loading="lazy" />
           </div>
         </div>
 
-        <dl class="hero__trust">
-          <div class="hero__trust-item">
+        <ul class="hero__trust" role="list">
+          <li class="hero__trust-item">
             <StatCounter value={20} suffix="+" label="Years' accounting experience" />
-          </div>
-          <div class="hero__trust-item hero__trust-item--text">
-            <dt>AAT Member</dt>
-            <dd>Full membership</dd>
-          </div>
-          <div class="hero__trust-item hero__trust-item--text">
-            <dt>English &amp; Turkish</dt>
-            <dd>Bilingual service</dd>
-          </div>
-          <div class="hero__trust-item hero__trust-item--text">
-            <dt>London &amp; UK-Wide</dt>
-            <dd>Enfield-based office</dd>
-          </div>
-        </dl>
+          </li>
+          <li class="hero__trust-item hero__trust-item--text">
+            <strong class="hero__trust-title">AAT Member</strong>
+            <span class="hero__trust-desc">Full membership</span>
+          </li>
+          <li class="hero__trust-item hero__trust-item--text">
+            <strong class="hero__trust-title">English &amp; Turkish</strong>
+            <span class="hero__trust-desc">Bilingual service</span>
+          </li>
+          <li class="hero__trust-item hero__trust-item--text">
+            <strong class="hero__trust-title">London &amp; UK-Wide</strong>
+            <span class="hero__trust-desc">Enfield-based office</span>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
@@ -221,7 +227,7 @@ const whyPoints = [
         <VideoShowcase
           class="how-we-help__video"
           src="/videos/calculator.mp4"
-          poster="/videos/calculator-poster.jpg"
+          poster="/videos/calculator-poster.webp"
         />
       </div>
       <div class="how-we-help__grid reveal">
@@ -359,9 +365,9 @@ const whyPoints = [
             Bektaş speaks native Turkish and advanced English, so you can go through your accounts, tax
             position or business plans in whichever language you're more comfortable with.
           </p>
-          <p class="bilingual__tr">Muhasebe ve vergi konularında Türkçe destek almak için tıklayın.</p>
+          <p class="bilingual__tr" lang="tr">Muhasebe ve vergi konularında Türkçe destek almak için tıklayın.</p>
         </div>
-        <Button href="/tr/" size="lg" icon="arrow-right">Türkçe bilgi alın</Button>
+        <Button href="/tr/" size="lg" icon="arrow-right" lang="tr">Türkçe bilgi alın</Button>
       </div>
     </div>
   </section>
@@ -453,6 +459,9 @@ const whyPoints = [
 
   .hero__trust {
     order: -1;
+    list-style: none;
+    margin-top: 0;
+    padding-left: 0;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6);
@@ -461,13 +470,15 @@ const whyPoints = [
     border-bottom: 1px solid var(--border-on-ink);
   }
 
-  .hero__trust-item--text dt {
+  .hero__trust-title {
+    display: block;
     font-weight: 700;
     font-size: var(--fs-small);
     color: var(--text-on-ink);
   }
 
-  .hero__trust-item--text dd {
+  .hero__trust-desc {
+    display: block;
     margin: 0.2rem 0 0;
     font-size: 0.8125rem;
     color: var(--text-on-ink-muted);

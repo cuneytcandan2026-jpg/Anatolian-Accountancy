@@ -6,7 +6,7 @@ category: general
 order: 6
 status: published
 relatedServiceHref: /contact/
-lastReviewed: "19 August 2026"
+lastReviewed: "29 September 2026"
 reviewBy: "2027-08-19"
 ---
 
@@ -30,7 +30,7 @@ A professional old accountant replies promptly, honestly, and cooperatively. Mos
 
 For your new accountant to actually speak to HMRC on your behalf (file returns, query your account, deal with correspondence), they need to be formally authorised. This is normally done through HMRC's agent authorisation process (the well-known "64-8" form, or its online equivalent), which your new accountant will usually prepare and send you to approve digitally. Once it's processed, HMRC treats them as your agent of record, which automatically supersedes the old authorisation.
 
-Online authorisations are typically actioned within a few working days. One recent wrinkle worth knowing about: since March 2026, HMRC no longer accepts the 64-8 form itself for certain limited/NI-related authorisations, which now have to be requested separately in writing. Not something you need to manage yourself, but a sign that the mechanics of this step do shift occasionally, so it's worth using an accountant who keeps up with the current process rather than an old template.
+Online authorisations are typically actioned within a few working days. One recent wrinkle worth knowing about: since March 2026, HMRC no longer accepts the 64-8 form for limited authorisation requests, which now have to be made by letter instead. Not something you need to manage yourself, but a sign that the mechanics of this step do shift occasionally, so it's worth using an accountant who keeps up with the current process rather than an old template.
 
 ## 4. Your records get transferred
 

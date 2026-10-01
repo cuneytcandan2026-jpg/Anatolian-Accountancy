@@ -1,16 +1,16 @@
 ---
 title: "E-Ticaret ve Çok Kanallı KDV: Online Satıcıların Bilmesi Gerekenler"
 metaTitle: "Online Satıcılar İçin Çok Kanallı KDV: 2026 Kuralları"
-description: "Kendi web siteniz ile Amazon, eBay veya Etsy'de KDV nasıl işler: eşik kuralları, pazaryeri KDV'si ve İngiltere'deki satıcıları etkileyebilecek bir danışma süreci."
+description: "Kendi sitenizde ve Amazon, eBay, Etsy'de KDV nasıl işler: eşik kuralları, pazaryeri KDV'si ve İngiltere'deki satıcıları etkileyebilecek bir danışma süreci."
 category: vat
 order: 5
 status: published
 relatedServiceHref: /services/#specialist
-lastReviewed: "19 Ağustos 2026"
+lastReviewed: "29 Eylül 2026"
 reviewBy: "2026-12-19"
 ---
 
-Kendi web sitenizden ve bir ya da daha fazla pazaryerinden (Amazon, eBay, Etsy ya da üçü birden) satış yapıyorsanız, KDV olması gerekenden daha kafa karıştırıcı hale gelir; bunun başlıca nedeni kuralların gerçekten de kanala göre farklı işlemesidir. KDV'nizin bir kısmı sizin yerinize zaten hallediliyor olabilir. Bir kısmı ise hallolmuyor. Ayrıca, özellikle İngiltere merkezli satıcılar için bu sınırın yerini değiştirebilecek, hâlâ süren bir hükümet danışma süreci var. Güncel durum şöyle.
+Kendi web sitenizden ve bir ya da daha fazla pazaryerinden (Amazon, eBay, Etsy ya da üçü birden) satış yapıyorsanız, KDV olması gerekenden daha kafa karıştırıcı hale gelir; bunun başlıca nedeni kuralların gerçekten de kanala göre farklı işlemesidir. KDV'nizin bir kısmı sizin yerinize zaten hallediliyor olabilir. Bir kısmı ise hallolmuyor. Ayrıca, Ağustos 2026'da kapanan bir hükümet danışma süreci, özellikle İngiltere merkezli satıcılar için bu sınırın yerini değiştirebilir. Güncel durum şöyle.
 
 ## KDV kayıt eşiği kanal başına değil, işletme başına uygulanır
 
@@ -30,7 +30,7 @@ Bu boşluğu iyi anlamakta fayda var, çünkü özellikle İngiltere'deki satıc
 
 ## İngiltere'deki satıcıları doğrudan etkileyebilecek bir değişiklik
 
-HMRC, 2026 yazında "Extending online marketplace liability to combat non-compliance" (Uyumsuzlukla mücadele için çevrimiçi pazaryeri sorumluluğunun genişletilmesi) başlıklı bir danışma süreci yürüttü ve bu boşluğun kapatılarak pazaryerlerinin yalnızca yabancı satıcıların değil, İngiltere'deki satıcıların satışları için de KDV'yi beyan etmekten sorumlu tutulmasını önerdi. Belirtilen gerekçe, HMRC'nin İngiltere merkezli pazaryeri satıcılarının azımsanmayacak bir kısmının şu anda KDV kurallarına uymadığını düşünmesi; sorumluluğu platforma kaydırmak da tek tek satıcıların peşine düşmekten daha etkili bir çözüm olarak görülüyor.
+HMRC, 23 Haziran ile 18 Ağustos 2026 arasında "Extending online marketplace liability to combat non-compliance" (Uyumsuzlukla mücadele için çevrimiçi pazaryeri sorumluluğunun genişletilmesi) başlıklı bir danışma süreci yürüttü ve bu boşluğun kapatılarak pazaryerlerinin yalnızca yabancı satıcıların değil, İngiltere'deki satıcıların satışları için de KDV'yi beyan etmekten sorumlu tutulmasını önerdi. Belirtilen gerekçe, HMRC'nin İngiltere merkezli pazaryeri satıcılarının azımsanmayacak bir kısmının şu anda KDV kurallarına uymadığını düşünmesi; sorumluluğu platforma kaydırmak da tek tek satıcıların peşine düşmekten daha etkili bir çözüm olarak görülüyor.
 
 Aynı önerinin parçası olarak küçük işletmeler için iki koruma gündeme getirildi. Hükümetin tercih ettiği seçenekte mevcut 90.000 sterlinlik KDV kayıt eşiğine sabitlenen bir "Asgari Platform Eşiği" (Minimum Platform Threshold), bu eşiğin altındaki satıcıları kapsam dışında bırakacak. Bu eşiğin altındaki İngiltere'deki satıcılar için bir tür KDV muafiyeti de gündeme getirildi. Henüz hiçbir şey kesinleşmedi ve bir uygulama tarihi belirlenmedi. İngiltere'de yerleşik bir işletme olarak pazaryerlerinde satış yapıyorsanız, bunu henüz harekete geçmeniz gereken değil, takip etmeniz gereken bir konu olarak görün; sonuç yayımlandığında bu yazıyı güncelleyeceğiz.
 

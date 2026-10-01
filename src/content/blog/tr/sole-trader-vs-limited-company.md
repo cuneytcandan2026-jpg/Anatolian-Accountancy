@@ -1,7 +1,7 @@
 ---
 title: "Şahıs Şirketi mi, Limited Şirket mi? Hangisi Size Uygun?"
 metaTitle: "Şahıs Şirketi mi Limited mi? 2026/27 Vergi Karşılaştırması"
-description: "Şahıs şirketi ile limited şirketin vergi, National Insurance ve idari yükleri 2026/27'de nasıl karşılaştırılır; çoğu rehberin henüz yansıtmadığı temettü vergisi artışı dahil."
+description: "Şahıs şirketi ve limited şirketin vergi, National Insurance ve idari yükü 2026/27'de nasıl kıyaslanır; çoğu rehberin atladığı temettü vergisi artışı dahil."
 category: business-structure
 order: 2
 status: published

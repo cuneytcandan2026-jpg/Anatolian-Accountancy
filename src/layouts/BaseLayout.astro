@@ -32,14 +32,25 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(withBase(path), site.url).toString();
-const ogImageURL = new URL(withBase('/og-image.jpg'), site.url).toString();
+// Share cards are rendered from scripts/og-image/ (EN + TR variants).
+const ogImageURL = new URL(withBase(lang === 'tr' ? '/og-image-tr.jpg' : '/og-image.jpg'), site.url).toString();
+const ogImageAlt =
+  lang === 'tr'
+    ? `${site.name}: İşinizi kolaylaştıran muhasebe. Türkçe ve İngilizce.`
+    : `${site.name}: Accountancy that makes business simpler. In English and Turkish.`;
 
+// No aggregateRating here: Google treats review stars a business publishes
+// about itself as self-serving (not eligible for rich results, and invented
+// figures risk a manual action), so ratings stay off-schema.
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'AccountingService',
+  '@id': `${site.url}/#business`,
   name: site.name,
+  legalName: site.legalName,
   url: site.url,
-  image: ogImageURL,
+  image: new URL(withBase('/og-image.jpg'), site.url).toString(),
+  logo: new URL(withBase('/apple-touch-icon.png'), site.url).toString(),
   telephone: site.phoneDisplay,
   email: site.email,
   address: {
@@ -62,18 +73,20 @@ const localBusinessSchema = {
   })),
   areaServed: ['London', 'Enfield', 'United Kingdom'],
   availableLanguage: ['English', 'Turkish'],
-  sameAs: Object.values(site.social),
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: site.googleRating,
-    reviewCount: site.googleReviewCount,
+  // The LinkedIn profile is the founder's personal one, so it belongs on the
+  // Person rather than claiming to be the business's own profile.
+  sameAs: [site.social.facebook, site.social.instagram],
+  founder: {
+    '@type': 'Person',
+    name: 'Bektaş Ünal',
+    sameAs: site.social.linkedin,
   },
 };
 
 // hreflang: emitted for the static EN<->TR page pairs (langAlternates in
 // site.ts), or for the explicit altHref override on pages whose pairing
 // isn't a fixed 1:1 path map (e.g. individual blog posts) — pages with no
-// translated twin (legal, 404) get neither.
+// translated twin (404) get neither.
 const altPath = altHref ?? langAlternates[path] ?? langAlternatesReverse[path];
 const enPath = lang === 'tr' ? altPath : path;
 const trPath = lang === 'tr' ? path : altPath;
@@ -89,7 +102,12 @@ const interPreload = lang === 'tr' ? interLatinExt : interLatin;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href={withBase('/favicon.ico')} sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase('/favicon-32x32.png')} />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+    <link rel="manifest" href={withBase('/site.webmanifest')} />
+    <meta name="theme-color" content="#fdfbf7" />
     <link rel="preload" href={frauncesPreload} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={interPreload} as="font" type="font/woff2" crossorigin />
     <link rel="canonical" href={canonicalURL} />
@@ -100,7 +118,7 @@ const interPreload = lang === 'tr' ? interLatinExt : interLatin;
         <link rel="alternate" hreflang="x-default" href={new URL(withBase(enPath), site.url).toString()} />
       </>
     )}
-    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    {noIndex && <meta name="robots" content="noindex" />}
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -110,12 +128,18 @@ const interPreload = lang === 'tr' ? interLatinExt : interLatin;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : 'en_GB'} />
+    {altPath && <meta property="og:locale:alternate" content={lang === 'tr' ? 'en_GB' : 'tr_TR'} />}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     {includeLocalBusinessSchema && (
       <script type="application/ld+json" is:inline set:html={JSON.stringify(localBusinessSchema)} />
@@ -127,15 +151,19 @@ const interPreload = lang === 'tr' ? interLatinExt : interLatin;
     </script>
   </head>
   <body>
-    <a href="#main" class="skip-link">Skip to main content</a>
+    <a href="#main" class="skip-link">{lang === 'tr' ? 'Ana içeriğe geç' : 'Skip to main content'}</a>
     <Header altHref={altHref} />
     <main id="main">
       <slot />
     </main>
     <Footer />
-    <MobileActionBar />
-    <ScrollToTop />
-    <WhatsAppButton />
+    <!-- The floating contact controls are position: fixed, so this wrapper
+         only groups them under a landmark for screen readers. -->
+    <aside aria-label={lang === 'tr' ? 'Hızlı iletişim' : 'Quick contact'}>
+      <MobileActionBar />
+      <ScrollToTop />
+      <WhatsAppButton />
+    </aside>
 
     <script>
       const revealEls = document.querySelectorAll<HTMLElement>('.reveal');

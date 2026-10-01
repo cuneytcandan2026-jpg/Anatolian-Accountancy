@@ -4,7 +4,7 @@ import HeroBoxes from '../../components/HeroBoxes.astro';
 import Icon from '../../components/Icon.astro';
 import ContactForm from '../../components/ContactForm.astro';
 import TrustStrip from '../../components/TrustStrip.astro';
-import { site, whatsappHref } from '../../lib/site';
+import { site, whatsappHref, directionsHref } from '../../lib/site';
 
 const mapQuery = encodeURIComponent(
   `${site.address.line1}, ${site.address.line2}, ${site.address.city} ${site.address.postcode}`
@@ -12,8 +12,8 @@ const mapQuery = encodeURIComponent(
 ---
 
 <BaseLayout
-  title="Bize Ulaşın | Anatolian Accountancy | Ücretsiz Görüşme Ayarlayın"
-  description="Anatolian Accountancy Enfield ile iletişime geçin, ücretsiz bir görüşme ayarlayın. Arayın, e-posta gönderin ya da bir talep bırakın. Londra ve İngiltere genelindeki müşterilere İngilizce veya Türkçe destek veriyoruz."
+  title="Bize Ulaşın: Ücretsiz Görüşme | Anatolian Accountancy"
+  description="Enfield'daki ofisimizle ücretsiz görüşme ayarlayın: arayın, e-posta gönderin ya da talep bırakın. İngiltere genelinde Türkçe veya İngilizce destek."
   path="/tr/iletisim/"
   lang="tr"
   includeLocalBusinessSchema
@@ -58,13 +58,14 @@ const mapQuery = encodeURIComponent(
             <div>
               <p class="contact-details__label">Ofis</p>
               <p>{site.address.line1}, {site.address.line2}<br />{site.address.city} {site.address.postcode}</p>
+              <a href={directionsHref} target="_blank" rel="noopener noreferrer">Yol tarifi al</a>
             </div>
           </li>
           <li>
             <span class="contact-details__icon"><Icon name="clock" /></span>
             <div>
               <p class="contact-details__label">Çalışma saatleri</p>
-              <p>{site.hoursTr}</p>
+              <p>{site.hoursTr.map((line, i) => <>{i > 0 && <br />}{line}</>)}</p>
             </div>
           </li>
           <li>
@@ -80,7 +81,7 @@ const mapQuery = encodeURIComponent(
       <div class="contact-hero__form reveal">
         <div class="contact-card">
           <h2 class="contact-card__heading">Görüşme talebimi gönder</h2>
-          <p class="contact-card__intro">Çalışma saatlerimiz içinde ({site.hoursTr}) genellikle 2 saat içinde dönüş yapıyoruz.</p>
+          <p class="contact-card__intro">Çalışma saatlerimiz içinde genellikle 2 saat içinde dönüş yapıyoruz.</p>
           <ContactForm lang="tr" />
         </div>
       </div>
