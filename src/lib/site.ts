@@ -1,6 +1,10 @@
 export const site = {
   name: 'Anatolian Accountancy',
-  legalName: 'Anadolu Muhasebecilik ve Mali Müşavirlik Ltd (Anatolian Accountancy Ltd)',
+  // Registered name and number at Companies House (England and Wales), which
+  // UK company law requires the website to show. The registered office is
+  // the same as `address` below.
+  legalName: 'Anatolian Accountancy Ltd',
+  companyNumber: '13439641',
   url: 'https://anatolianaccountancy.com',
   phoneDisplay: '+44 7541 173722',
   phoneHref: 'tel:+447541173722',
