@@ -32,6 +32,7 @@ html {
 .service-block,
 .whwh-block,
 #specialist,
+.specialist-card,
 #faq {
   scroll-margin-top: calc(var(--header-h) + var(--space-4));
 }

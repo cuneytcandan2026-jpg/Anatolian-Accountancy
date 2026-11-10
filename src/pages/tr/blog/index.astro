@@ -15,7 +15,7 @@ const posts = (await getCollection('blog', (e) => e.id.startsWith('tr/'))).sort(
   description="CIS, şirket yapısı, KDV, Self Assessment ve daha fazlası hakkında sade dilde rehberler, Anatolian Accountancy'den."
   path="/tr/blog/"
   lang="tr"
-  includeLocalBusinessSchema
+  pageType="CollectionPage"
 >
   <!-- ============ HERO ============ -->
   <section class="insights-hero">

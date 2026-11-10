@@ -6,7 +6,10 @@ import MobileActionBar from '../components/MobileActionBar.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
 import CookieBanner from '../components/CookieBanner.astro';
-import { site, withBase, langAlternates, langAlternatesReverse } from '../lib/site';
+import { getImage } from 'astro:assets';
+import { site, withBase, langAlternates, langAlternatesReverse, primaryNav, primaryNavTr } from '../lib/site';
+import { businessNode, personNode, websiteNode, breadcrumbNode, ids, inLanguage, type Crumb } from '../lib/schema';
+import founderPhoto from '../assets/founder-photo.jpg';
 import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-standard-normal.woff2?url';
 import frauncesLatinExt from '@fontsource-variable/fraunces/files/fraunces-latin-ext-standard-normal.woff2?url';
 import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
@@ -16,20 +19,32 @@ interface Props {
   title: string;
   description: string;
   path?: string;
-  includeLocalBusinessSchema?: boolean;
   noIndex?: boolean;
   lang?: 'en' | 'tr';
   altHref?: string;
+  // schema.org type of this page's WebPage node.
+  pageType?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage';
+  // Trail after Home. Defaults to the nav label (or title) of this page, so
+  // only nested pages such as blog posts need to pass it.
+  breadcrumbs?: Crumb[];
+  // Extra JSON-LD nodes for this page (Service, BlogPosting...), merged into
+  // the same @graph so they can reference the shared business by @id.
+  schema?: Record<string, unknown>[];
+  // @id of the node this page is mainly about, if not the business.
+  mainEntityId?: string;
 }
 
 const {
   title,
   description,
   path = '/',
-  includeLocalBusinessSchema = false,
   noIndex = false,
   lang = 'en',
   altHref,
+  pageType = 'WebPage',
+  breadcrumbs,
+  schema = [],
+  mainEntityId,
 } = Astro.props;
 
 const canonicalURL = new URL(withBase(path), site.url).toString();
@@ -40,49 +55,41 @@ const ogImageAlt =
     ? `${site.name}: İşinizi kolaylaştıran muhasebe. Türkçe ve İngilizce.`
     : `${site.name}: Accountancy that makes business simpler. In English and Turkish.`;
 
-// No aggregateRating here: Google treats review stars a business publishes
-// about itself as self-serving (not eligible for rich results, and invented
-// figures risk a manual action), so ratings stay off-schema.
-const localBusinessSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'AccountingService',
-  '@id': `${site.url}/#business`,
-  name: site.name,
-  legalName: site.legalName,
-  url: site.url,
-  image: new URL(withBase('/og-image.jpg'), site.url).toString(),
-  logo: new URL(withBase('/apple-touch-icon.png'), site.url).toString(),
-  telephone: site.phoneDisplay,
-  email: site.email,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: `${site.address.line1}, ${site.address.line2}`,
-    addressLocality: site.address.city,
-    postalCode: site.address.postcode,
-    addressCountry: site.address.country,
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: site.geo.lat,
-    longitude: site.geo.lng,
-  },
-  openingHoursSpecification: site.hoursSchema.map((h) => ({
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: h.days,
-    opens: h.opens,
-    closes: h.closes,
-  })),
-  areaServed: ['London', 'Enfield', 'United Kingdom'],
-  availableLanguage: ['English', 'Turkish'],
-  // The LinkedIn profile is the founder's personal one, so it belongs on the
-  // Person rather than claiming to be the business's own profile.
-  sameAs: [site.social.facebook, site.social.instagram],
-  founder: {
-    '@type': 'Person',
-    name: 'Bektaş Ünal',
-    sameAs: site.social.linkedin,
-  },
-};
+// One JSON-LD @graph per indexable page (see src/lib/schema.ts). noIndex
+// pages (404, legal pages) get none.
+const homePath = lang === 'tr' ? '/tr/' : '/';
+const isHome = path === homePath;
+const navItems = lang === 'tr' ? primaryNavTr : primaryNav;
+const pageLabel =
+  navItems.find((item) => item.href === path)?.label ?? title.replace(` | ${site.name}`, '');
+const crumbs: Crumb[] | undefined = isHome
+  ? undefined
+  : [{ name: lang === 'tr' ? 'Ana Sayfa' : 'Home', path: homePath }, ...(breadcrumbs ?? [{ name: pageLabel, path }])];
+const founderImage = (await getImage({ src: founderPhoto, width: 367, format: 'jpg' })).src;
+const graph = noIndex
+  ? undefined
+  : {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': pageType,
+          '@id': `${canonicalURL}#webpage`,
+          url: canonicalURL,
+          name: title,
+          description,
+          inLanguage: inLanguage(lang),
+          isPartOf: { '@id': ids.website },
+          about: { '@id': ids.business },
+          ...(mainEntityId ? { mainEntity: { '@id': mainEntityId } } : {}),
+          ...(crumbs ? { breadcrumb: { '@id': `${canonicalURL}#breadcrumb` } } : {}),
+        },
+        websiteNode(),
+        businessNode(),
+        personNode(new URL(founderImage, site.url).toString()),
+        ...(crumbs ? [breadcrumbNode(canonicalURL, crumbs)] : []),
+        ...schema,
+      ],
+    };
 
 // hreflang: emitted for the static EN<->TR page pairs (langAlternates in
 // site.ts), or for the explicit altHref override on pages whose pairing
@@ -142,9 +149,7 @@ const interPreload = lang === 'tr' ? interLatinExt : interLatin;
     <meta name="twitter:image" content={ogImageURL} />
     <meta name="twitter:image:alt" content={ogImageAlt} />
 
-    {includeLocalBusinessSchema && (
-      <script type="application/ld+json" is:inline set:html={JSON.stringify(localBusinessSchema)} />
-    )}
+    {graph && <script type="application/ld+json" is:inline set:html={JSON.stringify(graph)} />}
 
     <meta name="generator" content={Astro.generator} />
     <script is:inline>

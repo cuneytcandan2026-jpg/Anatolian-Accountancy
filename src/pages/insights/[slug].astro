@@ -5,7 +5,8 @@ import HeroBoxes from '../../components/HeroBoxes.astro';
 import Button from '../../components/Button.astro';
 import Icon from '../../components/Icon.astro';
 import { categoryLabels, categoryIcons } from '../../lib/blog';
-import { withBase, titleWithBrand } from '../../lib/site';
+import { site, withBase, titleWithBrand } from '../../lib/site';
+import { articleNode } from '../../lib/schema';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', (e) => e.id.startsWith('en/'));
@@ -20,12 +21,27 @@ const { Content } = await render(post);
 const slug = post.id.replace('en/', '');
 const trSibling = await getEntry('blog', `tr/${slug}`);
 const altHref = trSibling ? `/tr/blog/${slug}/` : undefined;
+const pagePath = `/insights/${slug}/`;
+const articleSchema = [
+  articleNode({
+    pageUrl: new URL(withBase(pagePath), site.url).toString(),
+    headline: post.data.title,
+    description: post.data.description,
+    lang: 'en',
+    lastReviewed: post.data.lastReviewed,
+  }),
+];
 ---
 
 <BaseLayout
   title={titleWithBrand(post.data.metaTitle ?? post.data.title)}
   description={post.data.description}
-  path={`/insights/${slug}/`}
+  path={pagePath}
+  breadcrumbs={[
+    { name: 'Insights', path: '/insights/' },
+    { name: post.data.title, path: pagePath },
+  ]}
+  schema={articleSchema}
   altHref={altHref}
 >
   <article>

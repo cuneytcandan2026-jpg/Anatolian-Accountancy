@@ -5,7 +5,7 @@ description: "How VAT works across your own website plus Amazon, eBay or Etsy: t
 category: vat
 order: 5
 status: published
-relatedServiceHref: /services/#specialist
+relatedServiceHref: /services/#ecommerce
 lastReviewed: "29 September 2026"
 reviewBy: "2026-12-19"
 ---
@@ -48,4 +48,4 @@ It's also worth keeping a clear reconciliation between VAT a marketplace has col
 
 ## Getting the setup right from the start
 
-Multi-channel selling is exactly the kind of situation where a slightly wrong assumption, thinking a marketplace "handles the VAT" when it doesn't, or checking turnover per-channel instead of combined, can go unnoticed for a while and then surface as a much bigger problem later. Our [VAT and payroll](/services/#vat-payroll) service covers registration and returns, and our [specialist e-commerce accounting](/services/#specialist) service is there if you're selling across multiple platforms and want the whole setup looked at properly. Get in touch and we'll go through your actual channel mix with you.
+Multi-channel selling is exactly the kind of situation where a slightly wrong assumption, thinking a marketplace "handles the VAT" when it doesn't, or checking turnover per-channel instead of combined, can go unnoticed for a while and then surface as a much bigger problem later. Our [VAT and payroll](/services/#vat-payroll) service covers registration and returns, and our [specialist e-commerce accounting](/services/#ecommerce) service is there if you're selling across multiple platforms and want the whole setup looked at properly. Get in touch and we'll go through your actual channel mix with you.

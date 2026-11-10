@@ -9,6 +9,7 @@ import CTASection from '../components/CTASection.astro';
 import TrustStrip from '../components/TrustStrip.astro';
 import Icon from '../components/Icon.astro';
 import { site, withBase } from '../lib/site';
+import { serviceNodes } from '../lib/schema';
 import imgAccounting from '../assets/services/business-accounting.jpg';
 import imgTax from '../assets/services/tax.jpg';
 import imgVatPayroll from '../assets/services/vat-payroll.jpg';
@@ -89,13 +90,22 @@ const blocks = [
 
 const cisRelated = relatedLinks(['cis-guide-contractors-subcontractors']);
 const ecommerceRelated = relatedLinks(['ecommerce-multichannel-vat']);
+
+const serviceSchema = serviceNodes(
+  [
+    ...blocks.map((b) => ({ id: b.id, name: b.title, description: (b.body ?? '').trim() })),
+    { id: 'cis', name: cis.data.title, description: (cis.body ?? '').trim() },
+    { id: 'ecommerce', name: ecommerce.data.title, description: (ecommerce.body ?? '').trim() },
+  ],
+  '/services/'
+);
 ---
 
 <BaseLayout
   title="Accounting & Tax Services | Anatolian Accountancy"
   description="Annual accounts, corporation tax, Self Assessment, VAT, payroll, company formation, CIS and e-commerce accounting for businesses and individuals."
   path="/services/"
-  includeLocalBusinessSchema
+  schema={serviceSchema}
 >
   <!-- ============ HERO ============ -->
   <section class="services-hero">
@@ -172,7 +182,7 @@ const ecommerceRelated = relatedLinks(['ecommerce-multichannel-vat']);
         intro="Two sectors with rules of their own, covered properly, not bolted on as an afterthought."
       />
       <div class="specialist-section__grid reveal">
-        <div class="specialist-card">
+        <div id="cis" class="specialist-card">
           <div class="specialist-card__image-wrap">
             <Image
               src={imgConstruction}
@@ -198,7 +208,7 @@ const ecommerceRelated = relatedLinks(['ecommerce-multichannel-vat']);
           )}
         </div>
 
-        <div class="specialist-card">
+        <div id="ecommerce" class="specialist-card">
           <div class="specialist-card__image-wrap">
             <Image
               src={imgEcommerce}

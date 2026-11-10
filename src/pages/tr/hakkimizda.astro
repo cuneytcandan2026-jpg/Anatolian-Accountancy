@@ -7,12 +7,13 @@ import SectionHeader from '../../components/SectionHeader.astro';
 import CTASection from '../../components/CTASection.astro';
 import Icon from '../../components/Icon.astro';
 import { site } from '../../lib/site';
+import { ids } from '../../lib/schema';
 import founderPhoto from '../../assets/founder-photo.jpg';
 
 const credentials = [
   { icon: 'ledger', title: 'Muhasebe ve Denetim Yüksek Lisansı', body: 'İstanbul Üniversitesi' },
   { icon: 'check', title: 'AAT Tam Üyesi', body: 'Association of Accounting Technicians' },
-  { icon: 'globe', title: 'ISMMMO', body: 'Türkiye Serbest Muhasebeci Mali Müşavirler Odası' },
+  { icon: 'globe', title: 'İSMMMO', body: 'İstanbul Serbest Muhasebeci Mali Müşavirler Odası' },
   { icon: 'formation', title: 'ACCA Finalisti', body: 'Association of Chartered Certified Accountants' },
 ];
 
@@ -43,7 +44,8 @@ const howIWork = [
   description="Anatolian Accountancy'nin kurucusu Bektaş Ünal ile tanışın: Türkiye, İngiltere, İrlanda, Suudi Arabistan ve Kamerun'da yirmi yılı aşkın muhasebe deneyimi."
   path="/tr/hakkimizda/"
   lang="tr"
-  includeLocalBusinessSchema
+  pageType="AboutPage"
+  mainEntityId={ids.person}
 >
   <!-- ============ HERO ============ -->
   <section class="section about-hero">
@@ -57,9 +59,9 @@ const howIWork = [
         <h1 class="about-hero__heading">Yirmi yıllık muhasebe deneyimi ve her zaman aynı muhasebeciyle çalışırsınız.</h1>
         <p class="about-hero__lead">
           Bektaş Ünal, Türkiye, İngiltere, İrlanda, Suudi Arabistan ve Kamerun'da inşaat, gıda &amp; içecek,
-          tekstil, ormancılık ve dış kaynaklı muhasebe alanlarında yirmi yılı aşkın süre çalıştıktan sonra
-          2019 yılında Anatolian Accountancy'yi kurdu. Bugün Londra ve İngiltere genelindeki müşterileriyle
-          doğrudan çalışıyor, İngilizce veya Türkçe.
+          tekstil, ormancılık ve dış kaynaklı muhasebe alanlarında yirmi yılı aşkın muhasebe deneyimine
+          sahip. 2019 yılında Anatolian Accountancy'yi kurdu; bugün Londra ve İngiltere genelindeki
+          müşterileriyle İngilizce veya Türkçe olarak doğrudan çalışıyor.
         </p>
         <div class="about-hero__chips">
           <span>Muhasebe ve Denetim Yüksek Lisansı</span>

@@ -14,7 +14,7 @@ const posts = (await getCollection('blog', (e) => e.id.startsWith('en/'))).sort(
   title="Insights | Anatolian Accountancy"
   description="Plain-English guides on CIS, company structure, VAT, Self Assessment and more, from Anatolian Accountancy."
   path="/insights/"
-  includeLocalBusinessSchema
+  pageType="CollectionPage"
 >
   <!-- ============ HERO ============ -->
   <section class="insights-hero">
