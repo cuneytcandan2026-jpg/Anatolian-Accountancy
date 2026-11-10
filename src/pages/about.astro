@@ -7,12 +7,13 @@ import SectionHeader from '../components/SectionHeader.astro';
 import CTASection from '../components/CTASection.astro';
 import Icon from '../components/Icon.astro';
 import { site } from '../lib/site';
+import { ids } from '../lib/schema';
 import founderPhoto from '../assets/founder-photo.jpg';
 
 const credentials = [
   { icon: 'ledger', title: 'MSc Accounting & Auditing', body: 'Istanbul University' },
   { icon: 'check', title: 'AAT Full Member', body: 'Association of Accounting Technicians' },
-  { icon: 'globe', title: 'ISMMMO', body: 'Turkish CPA Body' },
+  { icon: 'globe', title: 'İSMMMO', body: 'Istanbul Chamber of Certified Public Accountants' },
   { icon: 'formation', title: 'ACCA Finalist', body: 'Association of Chartered Certified Accountants' },
 ];
 
@@ -42,7 +43,8 @@ const howIWork = [
   title="About Bektaş Ünal | Anatolian Accountancy"
   description="Meet Bektaş Ünal, founder of Anatolian Accountancy, with 20+ years of accounting experience across Turkey, the UK, Ireland, Saudi Arabia and Cameroon."
   path="/about/"
-  includeLocalBusinessSchema
+  pageType="AboutPage"
+  mainEntityId={ids.person}
 >
   <!-- ============ HERO ============ -->
   <section class="section about-hero">
@@ -55,10 +57,10 @@ const howIWork = [
         <p class="eyebrow">About</p>
         <h1 class="about-hero__heading">Twenty years of accounting experience, and you'll always deal with the same accountant.</h1>
         <p class="about-hero__lead">
-          Bektaş Ünal founded Anatolian Accountancy in 2019 after more than two decades working across
-          construction, food &amp; beverage, textiles, forestry and outsourced accounting in Turkey, the UK,
-          Ireland, Saudi Arabia and Cameroon. Today he works directly with clients across London and the UK,
-          in English or Turkish.
+          Bektaş Ünal has more than twenty years of accounting experience across construction, food &amp;
+          beverage, textiles, forestry and outsourced accounting, in Turkey, the UK, Ireland, Saudi Arabia and
+          Cameroon. He founded Anatolian Accountancy in 2019, and today works directly with clients across
+          London and the UK, in English or Turkish.
         </p>
         <div class="about-hero__chips">
           <span>MSc Accounting &amp; Auditing</span>

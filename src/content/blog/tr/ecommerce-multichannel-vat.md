@@ -5,7 +5,7 @@ description: "Kendi sitenizde ve Amazon, eBay, Etsy'de KDV nasıl işler: eşik 
 category: vat
 order: 5
 status: published
-relatedServiceHref: /services/#specialist
+relatedServiceHref: /services/#ecommerce
 lastReviewed: "29 Eylül 2026"
 reviewBy: "2026-12-19"
 ---
@@ -48,4 +48,4 @@ Bir pazaryerinin sizin adınıza tahsil ettiği KDV (varsayılan tedarikçi kura
 
 ## Kurulumu baştan doğru yapmak
 
-Çok kanallı satış, küçük bir yanlış varsayımın (aslında öyle değilken "KDV'yi pazaryeri hallediyor" diye düşünmek ya da ciroyu toplam yerine kanal bazında kontrol etmek gibi) bir süre fark edilmeden kalıp sonra çok daha büyük bir sorun olarak ortaya çıkabildiği durumların tipik bir örneğidir. [KDV ve bordro](/tr/hizmetler/#vat-payroll) hizmetimiz kaydı ve beyannameleri kapsar; birden fazla platformda satış yapıyor ve tüm kurulumunuzun düzgünce incelenmesini istiyorsanız [e-ticaret muhasebesi](/tr/hizmetler/#specialist) hizmetimiz de hazır. Bizimle iletişime geçin, gerçek kanal dağılımınızı sizinle birlikte gözden geçirelim.
+Çok kanallı satış, küçük bir yanlış varsayımın (aslında öyle değilken "KDV'yi pazaryeri hallediyor" diye düşünmek ya da ciroyu toplam yerine kanal bazında kontrol etmek gibi) bir süre fark edilmeden kalıp sonra çok daha büyük bir sorun olarak ortaya çıkabildiği durumların tipik bir örneğidir. [KDV ve bordro](/tr/hizmetler/#vat-payroll) hizmetimiz kaydı ve beyannameleri kapsar; birden fazla platformda satış yapıyor ve tüm kurulumunuzun düzgünce incelenmesini istiyorsanız [e-ticaret muhasebesi](/tr/hizmetler/#ecommerce) hizmetimiz de hazır. Bizimle iletişime geçin, gerçek kanal dağılımınızı sizinle birlikte gözden geçirelim.

@@ -10,7 +10,7 @@ const { value, suffix = '', label } = Astro.props;
 
 <div class="stat reveal">
   <p class="stat__value">
-    <span class="stat__number" data-target={value}>0</span><span class="stat__suffix">{suffix}</span>
+    <span class="stat__number" data-target={value}>{value}</span><span class="stat__suffix">{suffix}</span>
   </p>
   <p class="stat__label">{label}</p>
 </div>
@@ -19,12 +19,13 @@ const { value, suffix = '', label } = Astro.props;
   const numbers = document.querySelectorAll<HTMLElement>('.stat__number');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // The real figure is in the HTML, so crawlers, text extractors and
+  // visitors without JavaScript never see a placeholder 0. The count-up only
+  // resets it to 0 at the moment the animation starts.
   const animate = (el: HTMLElement) => {
     const target = Number(el.dataset.target ?? '0');
-    if (reduceMotion) {
-      el.textContent = String(target);
-      return;
-    }
+    if (reduceMotion) return;
+    el.textContent = '0';
     const duration = 1200;
     const start = performance.now();
     const step = (now: number) => {
@@ -46,7 +47,9 @@ const { value, suffix = '', label } = Astro.props;
           }
         }
       },
-      { threshold: 0.4 }
+      // Same trigger as the .reveal fade-in, so the reset to 0 happens while the
+      // stat is still transparent rather than visibly jumping from 20 to 0.
+      { threshold: 0.2, rootMargin: '0px 0px -40px 0px' }
     );
     numbers.forEach((el) => observer.observe(el));
   }

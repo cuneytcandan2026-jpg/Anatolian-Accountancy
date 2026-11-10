@@ -102,13 +102,13 @@ const services = [
     title: 'İnşaat Sektörü Vergi Sistemi (CIS)',
     summary: 'Müteahhitler ve taşeronlar için CIS kaydı, kesintiler ve beyannameler, inşaat muhasebeniz uyumlu kalır.',
     icon: 'hardhat',
-    href: '/tr/hizmetler/#specialist',
+    href: '/tr/hizmetler/#cis',
   },
   {
     title: 'E-Ticaret Muhasebesi',
     summary: 'Amazon, eBay, Shopify ve diğer pazar yerleri için muhasebe: uygun olduğunda çok kanallı KDV ve uluslararası vergi dahil.',
     icon: 'cart',
-    href: '/tr/hizmetler/#specialist',
+    href: '/tr/hizmetler/#ecommerce',
   },
 ];
 
@@ -222,7 +222,7 @@ const faqGroups = [
       {
         question: 'KDV için ne zaman kayıt yaptırmam gerekir?',
         answer:
-          'Vergiye tabi cironuz, HMRC tarafından belirlenen ve herhangi bir hareketli 12 aylık dönemde geçerli olan KDV kayıt eşiğini aştığında kayıt zorunlu hale gelir; bu eşiği aştığınız andan itibaren genellikle kayıt için 30 gününüz vardır. Bazı işletmeler bu noktadan önce, kendi lehlerine olduğu durumlarda gönüllü olarak kayıt yaptırır. Devam eden müşterilerimiz için bunu takip ederiz, böylece asla sürpriz olmaz; gönüllü kaydın sizin için mantıklı olup olmadığını da birlikte değerlendirebiliriz.',
+          'Vergiye tabi cironuz, herhangi bir hareketli 12 aylık dönemde HMRC tarafından belirlenen güncel KDV kayıt eşiğini aştığında kayıt zorunlu hale gelir; eşiği aştığınız ayın sonundan itibaren 30 gün içinde kayıt yaptırmanız gerekir. Yalnızca önümüzdeki 30 gün içindeki cironuzun eşiği aşmasını bekliyorsanız da kayıt yaptırmanız gerekir. Bazı işletmeler bu noktadan önce, kendi lehlerine olduğu durumlarda gönüllü olarak kayıt yaptırır. Devam eden müşterilerimiz için bunu takip ederiz, böylece asla sürpriz olmaz; gönüllü kaydın sizin için mantıklı olup olmadığını da birlikte değerlendirebiliriz.',
       },
     ],
   },
@@ -276,7 +276,6 @@ const faqSchema = {
   description="Londra ve İngiltere genelinde limited şirketler, şahıs şirketleri ve mülk sahipleri için Türkçe veya İngilizce muhasebe ve vergi desteği. Ücretsiz görüşme."
   path="/tr/"
   lang="tr"
-  includeLocalBusinessSchema
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
 

@@ -5,7 +5,7 @@ description: "How the Construction Industry Scheme works in 2026: deduction rate
 category: cis
 order: 1
 status: published
-relatedServiceHref: /services/#specialist
+relatedServiceHref: /services/#cis
 lastReviewed: "19 August 2026"
 reviewBy: "2027-02-19"
 ---
@@ -58,4 +58,4 @@ CIS deductions apply the same way whether a subcontractor is a sole trader or a 
 
 If you're a self-employed CIS subcontractor with income over £50,000, you're also now inside Making Tax Digital for Income Tax, which changes how you report to HMRC through the year. Our [Making Tax Digital](/insights/making-tax-digital-explained/) guide covers what that involves.
 
-CIS is one of those areas where getting the mechanics slightly wrong (an incorrect materials deduction, a missed nil return, a lapsed Gross Payment Status application) tends to show up as a cash-flow problem before anyone notices the paperwork behind it. Our [specialist construction accounting](/services/#specialist) service handles CIS for contractors and subcontractors day to day, so get in touch if you'd like your current setup checked over.
+CIS is one of those areas where getting the mechanics slightly wrong (an incorrect materials deduction, a missed nil return, a lapsed Gross Payment Status application) tends to show up as a cash-flow problem before anyone notices the paperwork behind it. Our [specialist construction accounting](/services/#cis) service handles CIS for contractors and subcontractors day to day, so get in touch if you'd like your current setup checked over.

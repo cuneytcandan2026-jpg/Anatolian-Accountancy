@@ -9,6 +9,7 @@ import CTASection from '../../components/CTASection.astro';
 import TrustStrip from '../../components/TrustStrip.astro';
 import Icon from '../../components/Icon.astro';
 import { site, withBase } from '../../lib/site';
+import { serviceNodes } from '../../lib/schema';
 import imgAccounting from '../../assets/services/business-accounting.jpg';
 import imgTax from '../../assets/services/tax.jpg';
 import imgVatPayroll from '../../assets/services/vat-payroll.jpg';
@@ -84,6 +85,26 @@ const blocks = [
 
 const cisRelated = relatedLinks(['cis-guide-contractors-subcontractors']);
 const ecommerceRelated = relatedLinks(['ecommerce-multichannel-vat']);
+
+// Same wording as the visible CIS and e-commerce cards below.
+const serviceSchema = serviceNodes(
+  [
+    ...blocks.map((b) => ({ id: b.id, name: b.title, description: b.body })),
+    {
+      id: 'cis',
+      name: 'İnşaat Sektörü Vergi Sistemi (CIS)',
+      description:
+        'İnşaat sektöründe çalışan müteahhitler ve taşeronlar için CIS kaydı, aylık beyannameler ve kesinti bildirimleri, uyumlu ve sorunsuz şekilde yönetilir.',
+    },
+    {
+      id: 'ecommerce',
+      name: 'E-Ticaret Muhasebesi',
+      description:
+        'Amazon, eBay, Shopify ve diğer pazar yeri satıcıları için muhasebe: çok kanallı KDV, uluslararası vergi ve uygun olduğunda Ar-Ge vergi indirimi dahil.',
+    },
+  ],
+  '/tr/hizmetler/'
+);
 ---
 
 <BaseLayout
@@ -91,7 +112,7 @@ const ecommerceRelated = relatedLinks(['ecommerce-multichannel-vat']);
   description="Yıllık hesaplar, kurumlar vergisi, Self Assessment, KDV, bordro, şirket kuruluşu, CIS ve e-ticaret muhasebesi: işletmeler ve bireyler için."
   path="/tr/hizmetler/"
   lang="tr"
-  includeLocalBusinessSchema
+  schema={serviceSchema}
 >
   <!-- ============ HERO ============ -->
   <section class="services-hero">
@@ -169,7 +190,7 @@ const ecommerceRelated = relatedLinks(['ecommerce-multichannel-vat']);
         intro="Kendine has kuralları olan iki sektör, sonradan eklenen bir çözüm değil, baştan doğru şekilde ele alınır."
       />
       <div class="specialist-section__grid reveal">
-        <div class="specialist-card">
+        <div id="cis" class="specialist-card">
           <div class="specialist-card__image-wrap">
             <Image
               src={imgConstruction}
@@ -198,7 +219,7 @@ const ecommerceRelated = relatedLinks(['ecommerce-multichannel-vat']);
           )}
         </div>
 
-        <div class="specialist-card">
+        <div id="ecommerce" class="specialist-card">
           <div class="specialist-card__image-wrap">
             <Image
               src={imgEcommerce}

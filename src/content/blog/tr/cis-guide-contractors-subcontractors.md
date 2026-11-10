@@ -5,7 +5,7 @@ description: "İnşaat Sektörü Vergi Sistemi (CIS) 2026'da nasıl işliyor: ke
 category: cis
 order: 1
 status: published
-relatedServiceHref: /services/#specialist
+relatedServiceHref: /services/#cis
 lastReviewed: "19 Ağustos 2026"
 reviewBy: "2027-02-19"
 ---
@@ -58,4 +58,4 @@ CIS kesintileri, taşeron ister şahıs şirketi ister limited şirket olsun ayn
 
 Geliri 50.000 sterlinin üzerinde olan serbest çalışan bir CIS taşeronuysanız, artık Gelir Vergisi için Dijital Vergi Beyanı (Making Tax Digital) kapsamındasınız; bu da yıl içinde HMRC'ye nasıl bildirim yaptığınızı değiştiriyor. Bunun neleri kapsadığını [Dijital Vergi Beyanı (MTD)](/tr/blog/making-tax-digital-explained/) rehberimizde anlatıyoruz.
 
-CIS, işleyişin küçük bir kısmının yanlış kurulmasının (hatalı bir malzeme indirimi, kaçırılmış bir sıfır beyanname, kaybedilmiş bir Brüt Ödeme Statüsü) arkasındaki evrak fark edilmeden önce nakit akışı sorunu olarak ortaya çıktığı alanlardan biridir. [İnşaat sektörüne özel muhasebe](/tr/hizmetler/#specialist) hizmetimiz, müteahhitler ve taşeronlar için CIS işlemlerini günlük olarak yürütür; mevcut düzeninizin gözden geçirilmesini isterseniz bizimle iletişime geçin.
+CIS, işleyişin küçük bir kısmının yanlış kurulmasının (hatalı bir malzeme indirimi, kaçırılmış bir sıfır beyanname, kaybedilmiş bir Brüt Ödeme Statüsü) arkasındaki evrak fark edilmeden önce nakit akışı sorunu olarak ortaya çıktığı alanlardan biridir. [İnşaat sektörüne özel muhasebe](/tr/hizmetler/#cis) hizmetimiz, müteahhitler ve taşeronlar için CIS işlemlerini günlük olarak yürütür; mevcut düzeninizin gözden geçirilmesini isterseniz bizimle iletişime geçin.

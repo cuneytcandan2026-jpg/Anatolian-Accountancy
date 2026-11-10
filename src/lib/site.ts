@@ -34,12 +34,14 @@ export const site = {
     { days: ['Saturday'], opens: '10:00', closes: '17:00' },
   ],
   geo: { lat: 51.6742, lng: -0.0217 },
-  googleReviewsUrl:
-    'https://www.google.com/maps/place/Anatolian+Accountancy/@51.6741991,-0.0216902,17z/data=!3m1!4b1!4m6!3m5!1s0x48761d42ba7d16cb:0x5b720422b04e8d0b!8m2!3d51.6741991!4d-0.0216902',
-  // TODO: placeholder rating/count — replace with the real Google Business
-  // Profile figures before launch (visible in the homepage testimonials badge).
-  googleRating: 4.9,
-  googleReviewCount: 24,
+  // The Google Business Profile's stable CID link (the long /maps/place/...
+  // URL with coordinates sometimes opened an empty place panel).
+  googleReviewsUrl: 'https://www.google.com/maps?cid=6589333751829794059',
+  // Shown in the homepage testimonials badge. Copied by hand from the Google
+  // Business Profile, so they go stale as new reviews arrive: re-check them
+  // there and update both together. Last checked 10 November 2026.
+  googleRating: 4.5,
+  googleReviewCount: 8,
   social: {
     facebook:
       'https://www.facebook.com/people/Anatolian-Accountancy-Anadolu-Muhasebecilik/pfbid0oMowgC2gi1XbKLiNpPA5231NRfGXvQYQsp9TP7auNS4tVs1LBKKY6QkVPtLjQjw3l/',
