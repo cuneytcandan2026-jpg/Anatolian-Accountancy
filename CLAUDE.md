@@ -67,6 +67,7 @@ GA4 (`site.gaMeasurementId` in `src/lib/site.ts`) is consent-gated: `CookieBanne
 ### Deployment
 
 - **Live site (Hostinger):** `.github/workflows/deploy-hostinger.yml` runs on every push to `master`. It builds with `GITHUB_PAGES` unset (so `base` is `/` and `site` is the real domain), then commits `dist/` to the `hostinger` branch. Hostinger's hPanel Git integration (Advanced → Git) deploys that branch into `public_html`; it has no build step of its own, hence the workflow. The domain, DNS and email stay at IONOS, which only points the website A record at Hostinger.
+- **IndexNow (Bing, Yandex and others; not Google):** the workflow's last step runs `scripts/indexnow.mjs`, which submits the pages that deploy added, changed or removed, after waiting for Hostinger to serve the new build. The key is `public/ba05f56c57b20b57a0c10c67be9ea948.txt` and must stay published. `npm run build && npm run indexnow -- --all` submits every sitemap URL by hand. Set `INDEXNOW_DRY_RUN=1` to only print the list.
 - **Server rules:** `public/.htaccess` is copied into the build root. It holds the 301s from the old WordPress site's URLs, HTTPS and non-www forcing, the 404/410 error pages, and long caching for hashed `/_astro/` files. Hostinger serves it with LiteSpeed, so it can't be tested locally. Check changes on Hostinger's temporary domain.
 - **Client preview (GitHub Pages):** built and pushed to `gh-pages` by hand with `GITHUB_PAGES=true npm run build`; there's no workflow for it.
 

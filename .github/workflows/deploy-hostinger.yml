@@ -42,6 +42,7 @@ jobs:
           fi
 
       - name: Publish to the hostinger branch
+        id: publish
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -59,5 +60,15 @@ jobs:
             echo "Build output unchanged; nothing to publish."
             exit 0
           fi
+          git diff --cached --name-status --no-renames > "$RUNNER_TEMP/changed-files.txt"
           git commit -m "Build from ${GITHUB_SHA::7}"
           git push origin HEAD:hostinger
+          echo "published=true" >> "$GITHUB_OUTPUT"
+
+      # Pings Bing and the other IndexNow engines with the pages this deploy
+      # added, changed or removed. It waits for Hostinger to serve the new
+      # build first, and only ever warns, never fails the run.
+      - name: Submit changed pages to IndexNow
+        if: steps.publish.outputs.published == 'true'
+        timeout-minutes: 15
+        run: node scripts/indexnow.mjs "$RUNNER_TEMP/changed-files.txt"
